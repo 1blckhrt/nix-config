@@ -1,11 +1,12 @@
-{ config, pkgs, ... }:
-
 {
-	
-services.samba = {
+  config,
+  pkgs,
+  ...
+}: {
+  services.samba = {
     enable = true;
     openFirewall = true;
-    package = pkgs.sambaFull;  # Ensure full Samba support
+    package = pkgs.sambaFull; # Ensure full Samba support
     settings = {
       global = {
         "workgroup" = "WORKGROUP";
@@ -54,7 +55,7 @@ services.samba = {
   # Run backups weekly
   systemd.timers.rsnapshot-weekly = {
     description = "Weekly rsnapshot backup";
-    wantedBy = [ "timers.target" ];
+    wantedBy = ["timers.target"];
     timerConfig = {
       OnCalendar = "weekly";
       Persistent = true;
@@ -78,6 +79,5 @@ services.samba = {
     ];
   };
   networking.defaultGateway = "192.168.5.1";
-  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
+  networking.nameservers = ["1.1.1.1" "8.8.8.8"];
 }
-
