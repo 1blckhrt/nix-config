@@ -26,11 +26,17 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixvim, system-manager, nix-system-graphics, ... }@inputs:
-  let
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    nixvim,
+    system-manager,
+    nix-system-graphics,
+    ...
+  } @ inputs: let
     system = "x86_64-linux";
   in {
-
     # ===== Non-NixOS systems (system-manager) =====
     systemConfigs = {
       laptop = system-manager.lib.makeSystemConfig {
@@ -54,22 +60,22 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {
           # make the flake inputs available inside the home-manager modules
-          inputs = { inherit self nixpkgs home-manager system-manager nixvim nix-system-graphics; };
+          inputs = {inherit self nixpkgs home-manager system-manager nixvim nix-system-graphics;};
         };
         modules = [
           ./hosts/laptop/home.nix
-          { home.packages = [system-manager.packages.x86_64-linux.default]; }
+          {home.packages = [system-manager.packages.x86_64-linux.default];}
         ];
       };
 
       "blckhrt@pc" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {
-          inputs = { inherit self nixpkgs home-manager system-manager nixvim nix-system-graphics; };
+          inputs = {inherit self nixpkgs home-manager system-manager nixvim nix-system-graphics;};
         };
         modules = [
           ./hosts/pc-mint/home.nix
-          { home.packages = [system-manager.packages.x86_64-linux.default]; }
+          {home.packages = [system-manager.packages.x86_64-linux.default];}
         ];
       };
     };
@@ -79,7 +85,7 @@
       rustbucket = nixpkgs.lib.nixosSystem {
         inherit system;
 
-        specialArgs = { inherit inputs; };
+        specialArgs = {inherit inputs;};
 
         modules = [
           ./hosts/rustbucket/configuration.nix
@@ -90,20 +96,17 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-
-              extraSpecialArgs = { inherit inputs; };
+              extraSpecialArgs = {inherit inputs;};
 
               users = {
                 blckhrt = {
-                  imports = [ ./hosts/rustbucket/home/home.nix ];
+                  imports = [./hosts/rustbucket/home/home.nix];
                 };
               };
             };
           }
-
         ];
       };
     };
   };
 }
-

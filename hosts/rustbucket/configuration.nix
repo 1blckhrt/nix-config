@@ -1,16 +1,17 @@
-{ config, pkgs, ... }:
-
 {
-  imports =
-    [ 
-      ./hardware-configuration.nix
-      # ./profiles/headless.nix
-      ./profiles/lxqt.nix
-      ./services/samba.nix
-    ];
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    ./hardware-configuration.nix
+    # ./profiles/headless.nix
+    ./profiles/lxqt.nix
+    ./services/samba.nix
+  ];
 
   nix = {
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = ["nix-command" "flakes"];
     gc = {
       automatic = true;
       dates = "weekly";
@@ -55,17 +56,19 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    };
+  };
   users.users.blckhrt = {
+    shell = pkgs.zsh;
     isNormalUser = true;
     description = "Parker";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
-	fastfetch
+      fastfetch
     ];
   };
 
   programs.firefox.enable = true;
+  programs.zsh.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
@@ -85,5 +88,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
-
 }
