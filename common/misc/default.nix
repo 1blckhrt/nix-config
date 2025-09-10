@@ -24,6 +24,7 @@
     direnv
     zip
     unzip
+    ntfy
   ];
 
   fonts.fontconfig.enable = true;

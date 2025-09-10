@@ -2,8 +2,11 @@
   description = "NixOS configuration for 1blckhrt";
 
   inputs = {
-    # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    # Stable nixpkgs
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+
+    # Unstable nixpkgs
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
@@ -29,6 +32,7 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-unstable,
     home-manager,
     nixvim,
     system-manager,
@@ -57,25 +61,20 @@
     # ===== Standalone home-manager configurations =====
     homeConfigurations = {
       "blckhrt@laptop" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        extraSpecialArgs = {
-          # make the flake inputs available inside the home-manager modules
-          inputs = {inherit self nixpkgs home-manager system-manager nixvim nix-system-graphics;};
-        };
+        pkgs = nixpkgs.legacyPackages.${system};
+        extraSpecialArgs = {inputs = {inherit self nixpkgs nixpkgs-unstable home-manager system-manager nixvim nix-system-graphics;};};
         modules = [
           ./hosts/laptop/home.nix
-          {home.packages = [system-manager.packages.x86_64-linux.default];}
+          {home.packages = [system-manager.packages.${system}.default];}
         ];
       };
 
       "blckhrt@pc" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        extraSpecialArgs = {
-          inputs = {inherit self nixpkgs home-manager system-manager nixvim nix-system-graphics;};
-        };
+        pkgs = nixpkgs.legacyPackages.${system};
+        extraSpecialArgs = {inputs = {inherit self nixpkgs nixpkgs-unstable home-manager system-manager nixvim nix-system-graphics;};};
         modules = [
           ./hosts/pc-mint/home.nix
-          {home.packages = [system-manager.packages.x86_64-linux.default];}
+          {home.packages = [system-manager.packages.${system}.default];}
         ];
       };
     };
@@ -84,12 +83,10 @@
     nixosConfigurations = {
       rustbucket = nixpkgs.lib.nixosSystem {
         inherit system;
-
         specialArgs = {inherit inputs;};
 
         modules = [
           ./hosts/rustbucket/configuration.nix
-
           home-manager.nixosModules.home-manager
 
           {
@@ -98,12 +95,14 @@
               useUserPackages = true;
               extraSpecialArgs = {inherit inputs;};
 
-              users = {
-                blckhrt = {
-                  imports = [./hosts/rustbucket/home/home.nix];
-                };
-              };
+              users.blckhrt.imports = [./hosts/rustbucket/home/home.nix];
             };
+
+            # unstable tailscale, stable doesn't build
+            environment.systemPackages = [
+              (import nixpkgs-unstable {inherit system;}).tailscale
+            ];
+            services.tailscale.enable = true;
           }
         ];
       };

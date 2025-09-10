@@ -8,6 +8,8 @@
     # ./profiles/headless.nix
     ./profiles/lxqt.nix
     ./services/samba.nix
+    ./services/tailscale.nix
+    ./services/ntfy.nix
   ];
 
   nix = {
