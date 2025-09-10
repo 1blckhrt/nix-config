@@ -9,7 +9,7 @@
             preset = "default";
 
             # Enter accepts the current item
-            "<CR>" = ["accept"];
+            "<CR>" = ["accept" "fallback"];
 
             # Tab to move forward in the menu or fallback
             "<Tab>" = ["select_next" "fallback"];
@@ -44,4 +44,3 @@
     };
   };
 }
-

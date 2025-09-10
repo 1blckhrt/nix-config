@@ -1,7 +1,13 @@
-{ lib, config, pkgs, inputs, ... }: {
-
+{
+  lib,
+  config,
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     inputs.nixvim.homeModules.nixvim
+    ../../../common/alacritty/default.nix
     ../../../common/bin/default.nix
     ../../../common/nvim/default.nix
     ../../../common/starship/default.nix
@@ -27,4 +33,3 @@
 
   home.stateVersion = "25.05";
 }
-
