@@ -10,6 +10,7 @@
     ./services/samba.nix
     ./services/tailscale.nix
     ./services/ntfy.nix
+    ./services/notes-site.nix
   ];
 
   nix = {
