@@ -31,7 +31,6 @@
     ../../common/zsh/default.nix
 
     ./services/syncthing/default.nix
-    ./services/trayscale/default.nix
   ];
 
   xdg.configFile."environment.d/envvars.conf".text = ''
