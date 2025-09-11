@@ -329,4 +329,21 @@ in {
       WantedBy = ["timers.target"];
     };
   };
+
+  systemd.user.services.hugo-site = {
+    Unit = {
+      Description = "Hugo Site with nginx";
+      After = ["network.target"];
+    };
+
+    Service = {
+      Type = "simple";
+      ExecStart = "${mainScript} nginx";
+      Restart = "on-failure";
+    };
+
+    Install = {
+      WantedBy = ["default.target"];
+    };
+  };
 }
