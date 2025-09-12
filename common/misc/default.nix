@@ -25,6 +25,7 @@
     zip
     unzip
     ntfy
+    inputs.commit.packages.x86_64-linux.default
   ];
 
   fonts.fontconfig.enable = true;

@@ -2,10 +2,7 @@
   description = "NixOS configuration for 1blckhrt";
 
   inputs = {
-    # Stable nixpkgs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
-
-    # Unstable nixpkgs
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
@@ -27,6 +24,16 @@
       url = "github:soupglasses/nix-system-graphics";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    pre-commit-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    commit = {
+      url = "github:1blckhrt/commit";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -37,9 +44,13 @@
     nixvim,
     system-manager,
     nix-system-graphics,
+    pre-commit-hooks,
+    commit,
     ...
   } @ inputs: let
     system = "x86_64-linux";
+    lib = nixpkgs.lib;
+    forAllSystems = lib.genAttrs [system];
   in {
     # ===== Non-NixOS systems (system-manager) =====
     systemConfigs = {
@@ -62,19 +73,29 @@
     homeConfigurations = {
       "blckhrt@laptop" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
-        extraSpecialArgs = {inputs = {inherit self nixpkgs nixpkgs-unstable home-manager system-manager nixvim nix-system-graphics;};};
+        extraSpecialArgs = {inputs = {inherit self nixpkgs nixpkgs-unstable home-manager system-manager nixvim nix-system-graphics commit;};};
         modules = [
           ./hosts/laptop/home.nix
-          {home.packages = [system-manager.packages.${system}.default];}
+          {
+            home.packages = [
+              system-manager.packages.${system}.default
+              commit.packages.${system}.default
+            ];
+          }
         ];
       };
 
       "blckhrt@pc" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
-        extraSpecialArgs = {inputs = {inherit self nixpkgs nixpkgs-unstable home-manager system-manager nixvim nix-system-graphics;};};
+        extraSpecialArgs = {inputs = {inherit self nixpkgs nixpkgs-unstable home-manager system-manager nixvim nix-system-graphics commit;};};
         modules = [
           ./hosts/pc-mint/home.nix
-          {home.packages = [system-manager.packages.${system}.default];}
+          {
+            home.packages = [
+              system-manager.packages.${system}.default
+              commit.packages.${system}.default
+            ];
+          }
         ];
       };
     };
@@ -107,5 +128,33 @@
         ];
       };
     };
+
+    # ===== Git hooks / formatting / linting =====
+    checks = forAllSystems (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      pre-commit-check = pre-commit-hooks.lib.${system}.run {
+        src = ./.;
+        hooks = {
+          alejandra.enable = true;
+          convco.enable = true;
+        };
+      };
+    });
+
+    devShells = forAllSystems (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+      check = self.checks.${system}.pre-commit-check;
+    in {
+      default = pkgs.mkShell {
+        inherit (check) shellHook;
+        buildInputs = check.enabledPackages ++ [pkgs.alejandra pkgs.convco];
+      };
+    });
+
+    formatter = forAllSystems (
+      system:
+        nixpkgs.legacyPackages.${system}.alejandra
+    );
   };
 }

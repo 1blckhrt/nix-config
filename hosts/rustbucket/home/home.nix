@@ -18,6 +18,8 @@
     ../../../common/ssh/default.nix
     ../../../common/tmux/default.nix
     ../../../common/zsh/default.nix
+
+    ../services/notes-site.nix
   ];
 
   nixpkgs = {

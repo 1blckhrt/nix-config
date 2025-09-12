@@ -1,2 +1,4 @@
-# system manager
 result
+
+/.pre-commit-config.yaml
+/.direnv
