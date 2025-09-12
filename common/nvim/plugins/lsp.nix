@@ -16,7 +16,7 @@ _: {
     none-ls = {
       enable = true;
       enableLspFormat = true;
-      settings.update_in_insert = true;
+      settings.update_in_insert = false;
 
       sources = {
         code_actions = {
