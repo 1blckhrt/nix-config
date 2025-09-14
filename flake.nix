@@ -98,6 +98,19 @@
           }
         ];
       };
+
+      "blckhrt@wsl" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.${system};
+        extraSpecialArgs = {inputs = {inherit self nixpkgs home-manager nixvim commit;};};
+        modules = [
+          ./hosts/wsl/home.nix
+          {
+            home.packages = [
+              commit.packages.${system}.default
+            ];
+          }
+        ];
+      };
     };
 
     # ===== NixOS system configuration =====
