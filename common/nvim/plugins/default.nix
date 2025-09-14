@@ -12,6 +12,7 @@
     ];
 
     plugins = {
+      wakatime.enable = true;
       nvim-tree.enable = true;
       web-devicons.enable = true;
       which-key.enable = true;
