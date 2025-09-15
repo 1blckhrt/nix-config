@@ -12,6 +12,7 @@
     ];
 
     plugins = {
+      smear-cursor.enable = true;
       wakatime.enable = true;
       nvim-tree.enable = true;
       web-devicons.enable = true;
