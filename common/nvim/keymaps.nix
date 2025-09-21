@@ -6,17 +6,6 @@
   ...
 }: {
   programs.nixvim.keymaps = [
-    # transparency
-    {
-      mode = ["n"];
-      key = "<leader>t";
-      action = ":TransparentToggle<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Toggle transparency";
-      };
-    }
     {
       mode = ["n"];
       key = "<C-n>";
@@ -37,7 +26,6 @@
       };
     }
 
-    # easy cmds
     {
       mode = ["n"];
       key = ";";
@@ -47,7 +35,6 @@
       };
     }
 
-    # hop.nvim trigger
     {
       mode = ["n"];
       key = "<CR>";
@@ -58,7 +45,6 @@
       };
     }
 
-    # easy saving
     {
       mode = ["n" "v" "i"];
       key = "<C-s>";
@@ -70,7 +56,6 @@
       };
     }
 
-    # Smart-splits navigation
     {
       mode = ["n"];
       key = "<C-h>";
@@ -112,11 +97,10 @@
       };
     }
 
-    # Open file in vertical split via Telescope
     {
       mode = ["n"];
       key = "<leader>v";
-      action = "<cmd>lua _G.telescope_find_files_vertical()<CR>";
+      action = "<cmd>lua _G.telescope_project_files_vertical()<CR>";
       options = {
         noremap = true;
         silent = true;
@@ -124,11 +108,10 @@
       };
     }
 
-    # Open file in horizontal split via Telescope
     {
       mode = ["n"];
       key = "<leader>h";
-      action = "<cmd>lua _G.telescope_find_files_horizontal()<CR>";
+      action = "<cmd>lua _G.telescope_project_files_horizontal()<CR>";
       options = {
         noremap = true;
         silent = true;
@@ -136,7 +119,6 @@
       };
     }
 
-    # Smart-splits resizing
     {
       mode = ["n"];
       key = "<A-k>";
@@ -178,7 +160,6 @@
       };
     }
 
-    # Buffer management
     {
       mode = ["n"];
       key = "<leader>bn";
@@ -200,7 +181,6 @@
       };
     }
 
-    # markdown preview
     {
       "mode" = ["n"];
       key = "<leader>md";
@@ -210,6 +190,13 @@
         silent = true;
         desc = "Toggle markdown preview";
       };
+    }
+
+    {
+      action = "<C-r>";
+      key = "q";
+      mode = "n";
+      options.desc = "Easier redo.";
     }
   ];
 }

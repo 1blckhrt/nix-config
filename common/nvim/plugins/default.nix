@@ -5,7 +5,7 @@
   lib,
   ...
 }: {
-  imports = [./cmp.nix ./lsp.nix ./lualine.nix ./telescope.nix ./obsidian.nix ./treesitter.nix];
+  imports = [./cmp.nix ./lsp.nix ./lualine.nix ./telescope.nix ./obsidian.nix ./treesitter.nix ./toggleterm.nix];
   programs.nixvim = {
     extraPlugins = [
       pkgs.vimPlugins.lackluster-nvim
@@ -31,10 +31,6 @@
       smart-splits.enable = true;
       markdown-preview.enable = true;
       zen-mode.enable = true;
-      transparent = {
-        enable = true;
-        autoLoad = true;
-      };
     };
   };
 }
