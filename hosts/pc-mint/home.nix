@@ -29,8 +29,6 @@
     ../../common/tmux/default.nix
     ../../common/zoxide/default.nix
     ../../common/zsh/default.nix
-
-    ./services/trayscale/default.nix
   ];
 
   xdg.configFile."environment.d/envvars.conf".text = ''
