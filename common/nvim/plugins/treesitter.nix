@@ -8,13 +8,15 @@
   programs.nixvim.plugins = {
     treesitter = {
       enable = true;
-      ensureInstalled = [
-        "python"
-        "javascript"
-        "typescript"
-        "lua"
-        "rust"
-      ];
+      settings = {
+        ensure_installed = [
+          "python"
+          "javascript"
+          "typescript"
+          "lua"
+          "rust"
+        ];
+      };
     };
   };
 }

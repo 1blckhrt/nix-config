@@ -1,7 +1,6 @@
 _: {
   programs.nixvim.plugins = {
     lsp-format.enable = true;
-    lsp-lines.enable = true;
     lsp = {
       enable = true;
       servers = {
@@ -62,7 +61,7 @@ _: {
 
         formatters_by_ft =
           {
-            python = ["black" "ruff" "pyrefly"];
+            python = ["black" "ruff"];
             lua = ["stylua"];
             nix = ["alejandra"];
           }
