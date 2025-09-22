@@ -12,6 +12,7 @@
     ];
 
     plugins = {
+      harpoon.enable = true;
       smear-cursor.enable = true;
       neoscroll.enable = true;
       wakatime.enable = true;
@@ -29,7 +30,6 @@
       rustaceanvim.enable = true;
       todo-comments.enable = true;
       smart-splits.enable = true;
-      markdown-preview.enable = true;
       zen-mode.enable = true;
     };
   };

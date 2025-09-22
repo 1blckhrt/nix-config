@@ -99,7 +99,7 @@
 
     {
       mode = ["n"];
-      key = "<leader>v";
+      key = "<leader>sv";
       action = "<cmd>lua _G.telescope_project_files_vertical()<CR>";
       options = {
         noremap = true;
@@ -110,7 +110,7 @@
 
     {
       mode = ["n"];
-      key = "<leader>h";
+      key = "<leader>sh";
       action = "<cmd>lua _G.telescope_project_files_horizontal()<CR>";
       options = {
         noremap = true;
@@ -178,17 +178,6 @@
         noremap = true;
         silent = true;
         desc = "Previous buffer";
-      };
-    }
-
-    {
-      "mode" = ["n"];
-      key = "<leader>md";
-      action = ":MarkdownPreviewToggle<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Toggle markdown preview";
       };
     }
 
