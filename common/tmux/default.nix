@@ -40,9 +40,10 @@ in {
       {
         plugin = tmux2k;
         extraConfig = ''
-                    set -g @tmux2k-theme "duo"
+          set -g @tmux2k-theme "duo"
                run-shell "${tmux2k}/share/tmux-plugins/tmux2k/main.sh"
-          set -g @tmux2k-icons-only true
+               set -g @tmux2k-left-plugins "session"
+               set -g @tmux2k-right-plugins "time"
         '';
       }
       {
@@ -73,7 +74,7 @@ in {
         extraConfig = ''
           set -g @continuum-boot 'on'
           set -g @continuum-restore 'on'
-          set -g @continuum-save-interval '0.5'
+          set -g @continuum-save-interval '0.3'
           set -g @continuum-save-bash-history 'on'
           set -g @continuum-save-zsh-history 'on'
           set -g @continuum-save-shell-history 'on'
