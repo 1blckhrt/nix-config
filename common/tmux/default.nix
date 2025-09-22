@@ -78,7 +78,7 @@ in {
         extraConfig = ''
           set -g @continuum-boot 'on'
           set -g @continuum-restore 'on'
-          set -g @continuum-save-interval '0.3'
+          set -g @continuum-save-interval '0.1'
           set -g @continuum-save-bash-history 'on'
           set -g @continuum-save-zsh-history 'on'
           set -g @continuum-save-shell-history 'on'
@@ -117,36 +117,38 @@ in {
       bind-key x kill-pane
       set -g detach-on-destroy off
 
-      bind-key "s" run-shell "sesh connect \"$(
-        sesh list --icons | fzf-tmux -p 80%,70% \
-          --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
-          --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
-          --bind 'tab:down,btab:up' \
-          --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list --icons)' \
-          --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t --icons)' \
-          --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c --icons)' \
-          --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z --icons)' \
-          --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
-          --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' \
-          --preview-window 'right:55%' \
-          --preview 'sesh preview {}'
-      )\""
     '';
   };
 
+  # Create resurrect directory
+  home.file.".local/share/tmux/resurrect/.keep".text = "";
+
   systemd.user.services.tmux = {
     Unit = {
-      Description = "Tmux default session";
-      Documentation = "man:tmux(1)";
+      Description = "Tmux server with continuum auto-restore";
       After = ["graphical-session.target"];
-      Requires = ["graphical-session.target"];
+      Wants = ["graphical-session.target"];
     };
 
     Service = {
       Type = "forking";
-      ExecStart = "${pkgs.tmux}/bin/tmux new-session -d -s default && /home/blckhrt/.tmux/plugins/tmux-resurrect/scripts/restore.sh";
       RemainAfterExit = true;
       Restart = "on-failure";
+      RestartSec = "5s";
+      WorkingDirectory = "%h";
+
+      Environment = [
+        "HOME=%h"
+        "SHELL=${pkgs.zsh}/bin/zsh"
+        "PATH=%h/.nix-profile/bin:${pkgs.tmux}/bin:${pkgs.git}/bin:${pkgs.fzf}/bin:${pkgs.sesh}/bin:/run/current-system/sw/bin"
+      ];
+
+      ExecStart = "${pkgs.tmux}/bin/tmux new-session -d -s main || true";
+      ExecReload = "${pkgs.tmux}/bin/tmux source-file ~/.config/tmux/tmux.conf";
+      ExecStop = "${pkgs.tmux}/bin/tmux kill-server";
+
+      KillMode = "none";
+      TimeoutStopSec = "30s";
     };
 
     Install = {

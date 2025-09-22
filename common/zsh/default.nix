@@ -10,7 +10,6 @@
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-
     shellAliases = {
       ls = "lsd";
       h = "history";
@@ -26,21 +25,15 @@
       "..." = "cd ../..";
       "...." = "cd ../../..";
     };
-
     initContent = ''
       # Load system-manager PATH
       if [ -f /etc/profile.d/system-manager-path.sh ]; then
         source /etc/profile.d/system-manager-path.sh
       fi
 
-      # tmux-sessionizer
-      bindkey -s '^f' "$HOME/bin/tmux-sessionizer\n"
-
-      # PATH exports
       export PATH=/home/blckhrt/.opencode/bin:$PATH
       export PATH="$HOME/.cargo/bin:$PATH"
 
-      # fnm (Fast Node Manager)
       FNM_PATH="$HOME/.local/share/fnm"
       if [ -d "$FNM_PATH" ]; then
         export PATH="$FNM_PATH:$PATH"
@@ -50,7 +43,6 @@
       export TERM=xterm-256color
       eval "$(direnv hook zsh)"
 
-      # git push helper
       gpush() {
         git add .
         git status
@@ -66,31 +58,32 @@
         git push
       }
 
-      # sesh integration with fzf
-      function sesh-sessions() {
-        {
-          exec </dev/tty
-          exec <&1
-          local session
-          session=$(sesh list -t -c | fzf --height 40% \
-                                          --reverse \
-                                          --border-label ' sesh ' \
-                                          --border \
-                                          --prompt '⚡  ')
-          zle reset-prompt > /dev/null 2>&1 || true
-          [[ -z "$session" ]] && return
-          sesh connect $session
-        }
+      tmux-session() {
+        local session sessions fzf_output
+
+        sessions=$(tmux list-sessions -F "#{session_name}" 2>/dev/null || true)
+
+        fzf_output=$(echo -e "$sessions" | fzf \
+          --height 40% \
+          --border \
+          --inline-info \
+          --prompt='Tmux session: ' \
+          --print-query)
+
+        [ -z "$fzf_output" ] && return 1
+
+        session=$(echo "$fzf_output" | tail -n1)
+
+        if ! tmux has-session -t "$session" 2>/dev/null; then
+          tmux new-session -d -s "$session"
+        fi
+
+        if [[ -n "$TMUX" ]]; then
+          tmux switch-client -t "$session"
+        else
+          tmux attach -t "$session"
+        fi
       }
-
-      zle -N sesh-sessions
-      bindkey -M emacs '\es' sesh-sessions
-      bindkey -M vicmd '\es' sesh-sessions
-      bindkey -M viins '\es' sesh-sessions
-
-      # theme and startup clear
-      wallust theme Mono-White
-      clear
     '';
   };
 }
