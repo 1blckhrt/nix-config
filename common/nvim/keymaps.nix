@@ -198,5 +198,71 @@
       mode = "n";
       options.desc = "Easier redo.";
     }
+
+    # Normal mode
+    {
+      mode = "n";
+      key = "<Up>";
+      action = "<Nop>";
+    }
+    {
+      mode = "n";
+      key = "<Down>";
+      action = "<Nop>";
+    }
+    {
+      mode = "n";
+      key = "<Left>";
+      action = "<Nop>";
+    }
+    {
+      mode = "n";
+      key = "<Right>";
+      action = "<Nop>";
+    }
+
+    # Insert mode
+    {
+      mode = "i";
+      key = "<Up>";
+      action = "<Nop>";
+    }
+    {
+      mode = "i";
+      key = "<Down>";
+      action = "<Nop>";
+    }
+    {
+      mode = "i";
+      key = "<Left>";
+      action = "<Nop>";
+    }
+    {
+      mode = "i";
+      key = "<Right>";
+      action = "<Nop>";
+    }
+
+    # Visual mode
+    {
+      mode = "v";
+      key = "<Up>";
+      action = "<Nop>";
+    }
+    {
+      mode = "v";
+      key = "<Down>";
+      action = "<Nop>";
+    }
+    {
+      mode = "v";
+      key = "<Left>";
+      action = "<Nop>";
+    }
+    {
+      mode = "v";
+      key = "<Right>";
+      action = "<Nop>";
+    }
   ];
 }

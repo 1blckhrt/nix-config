@@ -26,6 +26,7 @@
     unzip
     ntfy
     inputs.commit.packages.x86_64-linux.default
+    sesh
   ];
 
   fonts.fontconfig.enable = true;

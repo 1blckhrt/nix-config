@@ -10,6 +10,7 @@
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+
     shellAliases = {
       ls = "lsd";
       h = "history";
@@ -25,52 +26,71 @@
       "..." = "cd ../..";
       "...." = "cd ../../..";
     };
+
     initContent = ''
-      		# Load system-manager PATH
+      # Load system-manager PATH
       if [ -f /etc/profile.d/system-manager-path.sh ]; then
-          source /etc/profile.d/system-manager-path.sh
+        source /etc/profile.d/system-manager-path.sh
       fi
 
-                  bindkey -s '^f' "$HOME/bin/tmux-sessionizer\n"
-            export PATH=/home/blckhrt/.opencode/bin:$PATH
-              export PATH="$HOME/.cargo/bin:$PATH"
+      # tmux-sessionizer
+      bindkey -s '^f' "$HOME/bin/tmux-sessionizer\n"
 
-                  # fnm
-                  FNM_PATH="$HOME/.local/share/fnm"
-                  if [ -d "$FNM_PATH" ]; then
-                    export PATH="$FNM_PATH:$PATH"
-                    eval "$(fnm env)"
-                  fi
+      # PATH exports
+      export PATH=/home/blckhrt/.opencode/bin:$PATH
+      export PATH="$HOME/.cargo/bin:$PATH"
 
-                  export TERM=xterm-256color
-                  eval "$(direnv hook zsh)"
+      # fnm (Fast Node Manager)
+      FNM_PATH="$HOME/.local/share/fnm"
+      if [ -d "$FNM_PATH" ]; then
+        export PATH="$FNM_PATH:$PATH"
+        eval "$(fnm env)"
+      fi
 
-                  gpush() {
-                    git add .
-                    git status
-                    echo -n "Continue with commit and push? [y/N]: "
-                    read -r reply
-                    if [[ "$reply" != "y" && "$reply" != "Y" ]]; then
-                      echo "Aborted."
-                      return 1
-                    fi
-                    echo -n "Enter commit message: "
-                    read -r message
-                    git commit -am "$message"
-                    git push
-                  }
+      export TERM=xterm-256color
+      eval "$(direnv hook zsh)"
 
-                  tmux-session() {
-                    if [ -z "$1" ]; then
-                    echo "Usage: tmux-session <session-name>"
-                      return 1
-                    fi
-                    tmux new-session -d -s "$1"
-                    tmux attach -t "$1"
-                  }
+      # git push helper
+      gpush() {
+        git add .
+        git status
+        echo -n "Continue with commit and push? [y/N]: "
+        read -r reply
+        if [[ "$reply" != "y" && "$reply" != "Y" ]]; then
+          echo "Aborted."
+          return 1
+        fi
+        echo -n "Enter commit message: "
+        read -r message
+        git commit -am "$message"
+        git push
+      }
 
-      			wallust theme Mono-White
-      			clear
+      # sesh integration with fzf
+      function sesh-sessions() {
+        {
+          exec </dev/tty
+          exec <&1
+          local session
+          session=$(sesh list -t -c | fzf --height 40% \
+                                          --reverse \
+                                          --border-label ' sesh ' \
+                                          --border \
+                                          --prompt '⚡  ')
+          zle reset-prompt > /dev/null 2>&1 || true
+          [[ -z "$session" ]] && return
+          sesh connect $session
+        }
+      }
+
+      zle -N sesh-sessions
+      bindkey -M emacs '\es' sesh-sessions
+      bindkey -M vicmd '\es' sesh-sessions
+      bindkey -M viins '\es' sesh-sessions
+
+      # theme and startup clear
+      wallust theme Mono-White
+      clear
     '';
   };
 }

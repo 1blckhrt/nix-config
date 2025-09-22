@@ -14,19 +14,18 @@
       sha256 = "6dx81ItJodYUoWtlbGqoc5MPRCqy2PLgqIJK9lrAJ30=";
     };
   };
-  tmux-which-key =
-    pkgs.tmuxPlugins.mkTmuxPlugin
-    {
-      pluginName = "tmux-which-key";
-      version = "2024-01-10";
-      src = pkgs.fetchFromGitHub {
-        owner = "alexwforsythe";
-        repo = "tmux-which-key";
-        rev = "master";
-        sha256 = "1h830h9rz4d5pdr3ymmjjwaxg6sh9vi3fpsn0bh10yy0gaf6xcaz";
-      };
-      rtpFilePath = "plugin.sh.tmux";
+
+  tmux-which-key = pkgs.tmuxPlugins.mkTmuxPlugin {
+    pluginName = "tmux-which-key";
+    version = "2024-01-10";
+    src = pkgs.fetchFromGitHub {
+      owner = "alexwforsythe";
+      repo = "tmux-which-key";
+      rev = "master";
+      sha256 = "1h830h9rz4d5pdr3ymmjjwaxg6sh9vi3fpsn0bh10yy0gaf6xcaz";
     };
+    rtpFilePath = "plugin.sh.tmux";
+  };
 
   whichKeyScript = "${pkgs.tmuxPlugins.tmux-which-key}/share/tmux-plugins/tmux-which-key/which-key.sh";
 in {
@@ -41,11 +40,12 @@ in {
         plugin = tmux2k;
         extraConfig = ''
           set -g @tmux2k-theme "duo"
-               run-shell "${tmux2k}/share/tmux-plugins/tmux2k/main.sh"
-               set -g @tmux2k-left-plugins "session"
-               set -g @tmux2k-right-plugins "time"
+          run-shell "${tmux2k}/share/tmux-plugins/tmux2k/main.sh"
+          set -g @tmux2k-left-plugins "session"
+          set -g @tmux2k-right-plugins "time"
         '';
       }
+
       {
         plugin = tmux-which-key;
         extraConfig = ''
@@ -53,6 +53,7 @@ in {
           set -g @tmux-which-key-disable-autobuild 1
         '';
       }
+
       {
         plugin = resurrect;
         extraConfig = ''
@@ -68,7 +69,10 @@ in {
           set -g @resurrect-capture-pane-contents 'on'
         '';
       }
+
       sensible
+      tmux-fzf
+
       {
         plugin = continuum;
         extraConfig = ''
@@ -83,36 +87,53 @@ in {
     ];
 
     extraConfig = ''
-          unbind C-b
-          bind C-x send-prefix
-          set -sg escape-time 0
-          set -g history-limit 1000000
+      unbind C-b
+      bind C-x send-prefix
+      set -sg escape-time 0
+      set -g history-limit 1000000
 
-          is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
-          bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h' 'select-pane -L'
-          bind-key -n 'C-j' if-shell "$is_vim" 'send-keys C-j' 'select-pane -D'
-          bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k' 'select-pane -U'
-          bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l' 'select-pane -R'
+      is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
+      bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h' 'select-pane -L'
+      bind-key -n 'C-j' if-shell "$is_vim" 'send-keys C-j' 'select-pane -D'
+      bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k' 'select-pane -U'
+      bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l' 'select-pane -R'
 
-          set -g @which-key-popup-time 0.01
+      set -g @which-key-popup-time 0.01
 
-          setw -g mode-keys vi
-          bind d detach
-          bind * list-clients
-          bind | split-window -h -c "#{pane_current_path}"
-          bind - split-window -v -c "#{pane_current_path}"
-          bind h select-pane -L
-          bind j select-pane -D
-          bind k select-pane -U
-          bind l select-pane -R
+      setw -g mode-keys vi
+      bind d detach
+      bind * list-clients
+      bind | split-window -h -c "#{pane_current_path}"
+      bind - split-window -v -c "#{pane_current_path}"
+      bind h select-pane -L
+      bind j select-pane -D
+      bind k select-pane -U
+      bind l select-pane -R
 
-      bind-key Space run-shell "${whichKeyScript}";
+      bind-key Space run-shell "${whichKeyScript}"
 
-          set-option -g status-position top
+      set-option -g status-position top
+
+      bind-key x kill-pane
+      set -g detach-on-destroy off
+
+      bind-key "s" run-shell "sesh connect \"$(
+        sesh list --icons | fzf-tmux -p 80%,70% \
+          --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
+          --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
+          --bind 'tab:down,btab:up' \
+          --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list --icons)' \
+          --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t --icons)' \
+          --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c --icons)' \
+          --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z --icons)' \
+          --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
+          --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' \
+          --preview-window 'right:55%' \
+          --preview 'sesh preview {}'
+      )\""
     '';
   };
 
-  # Fixed systemd service for tmux with resurrection support
   systemd.user.services.tmux = {
     Unit = {
       Description = "Tmux default session";
