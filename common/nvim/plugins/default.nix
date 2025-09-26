@@ -5,7 +5,7 @@
   lib,
   ...
 }: {
-  imports = [./cmp.nix ./lsp.nix ./lualine.nix ./telescope.nix ./obsidian.nix ./treesitter.nix ./toggleterm.nix];
+  imports = [./cmp.nix ./lsp.nix ./lualine.nix ./telescope.nix ./treesitter.nix ./toggleterm.nix];
   programs.nixvim = {
     extraPlugins = [
       pkgs.vimPlugins.lackluster-nvim
