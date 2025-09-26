@@ -5,5 +5,5 @@
   lib,
   ...
 }: {
-  imports = [./new-note.nix ./note-commit.nix];
+  imports = [./note-commit.nix];
 }
