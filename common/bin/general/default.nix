@@ -5,5 +5,5 @@
   lib,
   ...
 }: {
-  imports = [./update-reminder.nix ./pacman-utils.nix];
+  imports = [./update-reminder.nix];
 }

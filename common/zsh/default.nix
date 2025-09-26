@@ -24,6 +24,8 @@
       ".." = "cd ..";
       "..." = "cd ../..";
       "...." = "cd ../../..";
+      upgrade = "sudo pacman -Syu && ~/bin/update-reminder cron";
+      install = "sudo pacman -S";
     };
     initContent = ''
       # Load system-manager PATH
