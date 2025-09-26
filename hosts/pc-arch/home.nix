@@ -21,7 +21,6 @@
     ../../common/atuin/default.nix
     ../../common/bin/default.nix
     ../../common/git/default.nix
-    ../../common/hyprland/default.nix
     ../../common/misc/default.nix
     ../../common/nvim/default.nix
     ../../common/ssh/default.nix

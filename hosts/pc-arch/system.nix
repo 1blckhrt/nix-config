@@ -12,8 +12,4 @@
 
   system-graphics.enable = true;
   system-graphics.enable32Bit = true;
-
-  systemd.services.tailscale = {
-    enable = true;
-  };
 }

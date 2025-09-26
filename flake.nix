@@ -63,7 +63,7 @@
 
       pc = system-manager.lib.makeSystemConfig {
         modules = [
-          ./hosts/pc-mint/system.nix
+          ./hosts/pc-arch/system.nix
           nix-system-graphics.systemModules.default
         ];
       };
@@ -89,7 +89,7 @@
         pkgs = nixpkgs.legacyPackages.${system};
         extraSpecialArgs = {inputs = {inherit self nixpkgs nixpkgs-unstable home-manager system-manager nixvim nix-system-graphics commit;};};
         modules = [
-          ./hosts/pc-mint/home.nix
+          ./hosts/pc-arch/home.nix
           {
             home.packages = [
               system-manager.packages.${system}.default
