@@ -16,7 +16,7 @@
   home.stateVersion = "25.05"; # DO NOT TOUCH
 
   imports = [
-    inputs.nixvim.homeManagerModules.nixvim
+    inputs.nixvim.homeModules.nixvim
     ../../common/atuin/default.nix
     ../../common/bin/default.nix
     ../../common/git/default.nix
