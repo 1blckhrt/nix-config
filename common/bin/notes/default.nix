@@ -1,9 +1,3 @@
-{
-  config,
-  pkgs,
-  inputs,
-  lib,
-  ...
-}: {
+_: {
   imports = [./note-commit.nix];
 }
