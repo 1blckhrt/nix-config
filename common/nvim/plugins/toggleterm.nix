@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  lib,
-  ...
-}: {
+_: {
   programs.nixvim = {
     plugins.toggleterm = {
       enable = true;
@@ -23,7 +17,7 @@
     keymaps = [
       {
         action = ":ToggleTerm direction=float<CR>";
-        key = "<leader>t";
+        key = "<C-t>";
         mode = "n";
         options.desc = "Open terminal";
       }

@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  lib,
-  ...
-}: {
+_: {
   home.file."bin/note-commit" = {
     text = ''
         #!/bin/zsh
@@ -17,7 +11,7 @@
         COMMIT_MSG="vault backup: ''${DATE} - ''${HOST}"
 
         # Change into vault directory
-        VAULT_DIR="/home/blckhrt/Documents/Notes"
+        VAULT_DIR="/home/blckhrt/doc"
         cd "''${VAULT_DIR}" || exit 1
 
         # Sync first

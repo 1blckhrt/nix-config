@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  lib,
-  ...
-}: {
+_: {
   home.file."bin/tmux-sessionizer" = {
     text = ''
       #!/usr/bin/env bash

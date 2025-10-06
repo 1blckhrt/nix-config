@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  lib,
-  ...
-}: {
+_: {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -24,17 +18,12 @@
       ".." = "cd ..";
       "..." = "cd ../..";
       "...." = "cd ../../..";
-      upgrade = "sudo pacman -Syu && ~/bin/update-reminder cron";
-      install = "sudo pacman -S";
     };
     initContent = ''
       # Load system-manager PATH
       if [ -f /etc/profile.d/system-manager-path.sh ]; then
         source /etc/profile.d/system-manager-path.sh
       fi
-
-      export PATH=/home/blckhrt/.opencode/bin:$PATH
-      export PATH="$HOME/.cargo/bin:$PATH"
 
       FNM_PATH="$HOME/.local/share/fnm"
       if [ -d "$FNM_PATH" ]; then

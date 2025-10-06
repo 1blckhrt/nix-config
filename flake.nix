@@ -1,5 +1,5 @@
 {
-  description = "NixOS configuration for 1blckhrt";
+  description = "NixOS & Standalone Nix configurations for 1blckhrt";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
@@ -47,7 +47,7 @@
     pre-commit-hooks,
     commit,
     ...
-  } @ inputs: let
+  }: let
     system = "x86_64-linux";
     lib = nixpkgs.lib;
     forAllSystems = lib.genAttrs [system];
@@ -73,7 +73,20 @@
     homeConfigurations = {
       "blckhrt@laptop" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
-        extraSpecialArgs = {inputs = {inherit self nixpkgs nixpkgs-unstable home-manager system-manager nixvim nix-system-graphics commit;};};
+        extraSpecialArgs = {
+          inputs = {
+            inherit
+              self
+              nixpkgs
+              nixpkgs-unstable
+              home-manager
+              system-manager
+              nixvim
+              nix-system-graphics
+              commit
+              ;
+          };
+        };
         modules = [
           ./hosts/laptop/home.nix
           {
@@ -87,7 +100,20 @@
 
       "blckhrt@pc" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
-        extraSpecialArgs = {inputs = {inherit self nixpkgs nixpkgs-unstable home-manager system-manager nixvim nix-system-graphics commit;};};
+        extraSpecialArgs = {
+          inputs = {
+            inherit
+              self
+              nixpkgs
+              nixpkgs-unstable
+              home-manager
+              system-manager
+              nixvim
+              nix-system-graphics
+              commit
+              ;
+          };
+        };
         modules = [
           ./hosts/pc-arch/home.nix
           {
@@ -101,7 +127,11 @@
 
       "blckhrt@wsl" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
-        extraSpecialArgs = {inputs = {inherit self nixpkgs home-manager nixvim commit;};};
+        extraSpecialArgs = {
+          inputs = {
+            inherit self nixpkgs home-manager nixvim commit;
+          };
+        };
         modules = [
           ./hosts/wsl/home.nix
           {
@@ -113,39 +143,8 @@
       };
     };
 
-    # ===== NixOS system configuration =====
-    nixosConfigurations = {
-      rustbucket = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {inherit inputs;};
-
-        modules = [
-          ./hosts/rustbucket/configuration.nix
-          home-manager.nixosModules.home-manager
-
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = {inherit inputs;};
-
-              users.blckhrt.imports = [./hosts/rustbucket/home/home.nix];
-            };
-
-            # unstable tailscale, stable doesn't build
-            environment.systemPackages = [
-              (import nixpkgs-unstable {inherit system;}).tailscale
-            ];
-            services.tailscale.enable = true;
-          }
-        ];
-      };
-    };
-
     # ===== Git hooks / formatting / linting =====
-    checks = forAllSystems (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
+    checks = forAllSystems (system: {
       pre-commit-check = pre-commit-hooks.lib.${system}.run {
         src = ./.;
         hooks = {
@@ -161,13 +160,17 @@
     in {
       default = pkgs.mkShell {
         inherit (check) shellHook;
-        buildInputs = check.enabledPackages ++ [pkgs.alejandra pkgs.convco];
+        buildInputs =
+          check.enabledPackages
+          ++ [
+            pkgs.alejandra
+            pkgs.convco
+          ];
       };
     });
 
-    formatter = forAllSystems (
-      system:
-        nixpkgs.legacyPackages.${system}.alejandra
-    );
+    formatter =
+      forAllSystems (system:
+        nixpkgs.legacyPackages.${system}.alejandra);
   };
 }

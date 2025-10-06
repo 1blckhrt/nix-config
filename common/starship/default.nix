@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
+_: let
   starshipFormat = "$os @$hostname $directory $character";
 in {
   programs.starship = {

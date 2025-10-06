@@ -1,7 +1,4 @@
 {
-  config,
-  lib,
-  pkgs,
   system-graphics,
   system-manager,
   ...

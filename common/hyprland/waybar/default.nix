@@ -1,10 +1,4 @@
-{
-  pkgs,
-  lib,
-  config,
-  inputs,
-  ...
-}: let
+{pkgs, ...}: let
   custom = {
     font = "JetBrainsMono Nerd Font";
     font_size = "15px";
@@ -36,7 +30,7 @@ in {
     After = ["graphical-session.target" "dbus.service"];
   };
 
-  programs.waybar.settings = with custom; [
+  programs.waybar.settings = [
     {
       position = "top";
       layer = "top";
@@ -79,7 +73,7 @@ in {
 
       "hyprland/window" = {
         format = "{}";
-        max-length = 60; # optional: truncate very long titles
+        max-length = 60;
         tooltip = false;
         expand = true; # <--- makes it stretch to center properly
       };

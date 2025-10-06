@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  lib,
-  ...
-}: {
+_: {
   home.file."bin/cheat-sheet" = {
     text = ''
       		#!/bin/bash

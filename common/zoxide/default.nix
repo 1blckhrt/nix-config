@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  lib,
-  ...
-}: {
+_: {
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;

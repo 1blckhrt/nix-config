@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   programs.nixvim = {
     clipboard = {
       register = "unnamedplus";

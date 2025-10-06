@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
+{pkgs, ...}: let
   tmux2k = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "tmux2k";
     version = "unstable-latest";

@@ -1,8 +1,6 @@
 {
-  config,
   pkgs,
   inputs,
-  lib,
   ...
 }: {
   home.packages = with pkgs; [
@@ -21,6 +19,8 @@
     gcc
     uv
     alejandra
+    nil
+    nixfmt
     direnv
     zip
     unzip

@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [./hyprpaper/default.nix ./waybar/default.nix];
   home.packages = with pkgs; [
     wofi

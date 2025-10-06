@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [./cmp.nix ./lsp.nix ./lualine.nix ./telescope.nix ./treesitter.nix ./toggleterm.nix];
   programs.nixvim = {
     extraPlugins = [
