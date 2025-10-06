@@ -4,7 +4,7 @@ _: {
     settings = {
       options = {
         icons_enabled = true;
-        theme = "lackluster";
+        theme = "nord";
         globalstatus = true;
         component_separators = {
           left = "";
@@ -26,10 +26,10 @@ _: {
             options = {
               sources = ["nvim_diagnostic"];
               symbols = {
-                error = " ";
-                warn = " ";
-                info = " ";
-                hint = " ";
+                error = "  ";
+                warn = "  ";
+                info = "  ";
+                hint = "  ";
               };
             };
           }

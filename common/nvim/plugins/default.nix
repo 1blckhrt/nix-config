@@ -2,13 +2,11 @@
   imports = [./cmp.nix ./lsp.nix ./lualine.nix ./telescope.nix ./treesitter.nix ./toggleterm.nix];
   programs.nixvim = {
     extraPlugins = [
-      pkgs.vimPlugins.lackluster-nvim
+      pkgs.vimPlugins.nord-nvim
     ];
 
     plugins = {
       harpoon.enable = true;
-      smear-cursor.enable = true;
-      neoscroll.enable = true;
       wakatime.enable = true;
       nvim-tree.enable = true;
       web-devicons.enable = true;
@@ -21,10 +19,7 @@
       barbecue.enable = true;
       noice.enable = true;
       tmux-navigator.enable = true;
-      rustaceanvim.enable = true;
-      todo-comments.enable = true;
       smart-splits.enable = true;
-      zen-mode.enable = true;
     };
   };
 }

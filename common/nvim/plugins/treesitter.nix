@@ -7,8 +7,6 @@ _: {
           "python"
           "javascript"
           "typescript"
-          "lua"
-          "rust"
         ];
       };
     };

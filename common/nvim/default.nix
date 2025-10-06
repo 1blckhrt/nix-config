@@ -16,7 +16,7 @@ _: {
 
     extraConfigLua = ''
       -- Colorscheme
-      vim.cmd("colorscheme lackluster")
+      vim.cmd("colorscheme nord")
 
       -- Telescope setup
       local builtin = require("telescope.builtin")
