@@ -5,47 +5,12 @@
 }: let
   mod = config.xsession.windowManager.i3.config.modifier;
 in {
-  imports = [./dunst/default.nix ./picom/default.nix ./packages.nix ./monitors.nix];
+  imports = [./dunst/default.nix ./polybar/default.nix ./rofi/default.nix ./picom/default.nix ./packages.nix ./monitors.nix];
   xsession = {
     enable = true;
     windowManager.i3 = {
       enable = true;
       config = {
-        bars = [
-          {
-            position = "top";
-            statusCommand = "${pkgs.i3status}/bin/i3status";
-            trayOutput = "primary";
-
-            colors = {
-              background = "#2E3440"; # nord0
-              statusline = "#ECEFF4"; # nord6
-              separator = "#4C566A"; # nord3
-
-              focusedWorkspace = {
-                border = "#81A1C1"; # nord9
-                background = "#3B4252"; # nord1
-                text = "#ECEFF4"; # nord6
-              };
-              activeWorkspace = {
-                border = "#4C566A"; # nord3
-                background = "#434C5E"; # nord2
-                text = "#D8DEE9"; # nord4
-              };
-              inactiveWorkspace = {
-                border = "#3B4252"; # nord1
-                background = "#2E3440"; # nord0
-                text = "#D8DEE9"; # nord4
-              };
-              urgentWorkspace = {
-                border = "#BF616A"; # nord11
-                background = "#BF616A"; # nord11
-                text = "#ECEFF4"; # nord6
-              };
-            };
-          }
-        ];
-
         modifier = "Mod4";
 
         fonts = {
@@ -206,11 +171,6 @@ in {
           }
           {
             command = "systemctl --user restart dunst.service";
-            always = true;
-            notification = true;
-          }
-          {
-            command = "systemctl --user restart trayscale.service";
             always = true;
             notification = true;
           }
