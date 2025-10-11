@@ -20,6 +20,7 @@
     uv
     alejandra
     nil
+    nixd
     nixfmt
     direnv
     zip

@@ -11,11 +11,19 @@
     xdg-desktop-portal
     xdg-desktop-portal-gtk
     python313Packages.i3ipc
+    snixembed
     font-awesome
     pavucontrol
     playerctl
     nerd-fonts.jetbrains-mono
     autotiling
     flameshot
+    feh
+    pulsemixer
+    coreutils
+    gawk
+    i3blocks
   ];
+
+  services.flameshot.enable = true;
 }

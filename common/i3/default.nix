@@ -5,13 +5,38 @@
 }: let
   mod = config.xsession.windowManager.i3.config.modifier;
 in {
-  imports = [./dunst/default.nix ./polybar/default.nix ./rofi/default.nix ./picom/default.nix ./packages.nix ./monitors.nix];
+  imports = [
+    ./dunst/default.nix
+    ./i3blocks/default.nix
+    ./rofi/default.nix
+    ./picom/default.nix
+    ./packages.nix
+    ./monitors.nix
+  ];
+
+  home.file.".xinitrc" = {
+    text = ''
+      #!/bin/sh
+
+      # Source home-manager environment
+      [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ] && \
+        . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+
+      # Start i3
+      exec /home/blckhrt/.nix-profile/bin/i3
+    '';
+    executable = true;
+  };
+
   xsession = {
     enable = true;
+
     windowManager.i3 = {
       enable = true;
+
       config = {
         modifier = "Mod4";
+        bars = [];
 
         fonts = {
           names = ["JetBrainsMono NF"];
@@ -21,13 +46,13 @@ in {
         keybindings = {
           "${mod}+Return" = "exec --no-startup-id ${pkgs.alacritty}/bin/alacritty";
           "${mod}+q" = "kill";
-          "${mod}+d" = "exec ${pkgs.rofi}/bin/rofi -show drun";
-
+          "${mod}+d" = "exec ${pkgs.rofi}/bin/rofi -show drun -cache-clear";
+          "${mod}+Shift+r" = "exec ${pkgs.i3}/bin/i3-msg restart";
+          "${mod}+Shift+e" = "exec ${pkgs.i3}/bin/i3-nagbar -t warning -m 'Do you really want to exit i3?' -B 'Yes, exit' 'i3-msg exit'";
           "${mod}+Left" = "focus left";
           "${mod}+Down" = "focus down";
           "${mod}+Up" = "focus up";
           "${mod}+Right" = "focus right";
-
           "${mod}+f" = "fullscreen toggle";
           "${mod}+Shift+space" = "floating toggle";
           "${mod}+space" = "focus mode_toggle";
@@ -55,16 +80,12 @@ in {
           "${mod}+Shift+9" = "move container to workspace number 9";
           "${mod}+Shift+0" = "move container to workspace number 10";
 
-          "${mod}+Shift+c" = "reload";
-          "${mod}+Shift+r" = "exec i3-msg restart; notify-send 'i3 has been refreshed.'";
-          "${mod}+Shift+e" = "exec i3-nagbar -t warning -m 'Do you really want to exit i3?' -B 'Yes, exit' 'i3-msg exit'";
-
           "XF86AudioRaiseVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ +10%";
           "XF86AudioLowerVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ -10%";
           "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
           "XF86AudioMicMute" = "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
 
-          "Print" = "exec flameshot";
+          "Print" = "exec flameshot gui";
 
           "${mod}+Tab" = "workspace next";
           "${mod}+Shift+Tab" = "workspace prev";
@@ -80,7 +101,9 @@ in {
           ];
         };
 
-        floating = {modifier = "Mod4";};
+        floating = {
+          modifier = "Mod4";
+        };
 
         gaps = {
           inner = 12;
@@ -88,24 +111,7 @@ in {
         };
 
         colors = {
-          # Nord palette reference:
-          # nord0: #2E3440 (background)
-          # nord1: #3B4252
-          # nord2: #434C5E
-          # nord3: #4C566A
-          # nord4: #D8DEE9 (text)
-          # nord5: #E5E9F0
-          # nord6: #ECEFF4
-          # nord7: #8FBCBB
-          # nord8: #88C0D0
-          # nord9: #81A1C1
-          # nord10: #5E81AC
-          # nord11: #BF616A
-          # nord12: #D08770
-          # nord13: #EBCB8B
-          # nord14: #A3BE8C
-          # nord15: #B48EAD
-
+          # Nord color palette reference
           focused = {
             border = "#81A1C1"; # nord9
             background = "#3B4252"; # nord1
@@ -113,6 +119,7 @@ in {
             indicator = "#88C0D0"; # nord8
             childBorder = "#81A1C1"; # nord9
           };
+
           focusedInactive = {
             border = "#4C566A"; # nord3
             background = "#3B4252"; # nord1
@@ -120,6 +127,7 @@ in {
             indicator = "#4C566A"; # nord3
             childBorder = "#4C566A"; # nord3
           };
+
           unfocused = {
             border = "#3B4252"; # nord1
             background = "#2E3440"; # nord0
@@ -127,6 +135,7 @@ in {
             indicator = "#3B4252"; # nord1
             childBorder = "#3B4252"; # nord1
           };
+
           urgent = {
             border = "#BF616A"; # nord11
             background = "#3B4252"; # nord1
@@ -134,6 +143,7 @@ in {
             indicator = "#BF616A"; # nord11
             childBorder = "#BF616A"; # nord11
           };
+
           placeholder = {
             border = "#2E3440"; # nord0
             background = "#2E3440"; # nord0
@@ -165,6 +175,11 @@ in {
             notification = false;
           }
           {
+            command = "${pkgs.feh}/bin/feh --bg-scale /home/blckhrt/nix-config/common/i3/nord_valley.png";
+            always = true;
+            notification = false;
+          }
+          {
             command = "systemctl --user restart xdg-desktop-portal.service";
             always = true;
             notification = false;
@@ -179,12 +194,43 @@ in {
             always = true;
             notification = true;
           }
+          {
+            command = "nm-applet";
+            always = true;
+            notification = false;
+          }
+          {
+            command = "xclip";
+            always = true;
+            notification = false;
+          }
+          {
+            command = "systemctl --user restart flameshot.service";
+            always = true;
+            notification = false;
+          }
         ];
       };
 
       extraConfig = ''
-        tiling_drag modifier titlebar
         exec_always --no-startup-id ${pkgs.autotiling}/bin/autotiling
+
+        bar {
+          position top
+          status_command i3blocks
+          tray_output primary
+          tray_padding 4
+
+          colors {
+            background       #2e3440
+            statusline       #d8dee9
+
+            focused_workspace   #2e3440 #2e3440 #81A1C1
+            active_workspace    #2e3440 #2e3440 #8FBCBB
+            inactive_workspace  #2e3440 #2e3440 #4c566a
+            urgent_workspace    #2e3440 #2e3440 #BF616A
+          }
+        }
       '';
     };
   };

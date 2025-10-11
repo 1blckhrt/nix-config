@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  config,
+  ...
+}: {
   home.username = "blckhrt";
   home.homeDirectory = "/home/blckhrt";
 
