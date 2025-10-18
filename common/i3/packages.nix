@@ -23,6 +23,7 @@
     coreutils
     gawk
     i3blocks
+    xclip
   ];
 
   services.flameshot.enable = true;

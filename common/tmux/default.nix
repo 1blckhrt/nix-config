@@ -1,21 +1,36 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: let
+  tmux-nerd-font-window-name = pkgs.tmuxPlugins.mkTmuxPlugin {
+    pluginName = "tmux-nerd-font-window-name.tmux";
+    version = "unstable-2023-08-22";
+    rtpFilePath = "tmux-nerd-font-window-name.tmux";
+    src = pkgs.fetchFromGitHub {
+      owner = "joshmedeski";
+      repo = "tmux-nerd-font-window-name";
+      rev = "c2e62d394a290a32e1394a694581791b0e344f9a";
+      sha256 = "stkhp95iLNxPy74Lo2SNes5j1AA4q/rgl+eLiZS81uA=";
+    };
+  };
+in {
   programs.tmux = {
     enable = true;
-    terminal = "xterm-256color";
+    terminal = "tmux-256color";
     baseIndex = 1;
     prefix = "C-x";
-
     plugins = with pkgs.tmuxPlugins; [
+      {
+        plugin = nord;
+      }
       vim-tmux-navigator
       tmux-which-key
-      resurrect
-      continuum
     ];
-
     extraConfig = ''
-      ##### Shell and Terminal #####
-      set -g default-shell ${pkgs.zsh}/bin/zsh
-      set -ga terminal-overrides ",*256col*:Tc"
+      ##### Colors & Terminal #####
+      set -ga terminal-overrides ",xterm-256color:Tc"
+      set -as terminal-features ",xterm-256color:RGB"
 
       ##### General #####
       set -g set-clipboard on
@@ -28,9 +43,6 @@
       set -g status-position top
 
       ##### Window / Pane Management #####
-      set -g base-index 1
-      set -g pane-base-index 1
-      set -g renumber-windows on
       unbind %
       bind | split-window -h -c "#{pane_current_path}"
       unbind '"'
@@ -49,30 +61,26 @@
       set -g @tmux-which-key-xdg-enable 1
       set -g @tmux-which-key-disable-autobuild 1
 
-      ##### Nord Theme #####
-      set -g status-left-length 200
-      set -g status-right-length 200
-      set -g status-left "#[fg=#A3BE8C,bold,bg=default] #S #[fg=#D8DEE9,nobold,bg=default] | "
-      set -g status-right " %Y-%m-%d  %I:%M %p"
-      set -g status-justify left
-      set -g status-style "bg=default"
-      set -g window-status-format "#[fg=#D8DEE9,bg=default] #I:#W"
-      set -g window-status-current-format "#[fg=#88C0D0,bold,bg=default]  #[underscore]#I:#W"
-      set -g message-style "bg=default,fg=#D8DEE9"
-      set -g mode-style "bg=#81A1C1,fg=#3B4252"
-      set -g pane-active-border-style "fg=#abb2bf,bg=default"
-      set -g pane-border-style "fg=brightblack,bg=default"
-
-      ##### resurrect #####
-      set -g @resurrect-dir ~/.local/share/tmux/resurrect
-      set -g @resurrect-capture-pane-contents 'on'
-      set -g @resurrect-save 'S'
-      set -g @resurrect-restore 'R'
-
-      ##### continuum #####
-      set -g @continuum-boot 'on'
-      set -g @continuum-restore 'on'
-      set -g @continuum-save-interval '10'
+      ##### Reload #####
+      bind r source-file ~/.config/tmux/tmux.conf \; display-message "Config reloaded!"
     '';
   };
 }
+#{
+#        plugin = resurrect;
+#        extraConfig = ''
+#          set -g @resurrect-strategy-nvim 'session'
+#          set -g @resurrect-strategy-vim 'session'
+#          set -g @resurrect-capture-pane-contents 'on'
+#        '';
+#      }
+#      {
+#        plugin = continuum;
+#        extraConfig = ''
+#          set -g @continuum-restore 'on'
+#          set -g @continuum-save-interval '5'
+#          set -g @continuum-boot 'on'
+#          set -g @continuum-systemd-start-cmd 'new-session -d'
+#        '';
+#      }
+
