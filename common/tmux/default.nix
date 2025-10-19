@@ -2,19 +2,7 @@
   pkgs,
   config,
   ...
-}: let
-  tmux-nerd-font-window-name = pkgs.tmuxPlugins.mkTmuxPlugin {
-    pluginName = "tmux-nerd-font-window-name.tmux";
-    version = "unstable-2023-08-22";
-    rtpFilePath = "tmux-nerd-font-window-name.tmux";
-    src = pkgs.fetchFromGitHub {
-      owner = "joshmedeski";
-      repo = "tmux-nerd-font-window-name";
-      rev = "c2e62d394a290a32e1394a694581791b0e344f9a";
-      sha256 = "stkhp95iLNxPy74Lo2SNes5j1AA4q/rgl+eLiZS81uA=";
-    };
-  };
-in {
+}: {
   programs.tmux = {
     enable = true;
     terminal = "tmux-256color";
@@ -22,10 +10,43 @@ in {
     prefix = "C-x";
     plugins = with pkgs.tmuxPlugins; [
       {
-        plugin = nord;
+        plugin = nord.overrideAttrs (old: {
+          postInstall =
+            (old.postInstall or "")
+            + ''
+              # Ensure the script has a proper bash shebang
+              if ! head -n1 $out/share/tmux-plugins/nord/nord.tmux | grep -q '^#!/usr/bin/env bash'; then
+                sed -i '1s|^#!.*|#!/usr/bin/env bash|; t; 1s|^|#!/usr/bin/env bash\n|' \
+                  $out/share/tmux-plugins/nord/nord.tmux
+              fi
+            '';
+        });
       }
       vim-tmux-navigator
-      tmux-which-key
+      {
+        plugin = tmux-which-key;
+        extraConfig = ''
+          set -g @tmux-which-key-xdg-enable 1
+          set -g @tmux-which-key-disable-autobuild 1
+        '';
+      }
+      {
+        plugin = resurrect;
+        extraConfig = ''
+          set -g @resurrect-strategy-nvim 'session'
+          set -g @resurrect-strategy-vim 'session'
+          set -g @resurrect-capture-pane-contents 'on'
+        '';
+      }
+      {
+        plugin = continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '5'
+          set -g @continuum-boot 'on'
+          set -g @continuum-systemd-start-cmd 'new-session -d'
+        '';
+      }
     ];
     extraConfig = ''
       ##### Colors & Terminal #####
@@ -58,29 +79,10 @@ in {
       setw -g mode-keys vi
 
       ##### which-key #####
-      set -g @tmux-which-key-xdg-enable 1
-      set -g @tmux-which-key-disable-autobuild 1
+
 
       ##### Reload #####
       bind r source-file ~/.config/tmux/tmux.conf \; display-message "Config reloaded!"
     '';
   };
 }
-#{
-#        plugin = resurrect;
-#        extraConfig = ''
-#          set -g @resurrect-strategy-nvim 'session'
-#          set -g @resurrect-strategy-vim 'session'
-#          set -g @resurrect-capture-pane-contents 'on'
-#        '';
-#      }
-#      {
-#        plugin = continuum;
-#        extraConfig = ''
-#          set -g @continuum-restore 'on'
-#          set -g @continuum-save-interval '5'
-#          set -g @continuum-boot 'on'
-#          set -g @continuum-systemd-start-cmd 'new-session -d'
-#        '';
-#      }
-
