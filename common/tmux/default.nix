@@ -33,8 +33,13 @@
       {
         plugin = resurrect;
         extraConfig = ''
-          set -g @resurrect-processes 'nvim'
-          set -g @resurrect-capture-pane-contents 'on'
+                 set -g @resurrect-processes 'nvim'
+                 set -g @resurrect-capture-pane-contents 'on'
+
+          # Fix NixOS path issues
+                 resurrect_dir="$HOME/.tmux/resurrect"
+                 set -g @resurrect-dir $resurrect_dir
+                 set -g @resurrect-hook-post-save-all 'target=$(readlink -f $resurrect_dir/last); sed "s| --cmd .*-vim-pack-dir||g; s|/etc/profiles/per-user/$USER/bin/||g; s|/home/$USER/.nix-profile/bin/||g" $target | ${pkgs.moreutils}/bin/sponge $target'
         '';
       }
       {
@@ -43,7 +48,6 @@
           set -g @continuum-restore 'on'
           set -g @continuum-save-interval '5'
           set -g @continuum-boot 'on'
-          set -g @continuum-systemd-start-cmd 'new-session -A -s main'
         '';
       }
     ];
