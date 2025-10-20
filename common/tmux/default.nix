@@ -8,6 +8,7 @@
     terminal = "tmux-256color";
     baseIndex = 1;
     prefix = "C-x";
+
     plugins = with pkgs.tmuxPlugins; [
       {
         plugin = nord.overrideAttrs (old: {
@@ -23,6 +24,7 @@
         });
       }
       vim-tmux-navigator
+
       {
         plugin = tmux-which-key;
         extraConfig = ''
@@ -30,27 +32,42 @@
           set -g @tmux-which-key-disable-autobuild 1
         '';
       }
+
       {
         plugin = resurrect;
         extraConfig = ''
-                 set -g @resurrect-processes 'nvim'
-                 set -g @resurrect-capture-pane-contents 'on'
+          # Writable path for resurrect saves
+          set -g @resurrect-dir "$HOME/.local/share/tmux/resurrect"
 
-          # Fix NixOS path issues
-                 resurrect_dir="$HOME/.tmux/resurrect"
-                 set -g @resurrect-dir $resurrect_dir
-                 set -g @resurrect-hook-post-save-all 'target=$(readlink -f $resurrect_dir/last); sed "s| --cmd .*-vim-pack-dir||g; s|/etc/profiles/per-user/$USER/bin/||g; s|/home/$USER/.nix-profile/bin/||g" $target | ${pkgs.moreutils}/bin/sponge $target'
+          # Capture full pane contents & some processes
+          set -g @resurrect-capture-pane-contents 'on'
+          set -g @resurrect-processes 'nvim'
+
+          # Post-save cleanup: remove nix-store paths for portability
+          set -g @resurrect-hook-post-save-all '
+            target=$(readlink -f "$HOME/.local/share/tmux/resurrect/last")
+            sed "s| --cmd .*-vim-pack-dir||g; \
+                 s|/etc/profiles/per-user/$USER/bin/||g; \
+                 s|/home/$USER/.nix-profile/bin/||g" "$target" | ${pkgs.moreutils}/bin/sponge "$target"
+          '
         '';
       }
+
       {
         plugin = continuum;
         extraConfig = ''
+          # Enable automatic saves & restore
           set -g @continuum-restore 'on'
           set -g @continuum-save-interval '5'
           set -g @continuum-boot 'on'
+
+          # Explicit debug logging path
+          set -g @continuum-boot-options 'debug'
+          set-environment -g TMUX_CONTINUUM_DEBUG_LOG "$HOME/.local/share/tmux/tmux-continuum-debug.log"
         '';
       }
     ];
+
     extraConfig = ''
       ##### Colors & Terminal #####
       set -ga terminal-overrides ",xterm-256color:Tc"
@@ -83,6 +100,12 @@
 
       ##### Reload #####
       bind r source-file ~/.config/tmux/tmux.conf \; display-message "Config reloaded!"
+
+      ##### Writable plugin manager path #####
+      set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.local/share/tmux/plugins"
     '';
   };
+
+  # Optional: create symlink for out-of-store writable state
+  home.file.".local/share/tmux".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.local/share/tmux";
 }

@@ -89,6 +89,9 @@ in {
 
           "${mod}+Tab" = "workspace next";
           "${mod}+Shift+Tab" = "workspace prev";
+
+          "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl set +10%";
+          "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl set 10%-";
         };
 
         window = {
