@@ -14,6 +14,12 @@ _: {
     vimAlias = true;
     globals.mapleader = " ";
 
+    lsp.inlayHints.enable = true;
+    diagnostic.settings = {
+      virtual_text = false;
+      virtual_lines.current_line = true;
+    };
+
     extraConfigLua = ''
       -- Colorscheme
       vim.cmd("colorscheme nord")
@@ -64,35 +70,6 @@ _: {
           vim.highlight.on_yank({ timeout = 200, visual = true })
         end,
       })
-
-      -----------------------------------------------------------------------
-      -- Harpoon v2 setup
-      -----------------------------------------------------------------------
-      local harpoon = require("harpoon")
-      harpoon:setup()
-
-      local map = vim.keymap.set
-      local opts = { noremap = true, silent = true }
-
-      -- Toggle quick menu
-      map("n", "<C-e>", function()
-        harpoon.ui:toggle_quick_menu(harpoon:list())
-      end, vim.tbl_extend("force", { desc = "Harpoon: toggle quick menu (Ctrl-e)" }, opts))
-
-      -- Add current file
-      map("n", "<leader>m", function()
-        harpoon:list():add()
-      end, vim.tbl_extend("force", { desc = "Harpoon: add file" }, opts))
-
-      -- Jump to marked files
-      map("n", "<leader>1", function() harpoon:list():select(1) end,
-        vim.tbl_extend("force", { desc = "Harpoon: go to 1" }, opts))
-      map("n", "<leader>2", function() harpoon:list():select(2) end,
-        vim.tbl_extend("force", { desc = "Harpoon: go to 2" }, opts))
-      map("n", "<leader>3", function() harpoon:list():select(3) end,
-        vim.tbl_extend("force", { desc = "Harpoon: go to 3" }, opts))
-      map("n", "<leader>4", function() harpoon:list():select(4) end,
-        vim.tbl_extend("force", { desc = "Harpoon: go to 4" }, opts))
     '';
   };
 }

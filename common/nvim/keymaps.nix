@@ -2,26 +2,6 @@ _: {
   programs.nixvim.keymaps = [
     {
       mode = ["n"];
-      key = "<C-n>";
-      action = ":NvimTreeToggle<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-      };
-    }
-    {
-      mode = ["n"];
-      key = "<leader>e";
-      action = ":NvimTreeToggle<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Toggle NvimTree";
-      };
-    }
-
-    {
-      mode = ["n"];
       key = ";";
       action = ":";
       options = {
@@ -155,97 +135,17 @@ _: {
     }
 
     {
-      mode = ["n"];
-      key = "<leader>bn";
-      action = ":bnext<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Next buffer";
-      };
-    }
-    {
-      mode = ["n"];
-      key = "<leader>bp";
-      action = ":bprevious<CR>";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Previous buffer";
-      };
-    }
-
-    {
       action = "<C-r>";
       key = "q";
       mode = "n";
       options.desc = "Easier redo.";
     }
 
-    # Normal mode
     {
+      action = ":Oil<CR>";
+      key = "-";
       mode = "n";
-      key = "<Up>";
-      action = "<Nop>";
-    }
-    {
-      mode = "n";
-      key = "<Down>";
-      action = "<Nop>";
-    }
-    {
-      mode = "n";
-      key = "<Left>";
-      action = "<Nop>";
-    }
-    {
-      mode = "n";
-      key = "<Right>";
-      action = "<Nop>";
-    }
-
-    # Insert mode
-    {
-      mode = "i";
-      key = "<Up>";
-      action = "<Nop>";
-    }
-    {
-      mode = "i";
-      key = "<Down>";
-      action = "<Nop>";
-    }
-    {
-      mode = "i";
-      key = "<Left>";
-      action = "<Nop>";
-    }
-    {
-      mode = "i";
-      key = "<Right>";
-      action = "<Nop>";
-    }
-
-    # Visual mode
-    {
-      mode = "v";
-      key = "<Up>";
-      action = "<Nop>";
-    }
-    {
-      mode = "v";
-      key = "<Down>";
-      action = "<Nop>";
-    }
-    {
-      mode = "v";
-      key = "<Left>";
-      action = "<Nop>";
-    }
-    {
-      mode = "v";
-      key = "<Right>";
-      action = "<Nop>";
+      options.desc = "Open parent directory";
     }
   ];
 }

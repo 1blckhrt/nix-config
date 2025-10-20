@@ -3,6 +3,7 @@ _: {
     lsp-format.enable = true;
     lsp = {
       enable = true;
+
       servers = {
         ts_ls.enable = true;
         eslint.enable = true;

@@ -78,9 +78,6 @@
       bind -r m resize-pane -Z
       setw -g mode-keys vi
 
-      ##### which-key #####
-
-
       ##### Reload #####
       bind r source-file ~/.config/tmux/tmux.conf \; display-message "Config reloaded!"
     '';
