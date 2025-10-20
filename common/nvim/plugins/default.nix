@@ -6,6 +6,7 @@
     ];
 
     plugins = {
+      persistence.enable = true;
       harpoon.enable = true;
       wakatime.enable = true;
       web-devicons.enable = true;

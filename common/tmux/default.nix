@@ -33,8 +33,7 @@
       {
         plugin = resurrect;
         extraConfig = ''
-          set -g @resurrect-strategy-nvim 'session'
-          set -g @resurrect-strategy-vim 'session'
+          set -g @resurrect-processes 'nvim'
           set -g @resurrect-capture-pane-contents 'on'
         '';
       }
@@ -44,7 +43,7 @@
           set -g @continuum-restore 'on'
           set -g @continuum-save-interval '5'
           set -g @continuum-boot 'on'
-          set -g @continuum-systemd-start-cmd 'new-session -d'
+          set -g @continuum-systemd-start-cmd 'new-session -A -s main'
         '';
       }
     ];
