@@ -27,7 +27,13 @@
     unzip
     ntfy
     inputs.commit.packages.x86_64-linux.default
+    mpc
   ];
+
+  services.mpd = {
+    enable = true;
+    musicDirectory = "$HOME/Music/pi_music";
+  };
 
   fonts.fontconfig.enable = true;
   xdg.enable = true;

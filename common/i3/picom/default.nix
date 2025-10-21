@@ -1,7 +1,7 @@
 _: {
   services.picom = {
     enable = true;
-    backend = "xrender";
+    backend = "glx";
     vSync = true;
     shadow = true;
     fade = true;
@@ -19,6 +19,13 @@ _: {
       dnd = {shadow = false;};
       popup_menu = {opacity = 0.9;};
       dropdown_menu = {opacity = 0.9;};
+    };
+    settings = {
+      blur = {
+        method = "gaussian";
+        size = 10;
+        deviation = 5.0;
+      };
     };
   };
 }

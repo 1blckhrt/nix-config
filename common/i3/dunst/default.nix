@@ -18,16 +18,21 @@ _: {
         stackDuplicates = true;
         hideDuplicateCount = true;
         showAgeThreshold = 60;
-        origin = "top-right";
-        width = 300;
-        height = 80;
+
+        origin = "top-center"; # top-center
+        width = "(200,300)";
+        height = "(0,150)";
         frame_color = "#81A1C1"; # nord9 — blue accent
+
+        # Make notifications grow downward
+        horizontal_alignment = "center";
+        vertical_alignment = "top";
       };
 
       urgency_low = {
-        background = "#2E3440"; # nord0 — dark base
-        foreground = "#D8DEE9"; # nord4 — light text
-        frame_color = "#4C566A"; # nord3 — subtle border
+        background = "#2E3440"; # nord0
+        foreground = "#D8DEE9"; # nord4
+        frame_color = "#4C566A"; # nord3
         timeout = 5;
       };
 
@@ -39,8 +44,8 @@ _: {
       };
 
       urgency_critical = {
-        background = "#BF616A"; # nord11 — red alert
-        foreground = "#ECEFF4"; # nord6 — bright text
+        background = "#BF616A"; # nord11
+        foreground = "#ECEFF4"; # nord6
         frame_color = "#BF616A"; # nord11
         timeout = 0; # stays until dismissed
       };

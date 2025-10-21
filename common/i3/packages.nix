@@ -24,7 +24,12 @@
     gawk
     i3blocks
     xclip
+    cliphist
+    xsel
+    maim
+    xdotool
+    libnotify
+    mpv
+    mpc
   ];
-
-  services.flameshot.enable = true;
 }
