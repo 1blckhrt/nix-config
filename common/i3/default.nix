@@ -35,12 +35,6 @@ in {
         up) brightnessctl set +10% ;;
         down) brightnessctl set 10%- ;;
       esac
-
-      level=$(brightnessctl get)
-      max=$(brightnessctl max)
-      percent=$(( 100 * level / max ))
-      # escape $percent so Nix doesn't try to substitute it during evaluation
-      notify-send "💡 Brightness: \$percent%"
     '';
     executable = true;
   };
