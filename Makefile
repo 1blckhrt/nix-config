@@ -5,10 +5,13 @@ HOSTNAME := $(shell hostname)
 SYSTEM ?= x86_64-linux
 
 # ===== Home Manager configs =====
-
 .PHONY: home
 home:
+ifeq ($(HOSTNAME),pc)
+	home-manager switch --flake .#blckhrt@$(HOSTNAME) --impure
+else
 	home-manager switch --flake .#blckhrt@$(HOSTNAME)
+endif
 
 # ===== Maintenance =====
 
@@ -19,3 +22,4 @@ update:
 .PHONY: gc
 gc:
 	nix-collect-garbage -d
+

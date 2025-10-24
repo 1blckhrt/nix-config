@@ -4,18 +4,24 @@
   nixgl,
   lib,
   ...
-}: {
+}: let
+  pkgs = import inputs.nixpkgs {
+    system = "x86_64-linux";
+    config.allowUnfree = true;
+  };
+in {
   home.username = "blckhrt";
   home.homeDirectory = "/home/blckhrt";
 
   nixpkgs.config = {
     allowUnfree = true;
-    allowUnfreePredicate = pkg: true;
+    allowUnfreePredicate = pkg:
+      builtins.elem (lib.getName pkg) ["nvidia"];
   };
 
   nixGL = {
     packages = nixgl;
-    defaultWrapper = "mesa";
+    defaultWrapper = "nvidia";
   };
 
   home.stateVersion = "25.05"; # DO NOT TOUCH
@@ -49,6 +55,11 @@
     TERMINAL = "alacritty";
   };
 
-  # Let Home Manager install and manage itself.
+  home.file.".config/nixpkgs/config.nix".text = ''
+    {
+      allowUnfree = true;
+    }
+  '';
+
   programs.home-manager.enable = true;
 }
