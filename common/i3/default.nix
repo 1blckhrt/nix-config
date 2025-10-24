@@ -58,26 +58,42 @@ in {
       #!/usr/bin/env bash
 
       choice=$(printf "Full Screen\nWindow\nRegion" | rofi -dmenu -p "Screenshot:")
+      [[ -z "$choice" ]] && exit 0
+
       dir="$HOME/Pictures/Screenshots"
       mkdir -p "$dir"
       file="$dir/$(date +%F_%T).png"
 
       # Give Rofi a moment to disappear
-      sleep 1
+      sleep 0.5
 
-      # todo: make picom stop until screenshot is finished
+      # Check if picom is running
+      picom_running=false
+      if pgrep -x picom > /dev/null; then
+          picom_running=true
+          killall picom
+          sleep 0.2
+      fi
 
+      # Take screenshot
       case "$choice" in
           "Full Screen") maim "$file" ;;
           "Window") maim -i "$(xdotool getactivewindow)" "$file" ;;
           "Region") maim -s "$file" ;;
       esac
 
-      # Copy the **image itself** to the clipboard (works in image-aware apps)
-      xclip -selection clipboard -t image/png -i "$file"
+      # Restart picom if it was running
+      if $picom_running; then
+          picom --daemon &
+      fi
 
-      notify-send "Screenshot saved and copied to clipboard" "$file"
-      ✅
+      # Copy to clipboard
+      if [[ -f "$file" ]]; then
+          xclip -selection clipboard -t image/png -i "$file"
+          notify-send "Screenshot saved and copied to clipboard" "$file"
+      else
+          notify-send "Screenshot failed" "No file was created"
+      fi
     '';
     executable = true;
   };
