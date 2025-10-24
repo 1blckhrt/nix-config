@@ -1,4 +1,10 @@
-{inputs, ...}: {
+{
+  inputs,
+  config,
+  nixgl,
+  lib,
+  ...
+}: {
   home.username = "blckhrt";
   home.homeDirectory = "/home/blckhrt";
 
