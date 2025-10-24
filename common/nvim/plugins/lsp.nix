@@ -70,7 +70,6 @@ _: {
           // builtins.listToAttrs (map (ft: {
               name = ft;
               value = {
-                __unkeyed-1 = "biome";
                 __unkeyed-2 = "prettierd";
                 __unkeyed-3 = "prettier";
 

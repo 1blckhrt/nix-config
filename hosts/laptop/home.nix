@@ -1,6 +1,8 @@
 {
   inputs,
   config,
+  nixgl,
+  lib,
   ...
 }: {
   home.username = "blckhrt";
@@ -9,6 +11,11 @@
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate = pkg: true;
+  };
+
+  nixGL = {
+    packages = nixgl;
+    defaultWrapper = "mesa";
   };
 
   home.stateVersion = "25.05"; # DO NOT TOUCH
@@ -38,7 +45,6 @@
   home.sessionPath = [
     "$HOME/.local/bin"
     "$HOME/bin"
-    "/run/system-manager/sw/bin/"
   ];
 
   home.sessionVariables = {

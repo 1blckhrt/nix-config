@@ -20,11 +20,6 @@ _: {
       "...." = "cd ../../..";
     };
     initContent = ''
-      # Load system-manager PATH
-      if [ -f /etc/profile.d/system-manager-path.sh ]; then
-        source /etc/profile.d/system-manager-path.sh
-      fi
-
       FNM_PATH="$HOME/.local/share/fnm"
       if [ -d "$FNM_PATH" ]; then
         export PATH="$FNM_PATH:$PATH"

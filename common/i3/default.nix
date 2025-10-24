@@ -65,6 +65,8 @@ in {
       # Give Rofi a moment to disappear
       sleep 1
 
+      # todo: make picom stop until screenshot is finished
+
       case "$choice" in
           "Full Screen") maim "$file" ;;
           "Window") maim -i "$(xdotool getactivewindow)" "$file" ;;

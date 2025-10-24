@@ -10,20 +10,6 @@ SYSTEM ?= x86_64-linux
 home:
 	home-manager switch --flake .#blckhrt@$(HOSTNAME)
 
-# ===== System Manager configs =====
-
-.PHONY: system
-system:
-	@if grep -q '^ID=nixos' /etc/os-release; then \
-		echo "⚠️  system-manager setup skipped: detected NixOS."; \
-	else \
-		sudo env "PATH=$$HOME/.nix-profile/bin:$$PATH" \
-		nix run --extra-experimental-features 'flakes nix-command' 'github:numtide/system-manager' \
-			-- switch \
-			--flake .#$(HOSTNAME) ; \
-	fi
-	@echo "✅ System setup done."
-
 # ===== Maintenance =====
 
 .PHONY: update

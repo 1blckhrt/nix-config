@@ -7,6 +7,11 @@
     allowUnfreePredicate = pkg: true;
   };
 
+  nixGL = {
+    packages = nixgl;
+    defaultWrapper = "mesa";
+  };
+
   home.stateVersion = "25.05"; # DO NOT TOUCH
 
   imports = [
@@ -31,7 +36,6 @@
   home.sessionPath = [
     "$HOME/.local/bin"
     "$HOME/bin"
-    "/run/system-manager/sw/bin/"
   ];
 
   home.sessionVariables = {

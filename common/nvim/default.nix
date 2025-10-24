@@ -17,7 +17,7 @@ _: {
     lsp.inlayHints.enable = true;
     diagnostic.settings = {
       virtual_text = false;
-      virtual_lines = true;
+      virtual_lines.current_line = true;
     };
 
     extraConfigLua = ''

@@ -1,4 +1,11 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  lib,
+  nixgl,
+  inputs,
+  ...
+}: {
   imports = [./hyprpaper/default.nix ./waybar/default.nix];
   home.packages = with pkgs; [
     wofi
@@ -36,6 +43,7 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
+    package = config.lib.nixGL.wrap pkgs.hyprland;
     xwayland.enable = true;
     settings = {
       exec = [

@@ -1,6 +1,14 @@
-_: {
+{
+  config,
+  lib,
+  nixgl,
+  pkgs,
+  inputs,
+  ...
+}: {
   programs.alacritty = {
     enable = true;
+    package = config.lib.nixGL.wrap pkgs.alacritty;
 
     settings = {
       window = {
