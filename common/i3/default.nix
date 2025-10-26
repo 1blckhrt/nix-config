@@ -209,7 +209,7 @@ in {
         };
 
         keybindings = {
-          "${mod}+Return" = "exec --no-startup-id ${pkgs.alacritty}/bin/alacritty";
+          "${mod}+Return" = "exec --no-startup-id alacritty";
           "${mod}+q" = "kill";
           "${mod}+d" = "exec ${pkgs.rofi}/bin/rofi -show drun -cache-clear";
           "${mod}+Shift+r" = "exec ${pkgs.i3}/bin/i3-msg restart";
@@ -353,7 +353,7 @@ in {
           {
             command = "systemctl --user restart xdg-desktop-portal.service";
             always = true;
-            notification = false;
+            notification = true;
           }
           {
             command = "systemctl --user restart dunst.service";
@@ -361,24 +361,24 @@ in {
             notification = true;
           }
           {
-            command = "systemctl --user restart snixembed.service";
+            command = "snixembed";
             always = true;
             notification = true;
           }
           {
             command = "nm-applet";
             always = true;
-            notification = false;
+            notification = true;
           }
           {
             command = "xclip";
             always = true;
-            notification = false;
+            notification = true;
           }
           {
             command = "systemctl --user restart cliphist.service";
             always = true;
-            notification = false;
+            notification = true;
           }
         ];
       };
@@ -388,8 +388,9 @@ in {
 
         bar {
           position top
+          font pango:JetBrainsMono NF 10
           status_command i3blocks
-          tray_output primary
+
           tray_padding 4
 
           colors {

@@ -15,13 +15,11 @@ in {
 
   nixpkgs.config = {
     allowUnfree = true;
-    allowUnfreePredicate = pkg:
-      builtins.elem (lib.getName pkg) ["nvidia"];
   };
 
   nixGL = {
     packages = nixgl;
-    defaultWrapper = "nvidia";
+    defaultWrapper = "mesa";
   };
 
   home.stateVersion = "25.05"; # DO NOT TOUCH
@@ -31,6 +29,7 @@ in {
     ../../common/alacritty/default.nix
     ../../common/atuin/default.nix
     ../../common/bin/default.nix
+    ../../common/i3/default.nix
     ../../common/git/default.nix
     ../../common/misc/default.nix
     ../../common/nvim/default.nix

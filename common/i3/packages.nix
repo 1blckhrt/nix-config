@@ -31,5 +31,6 @@
     libnotify
     mpv
     mpc
+    pango
   ];
 }

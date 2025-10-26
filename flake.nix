@@ -86,7 +86,7 @@
           nixgl = nixgl.packages.${system};
         };
         modules = [
-          ./hosts/pc-arch/home.nix
+          ./hosts/pc/home.nix
           {
             home.packages = [
               commit.packages.${system}.default
