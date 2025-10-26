@@ -11,6 +11,12 @@ _: {
         basedpyright.enable = true;
         ruff.enable = true;
         marksman.enable = true;
+        rust_analyzer = {
+          enable = true;
+
+          installRustc = false;
+          installCargo = false;
+        };
       };
     };
 
@@ -66,6 +72,7 @@ _: {
             python = ["black" "ruff"];
             lua = ["stylua"];
             nix = ["alejandra"];
+            rust = ["rustfmt"];
           }
           // builtins.listToAttrs (map (ft: {
               name = ft;
