@@ -23,6 +23,10 @@
       url = "github:1blckhrt/commit";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = {
     self,
@@ -33,6 +37,7 @@
     pre-commit-hooks,
     commit,
     nixgl,
+    zen-browser,
     ...
   }: let
     system = "x86_64-linux";
@@ -62,6 +67,7 @@
           {
             home.packages = [
               commit.packages.${system}.default
+              zen-browser.packages."${system}".default
             ];
           }
         ];
@@ -90,6 +96,7 @@
           {
             home.packages = [
               commit.packages.${system}.default
+              zen-browser.packages."${system}".default
             ];
           }
         ];
