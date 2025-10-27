@@ -11,22 +11,7 @@ in {
     ./rofi/default.nix
     ./picom/default.nix
     ./packages.nix
-    ./monitors.nix
   ];
-
-  home.file.".xinitrc" = {
-    text = ''
-      #!/bin/sh
-
-      # Source home-manager environment
-      [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ] && \
-        . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-
-      # Start i3
-      exec /home/blckhrt/.nix-profile/bin/i3
-    '';
-    executable = true;
-  };
 
   home.file."bin/brightness" = {
     text = ''
@@ -341,11 +326,6 @@ in {
             notification = false;
           }
           {
-            command = "systemctl --user restart picom.service";
-            always = true;
-            notification = false;
-          }
-          {
             command = "${pkgs.feh}/bin/feh --bg-scale /home/blckhrt/nix-config/common/i3/nord_valley.png";
             always = true;
             notification = false;
@@ -358,7 +338,7 @@ in {
           {
             command = "systemctl --user restart dunst.service";
             always = true;
-            notification = true;
+            notification = false;
           }
           {
             command = "snixembed";

@@ -32,5 +32,6 @@
     mpv
     mpc
     pango
+    autorandr
   ];
 }

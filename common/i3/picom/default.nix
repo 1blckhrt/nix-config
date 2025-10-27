@@ -1,6 +1,12 @@
-_: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   services.picom = {
     enable = true;
+    package = config.lib.nixGL.wrap pkgs.picom;
     backend = "glx";
     vSync = true;
     shadow = true;
@@ -26,6 +32,8 @@ _: {
         size = 10;
         deviation = 5.0;
       };
+      use-damage = true;
+      glx-no-stencil = true;
     };
   };
 }

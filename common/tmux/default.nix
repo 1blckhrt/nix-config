@@ -97,24 +97,19 @@ in {
 
       set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.local/share/tmux/plugins"
 
-      # Nord theme with correctly colored rounded Powerline-style pills and padding
       set -g status on
-      set -g status-justify center
       set -g status-bg '${nordColors.nord0}'
       set -g status-fg '${nordColors.nord4}'
       set -g status-left-length 50
-      set -g status-right-length 50
+      set -g status-right-length 65
+      set -g status-justify absolute-centre
 
-      # Left: session name with rounded pill and padding
       set -g status-left "#[fg=${nordColors.nord8},bg=${nordColors.nord0}]#[fg=${nordColors.nord1},bg=${nordColors.nord8},bold]  #S  #[fg=${nordColors.nord8},bg=${nordColors.nord0}]"
 
-      # Windows: inactive with rounded pill and padding
-      setw -g window-status-format "#[fg=${nordColors.nord3},bg=${nordColors.nord0}]#[fg=${nordColors.nord4},bg=${nordColors.nord3}]  #I:#W  #[fg=${nordColors.nord3},bg=${nordColors.nord0}]"
+      setw -g window-status-format "#[align=absolute-centre]#[fg=${nordColors.nord3},bg=${nordColors.nord0}]#[fg=${nordColors.nord4},bg=${nordColors.nord3}]  #I:#W  #[fg=${nordColors.nord3},bg=${nordColors.nord0}]"
 
-      # Windows: active with rounded pill and padding
-      setw -g window-status-current-format "#[fg=${nordColors.nord8},bg=${nordColors.nord0}]#[fg=${nordColors.nord1},bg=${nordColors.nord8},bold]  #I:#W  #[fg=${nordColors.nord8},bg=${nordColors.nord0}]"
+      setw -g window-status-current-format "#[align=absolute-centre]#[fg=${nordColors.nord8},bg=${nordColors.nord0}]#[fg=${nordColors.nord1},bg=${nordColors.nord8},bold]  #I:#W  #[fg=${nordColors.nord8},bg=${nordColors.nord0}]"
 
-      # Right: date & time with rounded pill and padding
       set -g status-right "#[fg=${nordColors.nord9},bg=${nordColors.nord0}]#[fg=${nordColors.nord1},bg=${nordColors.nord9},bold]  %Y-%m-%d  %H:%M  #h  #[fg=${nordColors.nord9},bg=${nordColors.nord0}]"
     '';
   };
