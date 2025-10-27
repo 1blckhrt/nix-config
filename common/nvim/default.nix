@@ -20,6 +20,13 @@ _: {
       virtual_lines.current_line = true;
     };
 
+    performance.byteCompileLua = {
+      enable = true;
+      configs = true;
+      plugins = true;
+      nvimRuntime = true;
+    };
+
     extraConfigLua = ''
 
       -- select a session to load

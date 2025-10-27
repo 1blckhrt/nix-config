@@ -1,5 +1,6 @@
 _: {
   programs.nixvim = {
+    extraConfigLua = builtins.readFile ./cmp.lua;
     plugins = {
       luasnip.enable = true;
       cmp-nvim-lsp.enable = true;
@@ -20,6 +21,7 @@ _: {
       lspkind = {
         enable = true;
         cmp.enable = true;
+        settings.mode = "symbol";
       };
 
       cmp = {
@@ -33,13 +35,7 @@ _: {
           };
 
           autoEnableSources = true;
-
-          snippet.expand.__raw = ''
-            function(args)
-              require("luasnip").lsp_expand(args.body)
-            end
-          '';
-
+          snippet.expand = "luasnip";
           experimental.ghost_text = true;
           formatting.fields = ["kind" "abbr" "menu"];
 
