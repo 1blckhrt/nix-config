@@ -28,6 +28,7 @@
     ntfy
     inputs.commit.packages.x86_64-linux.default
     mpc
+    just
   ];
 
   services.mpd = {

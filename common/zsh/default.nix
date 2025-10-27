@@ -29,20 +29,7 @@ _: {
       export TERM=xterm-256color
       eval "$(direnv hook zsh)"
 
-      gpush() {
-        git add .
-        git status
-        echo -n "Continue with commit and push? [y/N]: "
-        read -r reply
-        if [[ "$reply" != "y" && "$reply" != "Y" ]]; then
-          echo "Aborted."
-          return 1
-        fi
-        echo -n "Enter commit message: "
-        read -r message
-        git commit -am "$message"
-        git push
-      }
+      bindkey -s '^F' '~/bin/tmux-sessionizer\n'
 
       tmux-session() {
         local session sessions fzf_output
