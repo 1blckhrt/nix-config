@@ -3,7 +3,6 @@
     pulseaudio
     dex
     xss-lock
-    i3lock
     networkmanagerapplet
     libnotify
     libappindicator-gtk3

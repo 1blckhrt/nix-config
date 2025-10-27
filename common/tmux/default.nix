@@ -42,16 +42,17 @@ in {
       {
         plugin = resurrect;
         extraConfig = ''
+          # Directory for saved sessions
           set -g @resurrect-dir "$HOME/.local/share/tmux/resurrect"
+
+          # Capture pane contents (important for nvim)
           set -g @resurrect-capture-pane-contents 'on'
           set -g @resurrect-processes 'nvim'
+          set -g @resurrect-debug 'on'
 
-          set -g @resurrect-hook-post-save-all '
-            target=$(readlink -f "$HOME/.local/share/tmux/resurrect/last")
-            sed "s| --cmd .*-vim-pack-dir||g; \
-                 s|/etc/profiles/per-user/$USER/bin/||g; \
-                 s|/home/$USER/.nix-profile/bin/||g" "$target" | ${pkgs.moreutils}/bin/sponge "$target"
-          '
+          # Ensure directory exists
+          if-shell "[ ! -d \"$HOME/.local/share/tmux/resurrect\" ]" \
+            "run-shell 'mkdir -p \"$HOME/.local/share/tmux/resurrect\"'"
         '';
       }
 
@@ -62,15 +63,15 @@ in {
           set -g @continuum-save-interval '5'
           set -g @continuum-boot 'on'
           set -g @continuum-boot-options 'debug'
-          set-environment -g TMUX_CONTINUUM_DEBUG_LOG "$HOME/.local/share/tmux/tmux-continuum-debug.log"
+          set-environment -g TMUX_CONTINUUM_DEBUG_LOG "$HOME/.tmux/tmux-continuum-debug.log"
         '';
       }
     ];
 
     extraConfig = ''
+      # Terminal & clipboard
       set -ga terminal-overrides ",xterm-256color:Tc"
       set -as terminal-features ",xterm-256color:RGB"
-
       set -g set-clipboard on
       set -g detach-on-destroy off
       set -g escape-time 0
@@ -80,12 +81,14 @@ in {
       set -g allow-passthrough on
       set -g status-position top
 
+      # Window splitting
       unbind %
       bind | split-window -h -c "#{pane_current_path}"
       unbind '"'
       bind - split-window -v -c "#{pane_current_path}"
       bind c new-window -c "#{pane_current_path}"
 
+      # Resize panes
       bind -r j resize-pane -D 5
       bind -r k resize-pane -U 5
       bind -r h resize-pane -L 5
@@ -93,10 +96,13 @@ in {
       bind -r m resize-pane -Z
       setw -g mode-keys vi
 
+      # Reload config
       bind r source-file ~/.config/tmux/tmux.conf \; display-message "Config reloaded!"
 
+      # Plugin manager path
       set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.local/share/tmux/plugins"
 
+      # Status bar colors
       set -g status on
       set -g status-bg '${nordColors.nord0}'
       set -g status-fg '${nordColors.nord4}'
@@ -113,6 +119,4 @@ in {
       set -g status-right "#[fg=${nordColors.nord9},bg=${nordColors.nord0}]#[fg=${nordColors.nord1},bg=${nordColors.nord9},bold]  %Y-%m-%d  %H:%M  #h  #[fg=${nordColors.nord9},bg=${nordColors.nord0}]"
     '';
   };
-
-  home.file.".local/share/tmux".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.local/share/tmux";
 }

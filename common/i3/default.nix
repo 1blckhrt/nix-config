@@ -321,11 +321,6 @@ in {
             notification = false;
           }
           {
-            command = "xss-lock --transfer-sleep-lock -- i3lock --nofork";
-            always = true;
-            notification = false;
-          }
-          {
             command = "${pkgs.feh}/bin/feh --bg-scale /home/blckhrt/nix-config/common/i3/nord_valley.png";
             always = true;
             notification = false;
