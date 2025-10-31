@@ -26,6 +26,7 @@
     ../../common/atuin/default.nix
     ../../common/bin/default.nix
     ../../common/git/default.nix
+    ../../common/hyprland/default.nix
     ../../common/i3/default.nix
     ../../common/misc/default.nix
     ../../common/nvim/default.nix
@@ -50,6 +51,7 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     TERMINAL = "alacritty";
+    NIXOS_OZONE_WL = "1";
   };
 
   # Let Home Manager install and manage itself.

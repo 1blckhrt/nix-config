@@ -6,45 +6,50 @@
   inputs,
   ...
 }: {
-  imports = [./hyprpaper/default.nix ./waybar/default.nix];
+  imports = [./waybar/default.nix ./hyprpaper/default.nix ./fuzzel/default.nix];
+  # Core packages
   home.packages = with pkgs; [
-    wofi
     brightnessctl
     grim
     wl-clipboard
     slurp
+    snixembed
+    networkmanagerapplet
+    libappindicator-gtk3
+    hyprlock
   ];
 
-  services.swaync.enable = true;
-  services.hyprpolkitagent.enable = true;
-
-  programs.waybar = {
-    enable = true;
-    systemd.enable = true;
+  # Screenshot script
+  home.file."bin/screenshot.sh" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+      mkdir -p "$HOME/Pictures/Screenshots"
+      REGION=$(slurp) || exit 1
+      FILE="$HOME/Pictures/Screenshots/Screenshot-$(date +%F_%T).png"
+      grim -g "$REGION" "$FILE" || exit 1
+      wl-copy < "$FILE"
+      notify-send "Screenshot saved and copied!"
+    '';
   };
 
-  home.file.".config/hypr/scripts/screenshot.sh".text = ''
-    #!/usr/bin/env bash
+  # Services
+  services.swaync.enable = true;
+  services.hyprpolkitagent.enable = true;
+  services.cliphist.enable = true;
 
-    mkdir -p "$HOME/Pictures/Screenshots"
+  # System tray embed
+  systemd.user.services.snixembed.Unit.After = [
+    "graphical-session.target"
+    "dbus.service"
+  ];
 
-    REGION=$(slurp) || exit 1
-
-    FILE="$HOME/Pictures/Screenshots/Screenshot-$(date +%F_%T).png"
-
-    grim -g "$REGION" "$FILE" || exit 1
-
-    wl-copy < "$FILE"
-
-    notify-send "Screenshot saved and copied!"
-  '';
-
-  home.file.".config/hypr/scripts/screenshot.sh".executable = true;
-
+  # Hyprland configuration
   wayland.windowManager.hyprland = {
     enable = true;
     package = config.lib.nixGL.wrap pkgs.hyprland;
     xwayland.enable = true;
+
     settings = {
       exec = [
         "systemctl --user restart waybar.service"
@@ -55,64 +60,51 @@
         "nm-applet --indicator"
       ];
 
-      cursor = {
-        no_hardware_cursors = true;
+      debug = {
+        disable_logs = false;
+        enable_stdout_logs = true;
       };
 
-      monitor = ",preferred,auto,1";
+      cursor.no_hardware_cursors = true;
+      monitor = ", 1920x1080@75, 0x0, 1";
 
       "$terminal" = "alacritty";
       "$fileManager" = "nautilus";
-      "$menu" = "wofi --show drun";
-
-      env = [
-        "XCURSOR_SIZE,24"
-        "HYPRCURSOR_SIZE,24"
-      ];
 
       general = {
         gaps_in = 5;
         gaps_out = 20;
         border_size = 2;
-
-        "col.active_border" = "rgba(ffffffff)";
-        /*
-        white
-        */
-        "col.inactive_border" = "rgba(323232ff)";
-        /*
-        grayish black
-        */
-
+        "col.active_border" = "rgba(88C0D0ff)"; # Nord cyan
+        "col.inactive_border" = "rgba(4C566Aff)"; # Nord dark gray
         resize_on_border = false;
         allow_tearing = false;
         layout = "dwindle";
       };
 
       decoration = {
-        rounding = 3;
+        rounding = 6;
         rounding_power = 2;
         active_opacity = 1.0;
-        inactive_opacity = 0.8;
+        inactive_opacity = 0.85;
 
         shadow = {
           enabled = true;
           range = 4;
           render_power = 3;
-          color = "rgba(1a1a1aee)";
+          color = "rgba(2e3440ee)";
         };
 
         blur = {
           enabled = true;
           size = 3;
-          passes = 1;
-          vibrancy = 0.1696;
+          passes = 2;
+          vibrancy = 0.18;
         };
       };
 
       animations = {
-        enabled = "yes, please :)";
-
+        enabled = true;
         bezier = [
           "easeOutQuint,0.23,1,0.32,1"
           "easeInOutCubic,0.65,0.05,0.36,1"
@@ -146,9 +138,7 @@
         preserve_split = true;
       };
 
-      master = {
-        new_status = "master";
-      };
+      master.new_status = "master";
 
       misc = {
         force_default_wallpaper = -1;
@@ -157,21 +147,12 @@
 
       input = {
         kb_layout = "us";
-        kb_variant = "";
-        kb_model = "";
-        kb_options = "";
-        kb_rules = "";
         follow_mouse = 1;
         sensitivity = 0;
-
-        touchpad = {
-          natural_scroll = false;
-        };
+        touchpad.natural_scroll = false;
       };
 
-      gestures = {
-        workspace_swipe = false;
-      };
+      gestures.workspace_swipe = false;
 
       device = {
         name = "epic-mouse-v1";
@@ -183,13 +164,10 @@
       bind = [
         ", Print, exec, ~/.config/hypr/scripts/screenshot.sh"
         "$mainMod, Return, exec, $terminal"
+        "$mainMod, D, exec, pkill fuzzel || ${pkgs.fuzzel}/bin/fuzzel"
         "$mainMod, Q, killactive,"
-        "$mainMod, M, exit,"
+        "$mainMod SHIFT, E, exec, ${pkgs.wlogout}/bin/wlogout"
         "$mainMod, E, exec, $fileManager"
-        "$mainMod, V, togglefloating,"
-        "$mainMod, D, exec, $menu"
-        "$mainMod, P, pseudo,"
-        "$mainMod, J, togglesplit,"
         "$mainMod, left, movefocus, l"
         "$mainMod, right, movefocus, r"
         "$mainMod, up, movefocus, u"
@@ -214,10 +192,8 @@
         "$mainMod SHIFT, 8, movetoworkspace, 8"
         "$mainMod SHIFT, 9, movetoworkspace, 9"
         "$mainMod SHIFT, 0, movetoworkspace, 10"
-        "$mainMod, S, togglespecialworkspace, magic"
-        "$mainMod SHIFT, S, movetoworkspace, special:magic"
-        "$mainMod, mouse_down, workspace, e+1"
-        "$mainMod, mouse_up, workspace, e-1"
+        "$mainMod, mouse_down, workspace, +1"
+        "$mainMod, mouse_up, workspace, -1"
       ];
 
       bindm = [
@@ -230,8 +206,8 @@
         ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
         ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
         ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-        ",XF86MonBrightnessUp, exec, brightnessctl -e4 -n2 set 5%+"
-        ",XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
+        ",XF86MonBrightnessUp, exec, brightnessctl set 5%+"
+        ",XF86MonBrightnessDown, exec, brightnessctl set 5%-"
       ];
 
       bindl = [
@@ -244,6 +220,16 @@
       windowrule = [
         "suppressevent maximize, class:.*"
         "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
+      ];
+
+      exec-once = [
+        "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch cliphist store"
+        "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch cliphist store"
+      ];
+
+      env = [
+        "XCURSOR_SIZE,24"
+        "HYPRCURSOR_SIZE,24"
       ];
     };
   };

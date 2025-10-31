@@ -2,8 +2,8 @@ _: {
   services.hyprpaper = {
     enable = true;
     settings = {
-      preload = ["~/Pictures/wallpapers/waves.jpg "];
-      wallpaper = [", ~/Pictures/wallpapers/waves.jpg"];
+      preload = [", ~/nix-config/common/hyprland/bg.png"];
+      wallpaper = [", ~/nix-config/common/hyprland/bg.png"];
     };
   };
 }

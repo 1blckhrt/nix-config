@@ -30,6 +30,7 @@ in {
     ../../common/atuin/default.nix
     ../../common/bin/default.nix
     ../../common/i3/default.nix
+    ../../common/hyprland/default.nix
     ../../common/git/default.nix
     ../../common/misc/default.nix
     ../../common/nvim/default.nix
@@ -52,6 +53,7 @@ in {
   home.sessionVariables = {
     EDITOR = "nvim";
     TERMINAL = "alacritty";
+    NIXOS_OZONE_WL = "1";
   };
 
   home.file.".config/nixpkgs/config.nix".text = ''

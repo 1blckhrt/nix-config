@@ -13,6 +13,14 @@ in {
     ./packages.nix
   ];
 
+  home.file.".xinitrc" = {
+    text = ''
+      #!/bin/sh
+      exec /home/blckhrt/.nix-profile/bin/i3
+    '';
+    executable = true;
+  };
+
   home.file."bin/brightness" = {
     text = ''
       #!/usr/bin/env bash
@@ -181,6 +189,11 @@ in {
   xsession = {
     enable = true;
 
+    initExtra = ''
+      systemctl --user import-environment PATH
+      systemctl --user start graphical-session.target
+    '';
+
     windowManager.i3 = {
       enable = true;
 
@@ -333,7 +346,12 @@ in {
           {
             command = "systemctl --user restart dunst.service";
             always = true;
-            notification = false;
+            notification = true;
+          }
+          {
+            command = "systemctl --user restart picom.service";
+            always = true;
+            notification = true;
           }
           {
             command = "snixembed";
@@ -367,6 +385,7 @@ in {
           status_command i3blocks
 
           tray_padding 4
+          tray_output primary
 
           colors {
             background       #2e3440
@@ -379,23 +398,6 @@ in {
           }
         }
       '';
-    };
-  };
-
-  # Clipboard sync daemon
-  systemd.user.services.cliphist = {
-    Unit = {
-      Description = "Clipboard history service (cliphist + xclip)";
-      After = ["graphical-session.target" "dbus.service"];
-    };
-
-    Service = {
-      ExecStart = "${pkgs.bash}/bin/bash -c 'while true; do ${pkgs.xclip}/bin/xclip -selection clipboard -o 2>/dev/null | ${pkgs.cliphist}/bin/cliphist store; sleep 1; done'";
-      Restart = "always";
-    };
-
-    Install = {
-      WantedBy = ["graphical-session.target"];
     };
   };
 

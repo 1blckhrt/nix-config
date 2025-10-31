@@ -6,12 +6,10 @@
 }: {
   services.picom = {
     enable = true;
-    package = config.lib.nixGL.wrap pkgs.picom;
     backend = "glx";
     vSync = true;
     shadow = true;
     fade = true;
-    fadeSteps = [0.03 0.03];
     inactiveOpacity = 0.9;
     activeOpacity = 1.0;
     wintypes = {

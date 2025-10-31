@@ -19,6 +19,12 @@
       noice.enable = true;
       tmux-navigator.enable = true;
       smart-splits.enable = true;
+      telekasten = {
+        enable = true;
+        settings = {
+          home = "/home/blckhrt/doc/01 - Index/";
+        };
+      };
     };
   };
 }

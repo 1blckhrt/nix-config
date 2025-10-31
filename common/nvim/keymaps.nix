@@ -147,5 +147,110 @@ _: {
       mode = "n";
       options.desc = "Open parent directory";
     }
+
+    {
+      mode = ["n"];
+      key = "<leader>z";
+      action = "<cmd>Telekasten panel<CR>";
+      options = {
+        noremap = true;
+        silent = true;
+        desc = "Telekasten: Panel";
+      };
+    }
+
+    # Most used functions
+    {
+      mode = ["n"];
+      key = "<leader>zf";
+      action = "<cmd>Telekasten find_notes<CR>";
+      options = {
+        noremap = true;
+        silent = true;
+        desc = "Telekasten: Find notes";
+      };
+    }
+    {
+      mode = ["n"];
+      key = "<leader>zg";
+      action = "<cmd>Telekasten search_notes<CR>";
+      options = {
+        noremap = true;
+        silent = true;
+        desc = "Telekasten: Search notes";
+      };
+    }
+    {
+      mode = ["n"];
+      key = "<leader>zd";
+      action = "<cmd>Telekasten goto_today<CR>";
+      options = {
+        noremap = true;
+        silent = true;
+        desc = "Telekasten: Goto today";
+      };
+    }
+    {
+      mode = ["n"];
+      key = "<leader>zz";
+      action = "<cmd>Telekasten follow_link<CR>";
+      options = {
+        noremap = true;
+        silent = true;
+        desc = "Telekasten: Follow link";
+      };
+    }
+    {
+      mode = ["n"];
+      key = "<leader>zn";
+      action = "<cmd>Telekasten new_note<CR>";
+      options = {
+        noremap = true;
+        silent = true;
+        desc = "Telekasten: New note";
+      };
+    }
+    {
+      mode = ["n"];
+      key = "<leader>zc";
+      action = "<cmd>Telekasten show_calendar<CR>";
+      options = {
+        noremap = true;
+        silent = true;
+        desc = "Telekasten: Show calendar";
+      };
+    }
+    {
+      mode = ["n"];
+      key = "<leader>zb";
+      action = "<cmd>Telekasten show_backlinks<CR>";
+      options = {
+        noremap = true;
+        silent = true;
+        desc = "Telekasten: Show backlinks";
+      };
+    }
+    {
+      mode = ["n"];
+      key = "<leader>zI";
+      action = "<cmd>Telekasten insert_img_link<CR>";
+      options = {
+        noremap = true;
+        silent = true;
+        desc = "Telekasten: Insert image link";
+      };
+    }
+
+    # Insert mode mapping for [[
+    {
+      mode = ["i"];
+      key = "[[";
+      action = "<cmd>Telekasten insert_link<CR>";
+      options = {
+        noremap = true;
+        silent = true;
+        desc = "Telekasten: Insert link";
+      };
+    }
   ];
 }
