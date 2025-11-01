@@ -29,7 +29,7 @@
         ];
 
         "custom/linuxmint" = {
-          format = "  ";
+          format = " ";
           tooltip = true;
           tooltip-format = "Linux Mint";
         };
@@ -92,7 +92,7 @@
 
         "custom/notifications" = {
           tooltip = false;
-          format = "{icon} Notifications";
+          format = "{icon}";
           format-icons = {
             notification = "󱥁 <span foreground='red'><sup></sup></span>";
             none = "󰍥 ";

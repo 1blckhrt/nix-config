@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  nixvim,
+  ...
+}: {
   home.username = "blckhrt";
   home.homeDirectory = "/home/blckhrt";
 

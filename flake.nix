@@ -1,5 +1,6 @@
 {
   description = "NixOS & Standalone Nix configurations for 1blckhrt";
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -11,7 +12,7 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    nixgl = {
+    nixGL = {
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -23,11 +24,8 @@
       url = "github:1blckhrt/commit";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    zen-browser = {
-      url = "github:0xc000022070/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
+
   outputs = {
     self,
     nixpkgs,
@@ -36,8 +34,7 @@
     nixvim,
     pre-commit-hooks,
     commit,
-    nixgl,
-    zen-browser,
+    nixGL,
     ...
   }: let
     system = "x86_64-linux";
@@ -47,66 +44,69 @@
     # ===== Standalone home-manager configurations =====
     homeConfigurations = {
       "blckhrt@laptop" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
-        extraSpecialArgs = {
-          inputs = {
-            inherit
-              self
-              nixpkgs
-              nixpkgs-unstable
-              home-manager
-              nixvim
-              commit
-              nixgl
-              ;
+        pkgs = import nixpkgs {
+          system = "x86_64-linux";
+          config = {
+            allowUnfree = true;
+            allowUnfreePredicate = _: true;
           };
-          nixgl = nixgl.packages.${system};
+        };
+        extraSpecialArgs = {
+          inherit
+            self
+            nixpkgs
+            nixpkgs-unstable
+            home-manager
+            nixvim
+            commit
+            nixGL
+            ;
         };
         modules = [
           ./hosts/laptop/home.nix
           {
             home.packages = [
               commit.packages.${system}.default
-              zen-browser.packages."${system}".default
             ];
           }
         ];
       };
+
       "blckhrt@pc" = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
           system = "x86_64-linux";
-          config.allowUnfree = true;
-        };
-        extraSpecialArgs = {
-          inputs = {
-            inherit
-              self
-              nixpkgs
-              nixpkgs-unstable
-              home-manager
-              nixvim
-              commit
-              nixgl
-              ;
+          config = {
+            allowUnfree = true;
+            allowUnfreePredicate = _: true;
           };
-          nixgl = nixgl.packages.${system};
         };
+
+        extraSpecialArgs = {
+          inherit
+            self
+            nixpkgs
+            nixpkgs-unstable
+            home-manager
+            nixvim
+            commit
+            nixGL
+            ;
+        };
+
         modules = [
           ./hosts/pc/home.nix
           {
             home.packages = [
               commit.packages.${system}.default
-              zen-browser.packages."${system}".default
             ];
           }
         ];
       };
+
       "blckhrt@wsl" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
         extraSpecialArgs = {
-          inputs = {
-            inherit self nixpkgs home-manager nixvim commit;
-          };
+          inherit self nixpkgs home-manager nixvim commit;
         };
         modules = [
           ./hosts/wsl/home.nix
@@ -118,6 +118,7 @@
         ];
       };
     };
+
     # ===== Git hooks / formatting / linting =====
     checks = forAllSystems (system: {
       pre-commit-check = pre-commit-hooks.lib.${system}.run {
@@ -128,6 +129,7 @@
         };
       };
     });
+
     devShells = forAllSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
       check = self.checks.${system}.pre-commit-check;
@@ -142,6 +144,7 @@
           ];
       };
     });
+
     formatter =
       forAllSystems (system:
         nixpkgs.legacyPackages.${system}.alejandra);

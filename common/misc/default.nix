@@ -1,6 +1,6 @@
 {
   pkgs,
-  inputs,
+  commit,
   ...
 }: {
   home.packages = with pkgs; [
@@ -26,7 +26,7 @@
     zip
     unzip
     ntfy
-    inputs.commit.packages.x86_64-linux.default
+    commit.packages.x86_64-linux.default
     mpc
     just
   ];

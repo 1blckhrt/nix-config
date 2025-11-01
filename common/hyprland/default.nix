@@ -2,7 +2,7 @@
   pkgs,
   config,
   lib,
-  nixgl,
+  nixGL,
   inputs,
   ...
 }: {
@@ -56,17 +56,11 @@
         "systemctl --user restart hyprpaper.service"
         "systemctl --user restart xdg-desktop-portal.service"
         "systemctl --user restart swaync.service"
-        "systemctl --user restart trayscale.service"
         "nm-applet --indicator"
       ];
 
-      debug = {
-        disable_logs = false;
-        enable_stdout_logs = true;
-      };
-
       cursor.no_hardware_cursors = true;
-      monitor = ", 1920x1080@75, 0x0, 1";
+      monitor = ["HDMI-A-1, preferred, 0x0, auto" "DP-2, preferred, 1920x0, auto"];
 
       "$terminal" = "alacritty";
       "$fileManager" = "nautilus";
@@ -162,7 +156,7 @@
       "$mainMod" = "SUPER";
 
       bind = [
-        ", Print, exec, ~/.config/hypr/scripts/screenshot.sh"
+        ", Print, exec, ~/bin/screenshot.sh"
         "$mainMod, Return, exec, $terminal"
         "$mainMod, D, exec, pkill fuzzel || ${pkgs.fuzzel}/bin/fuzzel"
         "$mainMod, Q, killactive,"

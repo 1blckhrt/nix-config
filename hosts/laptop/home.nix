@@ -1,8 +1,10 @@
 {
   inputs,
   config,
-  nixgl,
   lib,
+  pkgs,
+  nixGL,
+  nixvim,
   ...
 }: {
   home.username = "blckhrt";
@@ -14,14 +16,15 @@
   };
 
   nixGL = {
-    packages = nixgl;
+    packages = nixGL.packages;
     defaultWrapper = "mesa";
+    installScripts = ["mesa"];
   };
 
   home.stateVersion = "25.05"; # DO NOT TOUCH
 
   imports = [
-    inputs.nixvim.homeModules.nixvim
+    nixvim.homeModules.nixvim
     ../../common/alacritty/default.nix
     ../../common/atuin/default.nix
     ../../common/bin/default.nix

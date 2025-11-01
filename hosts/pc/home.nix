@@ -1,15 +1,12 @@
 {
   inputs,
   config,
-  nixgl,
   lib,
+  pkgs,
+  nixGL,
+  nixvim,
   ...
-}: let
-  pkgs = import inputs.nixpkgs {
-    system = "x86_64-linux";
-    config.allowUnfree = true;
-  };
-in {
+}: {
   home.username = "blckhrt";
   home.homeDirectory = "/home/blckhrt";
 
@@ -18,14 +15,15 @@ in {
   };
 
   nixGL = {
-    packages = nixgl;
+    packages = nixGL.packages;
     defaultWrapper = "mesa";
+    installScripts = ["mesa"];
   };
 
   home.stateVersion = "25.05"; # DO NOT TOUCH
 
   imports = [
-    inputs.nixvim.homeModules.nixvim
+    nixvim.homeModules.nixvim
     ../../common/alacritty/default.nix
     ../../common/atuin/default.nix
     ../../common/bin/default.nix
@@ -59,6 +57,7 @@ in {
   home.file.".config/nixpkgs/config.nix".text = ''
     {
       allowUnfree = true;
+      allowUnfreePredicate = pkg: true;
     }
   '';
 
