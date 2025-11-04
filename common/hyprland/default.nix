@@ -62,7 +62,7 @@
       cursor.no_hardware_cursors = true;
       monitor = ["HDMI-A-1, preferred, 0x0, auto" "DP-2, preferred, 1920x0, auto"];
 
-      "$terminal" = "alacritty";
+      "$terminal" = "${pkgs.alacritty}/bin/alacritty";
       "$fileManager" = "nautilus";
 
       general = {
