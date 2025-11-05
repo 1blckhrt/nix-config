@@ -29,6 +29,7 @@
     commit.packages.x86_64-linux.default
     mpc
     just
+    devenv
   ];
 
   services.mpd = {

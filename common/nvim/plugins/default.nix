@@ -6,8 +6,6 @@
     ];
 
     plugins = {
-      persistence.enable = true;
-      harpoon.enable = true;
       wakatime.enable = true;
       web-devicons.enable = true;
       which-key.enable = true;
@@ -19,6 +17,7 @@
       noice.enable = true;
       tmux-navigator.enable = true;
       smart-splits.enable = true;
+      guess-indent.enable = true;
       telekasten = {
         enable = true;
         settings = {

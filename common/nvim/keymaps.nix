@@ -159,7 +159,6 @@ _: {
       };
     }
 
-    # Most used functions
     {
       mode = ["n"];
       key = "<leader>zf";
@@ -241,7 +240,6 @@ _: {
       };
     }
 
-    # Insert mode mapping for [[
     {
       mode = ["i"];
       key = "[[";
