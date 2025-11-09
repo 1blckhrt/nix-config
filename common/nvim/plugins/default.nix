@@ -1,5 +1,18 @@
-{pkgs, ...}: {
-  imports = [./cmp.nix ./lsp.nix ./lualine.nix ./oil.nix ./telescope.nix ./treesitter.nix ./toggleterm.nix];
+{
+  pkgs,
+  lib,
+  ...
+}: {
+  imports = [
+    ./cmp.nix
+    ./lsp.nix
+    ./lualine.nix
+    ./oil.nix
+    ./telescope.nix
+    ./treesitter.nix
+    ./toggleterm.nix
+  ];
+
   programs.nixvim = {
     extraPlugins = [
       pkgs.vimPlugins.nord-nvim
@@ -18,6 +31,14 @@
       tmux-navigator.enable = true;
       smart-splits.enable = true;
       guess-indent.enable = true;
+      alpha = {
+        enable = true;
+        theme = "dashboard";
+      };
+      transparent = {
+        enable = true;
+        autoLoad = true;
+      };
       telekasten = {
         enable = true;
         settings = {

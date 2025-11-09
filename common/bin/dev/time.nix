@@ -6,6 +6,7 @@
   home.packages = with pkgs; [
     timewarrior
     fzf
+    skim
   ];
 
   home.file."bin/timetrack" = {
@@ -155,6 +156,56 @@
           timew "$@"
           ;;
       esac
+    '';
+  };
+
+  home.file."bin/tmux-time" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+
+      # -----------------------------
+      # Categories
+      # -----------------------------
+      CATEGORIES=(
+          "PROGRAMMING"
+          "CONFIGURATION"
+          "WASTED"
+          "STOP"
+      )
+
+      # -----------------------------
+      # Select a category using sk
+      # -----------------------------
+      selected=$(printf "%s\n" "''${CATEGORIES[@]}" | sk --margin 10% --color="bw" --bind 'q:abort')
+      sk_status=$?
+
+      if [[ $sk_status -ne 0 || -z "$selected" ]]; then
+          exit 0
+      fi
+
+      # -----------------------------
+      # Setup tmux status
+      # -----------------------------
+      tmux set -g status-interval 1  # refresh every second
+
+      if [[ "$selected" == "STOP" ]]; then
+          timew stop
+          tmux set -g status-right ""
+      else
+          timew start "$selected"
+          category="$selected"
+
+          # Simplified elapsed time in HH:MM:SS
+          tmux set -g status-right "#[fg=cyan]''${category}#[default] #[fg=green]#(timew get dom.active.duration | awk '
+          {
+              h=0; m=0; s=0
+              match($0, /([0-9]+)H/, a); if(a[1]) h=a[1]
+              match($0, /([0-9]+)M/, a); if(a[1]) m=a[1]
+              match($0, /([0-9]+)S/, a); if(a[1]) s=a[1]
+              printf(\"%02d:%02d:%02d\\n\", h, m, s)
+          }')#[default]"
+      fi
     '';
   };
 }

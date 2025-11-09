@@ -2,26 +2,7 @@
   pkgs,
   config,
   ...
-}: let
-  nordColors = {
-    nord0 = "#2E3440";
-    nord1 = "#3B4252";
-    nord2 = "#434C5E";
-    nord3 = "#4C566A";
-    nord4 = "#D8DEE9";
-    nord5 = "#E5E9F0";
-    nord6 = "#ECEFF4";
-    nord7 = "#8FBCBB";
-    nord8 = "#88C0D0";
-    nord9 = "#81A1C1";
-    nord10 = "#5E81AC";
-    nord11 = "#BF616A";
-    nord12 = "#D08770";
-    nord13 = "#EBCB8B";
-    nord14 = "#A3BE8C";
-    nord15 = "#B48EAD";
-  };
-in {
+}: {
   programs.tmux = {
     enable = true;
     terminal = "tmux-256color";
@@ -30,14 +11,6 @@ in {
 
     plugins = with pkgs.tmuxPlugins; [
       vim-tmux-navigator
-
-      {
-        plugin = tmux-which-key;
-        extraConfig = ''
-          set -g @tmux-which-key-xdg-enable 1
-          set -g @tmux-which-key-disable-autobuild 0
-        '';
-      }
 
       {
         plugin = resurrect;
@@ -49,6 +22,8 @@ in {
           set -g @resurrect-capture-pane-contents 'on'
           set -g @resurrect-processes 'nvim'
           set -g @resurrect-debug 'on'
+          set -g @resurrect-strategy-nvim 'session'
+          set -g @resurrect-hook-post-save-all "sed -i 's| --cmd .*-vim-pack-dir||g; s|/etc/profiles/per-user/$USER/bin/||g; s|/nix/store/.*/bin/||g' $(readlink -f $resurrect_dir/last)"
 
           # Ensure directory exists
           if-shell "[ ! -d \"$HOME/.local/share/tmux/resurrect\" ]" \
@@ -73,13 +48,16 @@ in {
       set -ga terminal-overrides ",xterm-256color:Tc"
       set -as terminal-features ",xterm-256color:RGB"
       set -g set-clipboard on
-      set -g detach-on-destroy off
+      set -g detach-on-destroy on
       set -g escape-time 0
       set -g history-limit 1000000
       set -g mouse on
       set -g status-interval 3
       set -g allow-passthrough on
       set -g status-position top
+      set -g base-index 1
+      set -g pane-base-index 1
+      set -g renumber-windows on
 
       # Window splitting
       unbind %
@@ -102,21 +80,23 @@ in {
       # Plugin manager path
       set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.local/share/tmux/plugins"
 
+      # time tracking
+      bind t display-popup -E "$HOME/bin/tmux-time"
+
       # Status bar colors
       set -g status on
-      set -g status-bg '${nordColors.nord0}'
-      set -g status-fg '${nordColors.nord4}'
-      set -g status-left-length 50
-      set -g status-right-length 65
+      set -g status-position top
+      set -g status-left-length 100
+      set -g status-style "fg=#D8DEE9,bg=default"
+      set -g status-left "#[fg=#A3BE8C,bold] #S"
+      set -g status-right ""
       set -g status-justify absolute-centre
-
-      set -g status-left "#[fg=${nordColors.nord8},bg=${nordColors.nord0}]#[fg=${nordColors.nord1},bg=${nordColors.nord8},bold]  #S  #[fg=${nordColors.nord8},bg=${nordColors.nord0}]"
-
-      setw -g window-status-format "#[align=absolute-centre]#[fg=${nordColors.nord3},bg=${nordColors.nord0}]#[fg=${nordColors.nord4},bg=${nordColors.nord3}]  #I:#W  #[fg=${nordColors.nord3},bg=${nordColors.nord0}]"
-
-      setw -g window-status-current-format "#[align=absolute-centre]#[fg=${nordColors.nord8},bg=${nordColors.nord0}]#[fg=${nordColors.nord1},bg=${nordColors.nord8},bold]  #I:#W  #[fg=${nordColors.nord8},bg=${nordColors.nord0}]"
-
-      set -g status-right "#[fg=${nordColors.nord9},bg=${nordColors.nord0}]#[fg=${nordColors.nord1},bg=${nordColors.nord9},bold]  %Y-%m-%d  %H:%M  #h  #[fg=${nordColors.nord9},bg=${nordColors.nord0}]"
+      set -g window-status-current-format "#[fg=#88C0D0,bold]  #[underscore]#I:#W"
+      set -g window-status-format " #I:#W"
+      set -g message-style "fg=#D8DEE9,bg=default"
+      set -g mode-style "fg=#3B4252,bg=#81A1C1"
+      set -g pane-border-style "fg=#3B4252"
+      set -g pane-active-border-style "fg=#A3BE8C"
     '';
   };
 }

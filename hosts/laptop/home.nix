@@ -25,7 +25,7 @@
 
   imports = [
     nixvim.homeModules.nixvim
-    ../../common/alacritty/default.nix
+    ../../common/kitty/default.nix
     ../../common/atuin/default.nix
     ../../common/bin/default.nix
     ../../common/git/default.nix
