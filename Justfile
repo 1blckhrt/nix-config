@@ -1,4 +1,3 @@
-# ===== Home Manager configs =====
 home:
     if [ "$(hostname)" = "pc" ]; then \
         home-manager switch --flake .#blckhrt@$(hostname) --impure; \
@@ -6,7 +5,9 @@ home:
         home-manager switch --flake .#blckhrt@$(hostname); \
     fi
 
-# ===== Maintenance =====
+os:
+    sudo nixos-rebuild switch --flake .#nixos
+
 update:
     nix flake update
 

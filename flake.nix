@@ -22,66 +22,31 @@
     };
   };
 
-  outputs = {
+  outputs = inputs @ {
     self,
     nixpkgs,
     nixpkgs-unstable,
     home-manager,
     nixvim,
-    pre-commit-hooks,
     nixGL,
+    pre-commit-hooks,
     ...
   }: let
-    system = "x86_64-linux";
-    inherit (nixpkgs) lib;
-    forAllSystems = lib.genAttrs [system];
+    lib = import ./lib {inherit self nixpkgs inputs;};
+    inherit (lib) mkHome mkSystem forAllSystems;
   in {
     homeConfigurations = {
-      "blckhrt@laptop" = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          system = "x86_64-linux";
-          config = {
-            allowUnfree = true;
-            allowUnfreePredicate = _: true;
-          };
-        };
-        extraSpecialArgs = {
-          inherit self nixpkgs nixpkgs-unstable home-manager nixvim nixGL;
-        };
-        modules = [
-          ./hosts/laptop/home.nix
-        ];
-      };
-
-      "blckhrt@pc" = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          system = "x86_64-linux";
-          config = {
-            allowUnfree = true;
-            allowUnfreePredicate = _: true;
-          };
-        };
-        extraSpecialArgs = {
-          inherit self nixpkgs nixpkgs-unstable home-manager nixvim nixGL;
-        };
-        modules = [
-          ./hosts/pc/home.nix
-        ];
-      };
-
-      "blckhrt@wsl" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
-        extraSpecialArgs = {
-          inherit self nixpkgs home-manager nixvim;
-        };
-        modules = [
-          ./hosts/wsl/home.nix
-        ];
-      };
+      "blckhrt@laptop" = mkHome "x86_64-linux" [./hosts/laptop/home.nix];
+      "blckhrt@pc" = mkHome "x86_64-linux" [./hosts/pc/home.nix];
+      "blckhrt@wsl" = mkHome "x86_64-linux" [./hosts/wsl/home.nix];
     };
 
-    checks = forAllSystems (system: {
-      pre-commit-check = pre-commit-hooks.lib.${system}.run {
+    nixosConfigurations = {
+      "nixos" = mkSystem "x86_64-linux" [./hosts/nixos/configuration.nix];
+    };
+
+    checks = forAllSystems ({pkgs, ...}: {
+      pre-commit-check = pre-commit-hooks.lib.${pkgs.system}.run {
         src = ./.;
         hooks = {
           alejandra.enable = true;
@@ -90,10 +55,11 @@
       };
     });
 
-    devShells = forAllSystems (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-      check = self.checks.${system}.pre-commit-check;
-    in {
+    devShells = forAllSystems ({
+      pkgs,
+      check,
+      ...
+    }: {
       default = pkgs.mkShell {
         inherit (check) shellHook;
         buildInputs =
@@ -105,8 +71,6 @@
       };
     });
 
-    formatter =
-      forAllSystems (system:
-        nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = forAllSystems ({pkgs, ...}: pkgs.alejandra);
   };
 }
