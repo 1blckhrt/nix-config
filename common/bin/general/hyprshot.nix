@@ -3,6 +3,7 @@ _: {
     executable = true;
     text = ''
       #!/usr/bin/env bash
+
       mkdir -p "$HOME/Pictures/Screenshots"
       REGION=$(slurp) || exit 1
       FILE="$HOME/Pictures/Screenshots/Screenshot-$(date +%F_%T).png"

@@ -1,7 +1,7 @@
 _: {
   home.file."bin/cheat-sheet" = {
     text = ''
-      		#!/bin/bash
+      #!/bin/bash
 
       topic_constraint="none"
 
