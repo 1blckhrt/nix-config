@@ -1,8 +1,4 @@
 {
-  inputs,
-  config,
-  lib,
-  pkgs,
   nixGL,
   nixvim,
   ...
@@ -16,7 +12,7 @@
   };
 
   nixGL = {
-    packages = nixGL.packages;
+    inherit (nixGL) packages;
     defaultWrapper = "mesa";
     installScripts = ["mesa"];
   };
@@ -38,8 +34,6 @@
     ../../common/tmux/default.nix
     ../../common/zoxide/default.nix
     ../../common/zsh/default.nix
-
-    ./services/syncthing/default.nix
   ];
 
   xdg.configFile."environment.d/envvars.conf".text = ''

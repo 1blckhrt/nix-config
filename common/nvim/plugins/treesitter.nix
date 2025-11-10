@@ -8,6 +8,7 @@ _: {
           "javascript"
           "typescript"
           "rust"
+          "nix"
         ];
       };
     };

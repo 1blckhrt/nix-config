@@ -1,26 +1,5 @@
 {
   "nodes": {
-    "commit": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "pyproject-nix": "pyproject-nix"
-      },
-      "locked": {
-        "lastModified": 1757898770,
-        "narHash": "sha256-5bUtdDsmn7vGCGdnOEmU8WkqFpfmsSWYqh0sQPDoEGI=",
-        "owner": "1blckhrt",
-        "repo": "commit",
-        "rev": "5d469c694676d4767b3d9565d9cb08cf497c34ba",
-        "type": "github"
-      },
-      "original": {
-        "owner": "1blckhrt",
-        "repo": "commit",
-        "type": "github"
-      }
-    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -285,30 +264,8 @@
         "type": "github"
       }
     },
-    "pyproject-nix": {
-      "inputs": {
-        "nixpkgs": [
-          "commit",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1757246327,
-        "narHash": "sha256-6pNlGhwOIMfhe/RLjHdpXveKS4FyLHvlGe+KtjDild4=",
-        "owner": "nix-community",
-        "repo": "pyproject.nix",
-        "rev": "8d77f342d66ad1601cdb9d97e9388b69f64d4c8e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "pyproject.nix",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
-        "commit": "commit",
         "home-manager": "home-manager",
         "nixGL": "nixGL",
         "nixpkgs": "nixpkgs",

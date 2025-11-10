@@ -1,8 +1,6 @@
-{
-  pkgs,
-  commit,
-  ...
-}: {
+{pkgs, ...}: let
+  myPkgs = import ../../pkgs/default.nix {inherit pkgs;};
+in {
   home.packages = with pkgs; [
     coreutils
     python3
@@ -25,19 +23,16 @@
     direnv
     zip
     unzip
-    ntfy
-    commit.packages.x86_64-linux.default
     mpc
     just
     devenv
+    statix
+    myPkgs.commit
   ];
 
-  services.mpd = {
-    enable = true;
-    musicDirectory = "$HOME/Music/pi_music";
-  };
-
   fonts.fontconfig.enable = true;
-  xdg.enable = true;
-  xdg.mime.enable = true;
+  xdg = {
+    enable = true;
+    mime.enable = true;
+  };
 }

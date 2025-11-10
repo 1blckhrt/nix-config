@@ -1,8 +1,4 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
+{pkgs, ...}: {
   programs.tmux = {
     enable = true;
     terminal = "tmux-256color";
@@ -11,40 +7,9 @@
 
     plugins = with pkgs.tmuxPlugins; [
       vim-tmux-navigator
-
-      {
-        plugin = resurrect;
-        extraConfig = ''
-          # Directory for saved sessions
-          set -g @resurrect-dir "$HOME/.local/share/tmux/resurrect"
-
-          # Capture pane contents (important for nvim)
-          set -g @resurrect-capture-pane-contents 'on'
-          set -g @resurrect-processes 'nvim'
-          set -g @resurrect-debug 'on'
-          set -g @resurrect-strategy-nvim 'session'
-          set -g @resurrect-hook-post-save-all "sed -i 's| --cmd .*-vim-pack-dir||g; s|/etc/profiles/per-user/$USER/bin/||g; s|/nix/store/.*/bin/||g' $(readlink -f $resurrect_dir/last)"
-
-          # Ensure directory exists
-          if-shell "[ ! -d \"$HOME/.local/share/tmux/resurrect\" ]" \
-            "run-shell 'mkdir -p \"$HOME/.local/share/tmux/resurrect\"'"
-        '';
-      }
-
-      {
-        plugin = continuum;
-        extraConfig = ''
-          set -g @continuum-restore 'on'
-          set -g @continuum-save-interval '5'
-          set -g @continuum-boot 'on'
-          set -g @continuum-boot-options 'debug'
-          set-environment -g TMUX_CONTINUUM_DEBUG_LOG "$HOME/.tmux/tmux-continuum-debug.log"
-        '';
-      }
     ];
 
     extraConfig = ''
-      # Terminal & clipboard
       set -ga terminal-overrides ",xterm-256color:Tc"
       set -as terminal-features ",xterm-256color:RGB"
       set -g set-clipboard on
@@ -59,14 +24,12 @@
       set -g pane-base-index 1
       set -g renumber-windows on
 
-      # Window splitting
       unbind %
       bind | split-window -h -c "#{pane_current_path}"
       unbind '"'
       bind - split-window -v -c "#{pane_current_path}"
       bind c new-window -c "#{pane_current_path}"
 
-      # Resize panes
       bind -r j resize-pane -D 5
       bind -r k resize-pane -U 5
       bind -r h resize-pane -L 5
@@ -74,16 +37,13 @@
       bind -r m resize-pane -Z
       setw -g mode-keys vi
 
-      # Reload config
       bind r source-file ~/.config/tmux/tmux.conf \; display-message "Config reloaded!"
 
-      # Plugin manager path
       set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.local/share/tmux/plugins"
 
       # time tracking
       bind t display-popup -E "$HOME/bin/tmux-time"
 
-      # Status bar colors
       set -g status on
       set -g status-position top
       set -g status-left-length 100

@@ -1,3 +1,3 @@
 _: {
-  imports = [./dev/default.nix ./notes/default.nix];
+  imports = [./dev/default.nix ./general/default.nix];
 }

@@ -28,7 +28,6 @@ _: {
     };
 
     extraConfigLua = ''
-
       -- Colorscheme
       vim.cmd("colorscheme nord")
 

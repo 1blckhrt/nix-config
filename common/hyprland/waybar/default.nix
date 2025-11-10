@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+_: {
   programs.waybar = {
     enable = true;
     systemd.enable = true;
@@ -189,13 +189,6 @@
       }
     '';
   };
-
-  # Optional for system tray in Wayland
-  home.packages = with pkgs; [
-    snixembed
-    networkmanagerapplet
-    libappindicator-gtk3
-  ];
 
   systemd.user.services.snixembed.Unit.After = [
     "graphical-session.target"

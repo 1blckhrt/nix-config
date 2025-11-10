@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+_: {
   programs.fuzzel = {
     enable = true;
     settings = {

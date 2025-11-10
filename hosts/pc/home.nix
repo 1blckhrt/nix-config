@@ -1,8 +1,4 @@
 {
-  inputs,
-  config,
-  lib,
-  pkgs,
   nixGL,
   nixvim,
   ...
@@ -15,7 +11,7 @@
   };
 
   nixGL = {
-    packages = nixGL.packages;
+    inherit (nixGL) packages;
     defaultWrapper = "mesa";
     installScripts = ["mesa"];
   };
@@ -27,7 +23,6 @@
     ../../common/kitty/default.nix
     ../../common/atuin/default.nix
     ../../common/bin/default.nix
-    ../../common/i3/default.nix
     ../../common/hyprland/default.nix
     ../../common/git/default.nix
     ../../common/misc/default.nix

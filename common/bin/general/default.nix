@@ -1,0 +1,3 @@
+{...}: {
+  imports = [./hyprshot.nix];
+}

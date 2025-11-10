@@ -1,12 +1,9 @@
 {
   pkgs,
   config,
-  lib,
-  nixGL,
-  inputs,
   ...
 }: {
-  imports = [./waybar/default.nix ./hyprpaper/default.nix ./fuzzel/default.nix];
+  imports = [./waybar/default.nix ./hyprpaper/default.nix ./fuzzel/default.nix ./wlogout/default.nix];
   # Core packages
   home.packages = with pkgs; [
     brightnessctl
@@ -16,35 +13,27 @@
     snixembed
     networkmanagerapplet
     libappindicator-gtk3
-    hyprlock
+    hyprpolkitagent
+    swaynotificationcenter
+    cliphist
+    pulseaudio
+    libnotify
+    pango
+    playerctl
+    nautilus
+    font-awesome
+    nerd-fonts.jetbrains-mono
+    pavucontrol
   ];
 
-  # Screenshot script
-  home.file."bin/screenshot.sh" = {
-    executable = true;
-    text = ''
-      #!/usr/bin/env bash
-      mkdir -p "$HOME/Pictures/Screenshots"
-      REGION=$(slurp) || exit 1
-      FILE="$HOME/Pictures/Screenshots/Screenshot-$(date +%F_%T).png"
-      grim -g "$REGION" "$FILE" || exit 1
-      wl-copy < "$FILE"
-      notify-send "Screenshot saved and copied!"
-    '';
+  services = {
+    swaync.enable = true;
+    hyprpolkitagent.enable = true;
+    cliphist.enable = true;
   };
 
-  # Services
-  services.swaync.enable = true;
-  services.hyprpolkitagent.enable = true;
-  services.cliphist.enable = true;
+  systemd.user.services.snixembed.Unit.After = ["graphical-session.target" "dbus.service"];
 
-  # System tray embed
-  systemd.user.services.snixembed.Unit.After = [
-    "graphical-session.target"
-    "dbus.service"
-  ];
-
-  # Hyprland configuration
   wayland.windowManager.hyprland = {
     enable = true;
     package = config.lib.nixGL.wrap pkgs.hyprland;
@@ -56,6 +45,8 @@
         "systemctl --user restart hyprpaper.service"
         "systemctl --user restart xdg-desktop-portal.service"
         "systemctl --user restart swaync.service"
+        "systemctl --user restart hyprpolkitagent.service"
+        "systemctl --user restart cliphist.service"
         "nm-applet --indicator"
       ];
 
@@ -63,7 +54,7 @@
       monitor = ["HDMI-A-1, preferred, 0x0, auto" "DP-2, preferred, 1920x0, auto"];
 
       "$terminal" = "${pkgs.kitty}/bin/kitty";
-      "$fileManager" = "nautilus";
+      "$fileManager" = "${pkgs.nautilus}/bin/nautilus";
 
       general = {
         gaps_in = 5;
@@ -156,7 +147,7 @@
       "$mainMod" = "SUPER";
 
       bind = [
-        ", Print, exec, ~/bin/screenshot.sh"
+        ", Print, exec, ~/bin/hyprshot"
         "$mainMod, Return, exec, $terminal"
         "$mainMod, D, exec, pkill fuzzel || ${pkgs.fuzzel}/bin/fuzzel"
         "$mainMod, Q, killactive,"
@@ -221,10 +212,7 @@
         "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch cliphist store"
       ];
 
-      env = [
-        "XCURSOR_SIZE,24"
-        "HYPRCURSOR_SIZE,24"
-      ];
+      env = ["XCURSOR_SIZE,20" "HYPRCURSOR_SIZE,20"];
     };
   };
 }

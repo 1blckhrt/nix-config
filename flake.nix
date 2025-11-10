@@ -20,10 +20,6 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    commit = {
-      url = "github:1blckhrt/commit";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
@@ -33,15 +29,13 @@
     home-manager,
     nixvim,
     pre-commit-hooks,
-    commit,
     nixGL,
     ...
   }: let
     system = "x86_64-linux";
-    lib = nixpkgs.lib;
+    inherit (nixpkgs) lib;
     forAllSystems = lib.genAttrs [system];
   in {
-    # ===== Standalone home-manager configurations =====
     homeConfigurations = {
       "blckhrt@laptop" = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
@@ -52,23 +46,10 @@
           };
         };
         extraSpecialArgs = {
-          inherit
-            self
-            nixpkgs
-            nixpkgs-unstable
-            home-manager
-            nixvim
-            commit
-            nixGL
-            ;
+          inherit self nixpkgs nixpkgs-unstable home-manager nixvim nixGL;
         };
         modules = [
           ./hosts/laptop/home.nix
-          {
-            home.packages = [
-              commit.packages.${system}.default
-            ];
-          }
         ];
       };
 
@@ -80,46 +61,25 @@
             allowUnfreePredicate = _: true;
           };
         };
-
         extraSpecialArgs = {
-          inherit
-            self
-            nixpkgs
-            nixpkgs-unstable
-            home-manager
-            nixvim
-            commit
-            nixGL
-            ;
+          inherit self nixpkgs nixpkgs-unstable home-manager nixvim nixGL;
         };
-
         modules = [
           ./hosts/pc/home.nix
-          {
-            home.packages = [
-              commit.packages.${system}.default
-            ];
-          }
         ];
       };
 
       "blckhrt@wsl" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
         extraSpecialArgs = {
-          inherit self nixpkgs home-manager nixvim commit;
+          inherit self nixpkgs home-manager nixvim;
         };
         modules = [
           ./hosts/wsl/home.nix
-          {
-            home.packages = [
-              commit.packages.${system}.default
-            ];
-          }
         ];
       };
     };
 
-    # ===== Git hooks / formatting / linting =====
     checks = forAllSystems (system: {
       pre-commit-check = pre-commit-hooks.lib.${system}.run {
         src = ./.;
