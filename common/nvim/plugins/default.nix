@@ -29,6 +29,7 @@
       tmux-navigator.enable = true;
       smart-splits.enable = true;
       guess-indent.enable = true;
+      gitsigns.enable = true;
 
       noice = {
         enable = true;
@@ -39,13 +40,6 @@
             long_message_to_split = true;
           };
         };
-      };
-
-      gitsigns.enable = true;
-
-      alpha = {
-        enable = true;
-        theme = "dashboard";
       };
 
       transparent = {
