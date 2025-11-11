@@ -8,7 +8,6 @@ _: {
 
   programs.nixvim = {
     enable = true;
-    plugins.lazy.enable = true;
 
     viAlias = true;
     vimAlias = true;
@@ -20,16 +19,9 @@ _: {
       virtual_lines.current_line = true;
     };
 
-    performance.byteCompileLua = {
-      enable = true;
-      configs = true;
-      plugins = true;
-      nvimRuntime = true;
-    };
+    colorschemes.nord.enable = true;
 
     extraConfigLua = ''
-      -- Colorscheme
-      vim.cmd("colorscheme nord")
 
       -- Telescope setup
       local builtin = require("telescope.builtin")

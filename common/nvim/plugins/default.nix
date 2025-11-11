@@ -10,8 +10,12 @@
   ];
 
   programs.nixvim = {
-    extraPlugins = [
-      pkgs.vimPlugins.nord-nvim
+    extraPlugins = with pkgs.vimPlugins; [
+      nord-nvim
+      mini-nvim
+      plenary-nvim
+      nui-nvim
+      nvim-notify
     ];
 
     plugins = {
@@ -22,24 +26,36 @@
       hop.enable = true;
       indent-blankline.enable = true;
       nvim-autopairs.enable = true;
-      barbecue.enable = true;
-      noice.enable = true;
       tmux-navigator.enable = true;
       smart-splits.enable = true;
       guess-indent.enable = true;
+
+      noice = {
+        enable = true;
+        settings = {
+          presets = {
+            bottom_search = true;
+            command_palette = true;
+            long_message_to_split = true;
+          };
+        };
+      };
+
+      gitsigns.enable = true;
+
       alpha = {
         enable = true;
         theme = "dashboard";
       };
+
       transparent = {
         enable = true;
         autoLoad = true;
       };
+
       telekasten = {
         enable = true;
-        settings = {
-          home = "/home/blckhrt/doc/01 - Index/";
-        };
+        settings.home = "/home/blckhrt/doc/01 - Index/";
       };
     };
   };

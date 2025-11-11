@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -91,6 +87,9 @@
       automatic = true;
       dates = ["weekly"];
     };
+    extraOptions = ''
+      trusted-users = root blckhrt
+    '';
   };
 
   environment.systemPackages = with pkgs; [

@@ -1,5 +1,8 @@
-{nixGL, ...}: {
+{...}: {
   home = {
+    username = "blckhrt";
+    homeDirectory = "/home/blckhrt";
+    stateVersion = "25.05"; # DO NOT TOUCH
     sessionPath = [
       "$HOME/.local/bin"
       "$HOME/bin"
@@ -16,19 +19,11 @@
     allowUnfreePredicate = pkg: true;
   };
 
-  nixGL = {
-    inherit (nixGL) packages;
-    defaultWrapper = "mesa";
-    installScripts = ["mesa"];
-  };
-
   imports = [
     ../../common/kitty/default.nix
     ../../common/atuin/default.nix
     ../../common/bin/default.nix
     ../../common/git/default.nix
-    ../../common/hyprland/default.nix
-    ../../common/i3/default.nix
     ../../common/misc/default.nix
     ../../common/nvim/default.nix
     ../../common/ssh/default.nix

@@ -1,6 +1,5 @@
 _: {
   programs.nixvim = {
-    extraConfigLua = builtins.readFile ./cmp.lua;
     plugins = {
       luasnip.enable = true;
       cmp-nvim-lsp.enable = true;
@@ -8,15 +7,6 @@ _: {
       cmp-path.enable = true;
       cmp_luasnip.enable = true;
       cmp-cmdline.enable = true;
-      copilot-cmp.enable = true;
-
-      copilot-lua = {
-        enable = true;
-        settings = {
-          suggestion.enabled = false;
-          panel.enabled = false;
-        };
-      };
 
       lspkind = {
         enable = true;
@@ -58,7 +48,6 @@ _: {
               option.get_bufnrs.__raw = "vim.api.nvim_list_bufs";
               keywordLength = 3;
             }
-            {name = "copilot";}
             {
               name = "path";
               keywordLength = 3;

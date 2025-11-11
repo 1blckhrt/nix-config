@@ -22,7 +22,7 @@
     };
   };
 
-  outputs = inputs @ {
+  outputs = {
     self,
     nixpkgs,
     nixpkgs-unstable,
@@ -31,46 +31,81 @@
     nixGL,
     pre-commit-hooks,
     ...
-  }: let
-    lib = import ./lib {inherit self nixpkgs inputs;};
-    inherit (lib) mkHome mkSystem forAllSystems;
-  in {
-    homeConfigurations = {
-      "blckhrt@laptop" = mkHome "x86_64-linux" [./hosts/laptop/home.nix];
-      "blckhrt@pc" = mkHome "x86_64-linux" [./hosts/pc/home.nix];
-      "blckhrt@wsl" = mkHome "x86_64-linux" [./hosts/wsl/home.nix];
-    };
+  } @ inputs: rec {
+    lib = nixpkgs.lib // home-manager.lib // (import ./lib {inherit nixpkgs self;});
 
     nixosConfigurations = {
-      "nixos" = mkSystem "x86_64-linux" [./hosts/nixos/configuration.nix];
+      nixos = nixpkgs.lib.nixosSystem {
+        specialArgs = {tools = lib;};
+        modules = [
+          ./hosts/nixos/configuration.nix
+          {
+            system.stateVersion = "25.05";
+          }
+          inputs.home-manager.nixosModules.home-manager
+          {
+            users.users.blckhrt.isNormalUser = true;
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.blckhrt = {
+                home.stateVersion = "25.05";
+                imports = [./hosts/nixos/home.nix inputs.nixvim.homeModules.nixvim];
+              };
+            };
+          }
+        ];
+      };
     };
 
-    checks = forAllSystems ({pkgs, ...}: {
-      pre-commit-check = pre-commit-hooks.lib.${pkgs.system}.run {
+    standaloneHomeConfigurations = ["laptop" "wsl" "pc"];
+
+    standaloneHomeManagers = lib.genAttrs standaloneHomeConfigurations (
+      host:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            config = {
+              allowUnfree = true;
+              allowUnfreePredicate = _: true;
+            };
+          };
+          extraSpecialArgs = {
+            inherit self nixpkgs nixpkgs-unstable home-manager nixvim nixGL;
+          };
+          modules = [./hosts/${host}/home.nix];
+          homeDirectory = "/home/blckhrt";
+          username = "blckhrt";
+          stateVersion = "25.05"; # DO NOT TOUCH
+          imports = [inputs.nixvim.homeModules.nixvim];
+        }
+    );
+
+    checks = lib.forAllSystems ({system, ...}: {
+      pre-commit-check = pre-commit-hooks.lib.${system}.run {
         src = ./.;
         hooks = {
-          alejandra.enable = true;
+          statix = {
+            enable = true;
+            settings.ignore = ["/.direnv" "hardware-configuration.nix"];
+          };
           convco.enable = true;
+          alejandra.enable = true;
         };
       };
     });
 
-    devShells = forAllSystems ({
+    devShells = lib.forAllSystems ({
       pkgs,
       check,
       ...
     }: {
       default = pkgs.mkShell {
         inherit (check) shellHook;
-        buildInputs =
-          check.enabledPackages
-          ++ [
-            pkgs.alejandra
-            pkgs.convco
-          ];
+        buildInputs = check.enabledPackages;
       };
     });
 
-    formatter = forAllSystems ({pkgs, ...}: pkgs.alejandra);
+    formatter = lib.forAllSystems ({pkgs, ...}: pkgs.alejandra);
   };
 }

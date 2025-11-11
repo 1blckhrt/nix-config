@@ -1,16 +1,17 @@
+HOSTNAME := `hostname`
+
+# Home Manager
 home:
-    if [ "$(hostname)" = "pc" ]; then \
-        home-manager switch --flake .#blckhrt@$(hostname) --impure; \
-    else \
-        home-manager switch --flake .#blckhrt@$(hostname); \
-    fi
+    home-manager switch --flake .#blckhrt@{{HOSTNAME}}
 
+# NixOS rebuild
 os:
-    sudo nixos-rebuild switch --flake .#nixos
+    sudo nixos-rebuild switch --flake .#{{HOSTNAME}}
 
+# Update flake
 update:
     nix flake update
 
+# Garbage collection
 gc:
     nix-collect-garbage -d
-

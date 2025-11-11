@@ -1,13 +1,19 @@
-{
-  nixGL,
-  nixvim,
-  ...
-}: {
-  home.username = "blckhrt";
-  home.homeDirectory = "/home/blckhrt";
+{nixGL, ...}: {
+  home = {
+    sessionPath = [
+      "$HOME/.local/bin"
+      "$HOME/bin"
+    ];
+    sessionVariables = {
+      EDITOR = "nvim";
+      TERMINAL = "kitty";
+      NIXOS_OZONE_WL = "1";
+    };
+  };
 
   nixpkgs.config = {
     allowUnfree = true;
+    allowUnfreePredicate = pkg: true;
   };
 
   nixGL = {
@@ -16,15 +22,13 @@
     installScripts = ["mesa"];
   };
 
-  home.stateVersion = "25.05"; # DO NOT TOUCH
-
   imports = [
-    nixvim.homeModules.nixvim
     ../../common/kitty/default.nix
     ../../common/atuin/default.nix
     ../../common/bin/default.nix
-    ../../common/hyprland/default.nix
     ../../common/git/default.nix
+    ../../common/hyprland/default.nix
+    ../../common/i3/default.nix
     ../../common/misc/default.nix
     ../../common/nvim/default.nix
     ../../common/ssh/default.nix
@@ -38,23 +42,6 @@
     PATH="$HOME/.nix-profile/bin:$PATH"
   '';
 
-  home.sessionPath = [
-    "$HOME/.local/bin"
-    "$HOME/bin"
-  ];
-
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    TERMINAL = "alacritty";
-    NIXOS_OZONE_WL = "1";
-  };
-
-  home.file.".config/nixpkgs/config.nix".text = ''
-    {
-      allowUnfree = true;
-      allowUnfreePredicate = pkg: true;
-    }
-  '';
-
+  # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }

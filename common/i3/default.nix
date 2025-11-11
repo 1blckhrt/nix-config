@@ -13,177 +13,163 @@ in {
     ./packages.nix
   ];
 
-  home.file.".xinitrc" = {
-    text = ''
-      #!/bin/sh
-      exec /home/blckhrt/.nix-profile/bin/i3
-    '';
-    executable = true;
-  };
+  home.file = {
+    ".xinitrc" = {
+      text = ''
+        #!/bin/sh
+        exec /home/blckhrt/.nix-profile/bin/i3
+      '';
+      executable = true;
+    };
 
-  home.file."bin/brightness" = {
-    text = ''
-      #!/usr/bin/env bash
-      case "$1" in
-        up) brightnessctl set +10% ;;
-        down) brightnessctl set 10%- ;;
-      esac
-    '';
-    executable = true;
-  };
+    "bin/brightness" = {
+      text = ''
+        #!/usr/bin/env bash
+        case "$1" in
+          up) brightnessctl set +10% ;;
+          down) brightnessctl set 10%- ;;
+        esac
+      '';
+      executable = true;
+    };
 
-  home.file."bin/power" = {
-    text = ''
-      #!/usr/bin/env bash
-      chosen=$(printf " Logout\n Reboot\n Poweroff" | rofi -dmenu -p "Power")
+    "bin/power" = {
+      text = ''
+        #!/usr/bin/env bash
+        chosen=$(printf " Logout\n Reboot\n Poweroff" | rofi -dmenu -p "Power")
 
-      case "$chosen" in
-      	" Logout") i3-msg exit ;;
-      	" Reboot") systemctl reboot ;;
-      	" Poweroff") systemctl poweroff ;;
-      esac
-    '';
-    executable = true;
-  };
+        case "$chosen" in
+          " Logout") i3-msg exit ;;
+          " Reboot") systemctl reboot ;;
+          " Poweroff") systemctl poweroff ;;
+        esac
+      '';
+      executable = true;
+    };
 
-  home.file."bin/screenshot" = {
-    text = ''
-      #!/usr/bin/env bash
+    "bin/screenshot" = {
+      text = ''
+        #!/usr/bin/env bash
 
-      choice=$(printf "Full Screen\nWindow\nRegion" | rofi -dmenu -p "Screenshot:")
-      [[ -z "$choice" ]] && exit 0
+        choice=$(printf "Full Screen\nWindow\nRegion" | rofi -dmenu -p "Screenshot:")
+        [[ -z "$choice" ]] && exit 0
 
-      dir="$HOME/Pictures/Screenshots"
-      mkdir -p "$dir"
-      file="$dir/$(date +%F_%T).png"
+        dir="$HOME/Pictures/Screenshots"
+        mkdir -p "$dir"
+        file="$dir/$(date +%F_%T).png"
 
-      # Give Rofi a moment to disappear
-      sleep 0.5
+        sleep 0.5
 
-      # Check if picom is running
-      picom_running=false
-      if pgrep -x picom > /dev/null; then
-          picom_running=true
-          killall picom
-          sleep 0.2
-      fi
+        picom_running=false
+        if pgrep -x picom > /dev/null; then
+            picom_running=true
+            killall picom
+            sleep 0.2
+        fi
 
-      # Take screenshot
-      case "$choice" in
-          "Full Screen") maim "$file" ;;
-          "Window") maim -i "$(xdotool getactivewindow)" "$file" ;;
-          "Region") maim -s "$file" ;;
-      esac
+        case "$choice" in
+            "Full Screen") maim "$file" ;;
+            "Window") maim -i "$(xdotool getactivewindow)" "$file" ;;
+            "Region") maim -s "$file" ;;
+        esac
 
-      # Restart picom if it was running
-      if $picom_running; then
-          picom --daemon &
-      fi
+        if $picom_running; then
+            picom --daemon &
+        fi
 
-      # Copy to clipboard
-      if [[ -f "$file" ]]; then
-          xclip -selection clipboard -t image/png -i "$file"
-          notify-send "Screenshot saved and copied to clipboard" "$file"
-      else
-          notify-send "Screenshot failed" "No file was created"
-      fi
-    '';
-    executable = true;
-  };
+        if [[ -f "$file" ]]; then
+            xclip -selection clipboard -t image/png -i "$file"
+            notify-send "Screenshot saved and copied to clipboard" "$file"
+        else
+            notify-send "Screenshot failed" "No file was created"
+        fi
+      '';
+      executable = true;
+    };
 
-  home.file."bin/music" = {
-    text = ''
-      #!/usr/bin/env bash
+    "bin/music" = {
+      text = ''
+        #!/usr/bin/env bash
 
-      # ====== CONFIG ======
-      MPD_HOST="localhost"
-      MUSIC_MOUNT="$HOME/Music/pi_music"
-      SAMBA_SHARE="//100.117.199.69/music"
-      SAMBA_USER="pi"
+        MPD_HOST="localhost"
+        MUSIC_MOUNT="$HOME/Music/pi_music"
+        SAMBA_SHARE="//100.117.199.69/music"
+        SAMBA_USER="pi"
 
-      # ====== Ensure mount exists ======
-      mkdir -p "$MUSIC_MOUNT"
+        mkdir -p "$MUSIC_MOUNT"
 
-      # ====== Mount Samba share if not already mounted ======
-      if ! mountpoint -q "$MUSIC_MOUNT"; then
-          echo "Mounting Samba share..."
-          if ! sudo mount -t cifs "$SAMBA_SHARE" "$MUSIC_MOUNT" -o user="$SAMBA_USER"; then
-              notify-send "🎵 Music Error" "Failed to mount Samba share $SAMBA_SHARE"
-              exit 1
-          fi
-          # Update MPD database after mounting
-          mpc update
-      fi
+        if ! mountpoint -q "$MUSIC_MOUNT"; then
+            echo "Mounting Samba share..."
+            if ! sudo mount -t cifs "$SAMBA_SHARE" "$MUSIC_MOUNT" -o user="$SAMBA_USER"; then
+                notify-send "🎵 Music Error" "Failed to mount Samba share $SAMBA_SHARE"
+                exit 1
+            fi
+            mpc update
+        fi
 
-      # ====== Check MPD ======
-      if ! mpc status >/dev/null 2>&1; then
-          notify-send "🎵 MPD Error" "MPD is not running locally"
-          exit 1
-      fi
+        if ! mpc status >/dev/null 2>&1; then
+            notify-send "🎵 MPD Error" "MPD is not running locally"
+            exit 1
+        fi
 
-      # ====== Options menu ======
-      options="▶️ Play/Pause
-      ⏭️ Next
-      ⏮️ Previous
-      ⏹️ Stop
-      🎵 Now Playing
-      📂 Choose Playlist
-      💿 Browse Albums
-      🔍 Search Song"
+        options="▶️ Play/Pause
+        ⏭️ Next
+        ⏮️ Previous
+        ⏹️ Stop
+        🎵 Now Playing
+        📂 Choose Playlist
+        💿 Browse Albums
+        🔍 Search Song"
 
-      chosen=$(echo "$options" | rofi -dmenu -i -p "Music Dashboard")
+        chosen=$(echo "$options" | rofi -dmenu -i -p "Music Dashboard")
 
-      case "$chosen" in
-          "▶️ Play/Pause")
-              mpc toggle
-              ;;
-          "⏭️ Next")
-              mpc next
-              ;;
-          "⏮️ Previous")
-              mpc prev
-              ;;
-          "⏹️ Stop")
-              mpc stop
-              ;;
-          "🎵 Now Playing")
-              nowplaying=$(mpc current)
-              [ -z "$nowplaying" ] && nowplaying="Nothing playing"
-              notify-send "Now Playing" "$nowplaying"
-              ;;
-          "📂 Choose Playlist")
-              playlists=$(mpc lsplaylists)
-              [ -z "$playlists" ] && notify-send "No playlists found" && exit 0
-              selected=$(echo "$playlists" | rofi -dmenu -i -p 'Select Playlist')
-              if [ -n "$selected" ]; then
-                  mpc clear
-                  mpc load "$selected"
-                  mpc play
-              fi
-              ;;
-          "💿 Browse Albums")
-              albums=$(mpc list album | sort -u)
-              [ -z "$albums" ] && notify-send "No albums found" && exit 0
-              album=$(echo "$albums" | rofi -dmenu -i -p 'Select Album')
-              if [ -n "$album" ]; then
-                  mpc clear
-                  mpc findadd album "$album"
-                  mpc play
-              fi
-              ;;
-          "🔍 Search Song")
-              songs=$(mpc listall | rofi -dmenu -i -p 'Search Song')
-              [ -z "$songs" ] && notify-send "No songs found" && exit 0
-              mpc clear
-              mpc add "$songs"
-              mpc play
-              ;;
-          *)
-              exit 0
-              ;;
-      esac
-    '';
-    executable = true;
+        case "$chosen" in
+            "▶️ Play/Pause") mpc toggle ;;
+            "⏭️ Next") mpc next ;;
+            "⏮️ Previous") mpc prev ;;
+            "⏹️ Stop") mpc stop ;;
+            "🎵 Now Playing")
+                nowplaying=$(mpc current)
+                [ -z "$nowplaying" ] && nowplaying="Nothing playing"
+                notify-send "Now Playing" "$nowplaying"
+                ;;
+            "📂 Choose Playlist")
+                playlists=$(mpc lsplaylists)
+                [ -z "$playlists" ] && notify-send "No playlists found" && exit 0
+                selected=$(echo "$playlists" | rofi -dmenu -i -p 'Select Playlist')
+                [ -n "$selected" ] && mpc clear && mpc load "$selected" && mpc play
+                ;;
+            "💿 Browse Albums")
+                albums=$(mpc list album | sort -u)
+                [ -z "$albums" ] && notify-send "No albums found" && exit 0
+                album=$(echo "$albums" | rofi -dmenu -i -p 'Select Album')
+                [ -n "$album" ] && mpc clear && mpc findadd album "$album" && mpc play
+                ;;
+            "🔍 Search Song")
+                songs=$(mpc listall | rofi -dmenu -i -p 'Search Song')
+                [ -z "$songs" ] && notify-send "No songs found" && exit 0
+                mpc clear && mpc add "$songs" && mpc play
+                ;;
+            *) exit 0 ;;
+        esac
+      '';
+      executable = true;
+    };
+
+    "bin/clipboard" = {
+      text = ''
+        #!/usr/bin/env bash
+
+        SELECTION=$(cliphist list | rofi -dmenu -p "Clipboard")
+
+        if [ -n "$SELECTION" ]; then
+            cliphist decode <<< "$SELECTION" | xsel --clipboard --input
+            cliphist decode <<< "$SELECTION" | xsel --primary --input
+            notify-send "Clipboard" "Copied selection to clipboard"
+        fi
+      '';
+      executable = true;
+    };
   };
 
   xsession = {
@@ -212,6 +198,7 @@ in {
           "${mod}+d" = "exec ${pkgs.rofi}/bin/rofi -show drun -cache-clear";
           "${mod}+Shift+r" = "exec ${pkgs.i3}/bin/i3-msg restart";
           "${mod}+Shift+e" = "exec --no-startup-id ~/bin/power";
+
           "${mod}+Left" = "focus left";
           "${mod}+Down" = "focus down";
           "${mod}+Up" = "focus up";
@@ -270,9 +257,7 @@ in {
           ];
         };
 
-        floating = {
-          modifier = "Mod4";
-        };
+        floating = {modifier = "Mod4";};
 
         gaps = {
           inner = 12;
@@ -280,45 +265,44 @@ in {
         };
 
         colors = {
-          # Nord color palette reference
           focused = {
-            border = "#81A1C1"; # nord9
-            background = "#3B4252"; # nord1
-            text = "#ECEFF4"; # nord6
-            indicator = "#88C0D0"; # nord8
-            childBorder = "#81A1C1"; # nord9
+            border = "#81A1C1";
+            background = "#3B4252";
+            text = "#ECEFF4";
+            indicator = "#88C0D0";
+            childBorder = "#81A1C1";
           };
 
           focusedInactive = {
-            border = "#4C566A"; # nord3
-            background = "#3B4252"; # nord1
-            text = "#D8DEE9"; # nord4
-            indicator = "#4C566A"; # nord3
-            childBorder = "#4C566A"; # nord3
+            border = "#4C566A";
+            background = "#3B4252";
+            text = "#D8DEE9";
+            indicator = "#4C566A";
+            childBorder = "#4C566A";
           };
 
           unfocused = {
-            border = "#3B4252"; # nord1
-            background = "#2E3440"; # nord0
-            text = "#D8DEE9"; # nord4
-            indicator = "#3B4252"; # nord1
-            childBorder = "#3B4252"; # nord1
+            border = "#3B4252";
+            background = "#2E3440";
+            text = "#D8DEE9";
+            indicator = "#3B4252";
+            childBorder = "#3B4252";
           };
 
           urgent = {
-            border = "#BF616A"; # nord11
-            background = "#3B4252"; # nord1
-            text = "#ECEFF4"; # nord6
-            indicator = "#BF616A"; # nord11
-            childBorder = "#BF616A"; # nord11
+            border = "#BF616A";
+            background = "#3B4252";
+            text = "#ECEFF4";
+            indicator = "#BF616A";
+            childBorder = "#BF616A";
           };
 
           placeholder = {
-            border = "#2E3440"; # nord0
-            background = "#2E3440"; # nord0
-            text = "#D8DEE9"; # nord4
-            indicator = "#2E3440"; # nord0
-            childBorder = "#2E3440"; # nord0
+            border = "#2E3440";
+            background = "#2E3440";
+            text = "#D8DEE9";
+            indicator = "#2E3440";
+            childBorder = "#2E3440";
           };
         };
 
@@ -383,7 +367,6 @@ in {
           position top
           font pango:JetBrainsMono NF 10
           status_command i3blocks
-
           tray_padding 4
           tray_output primary
 
@@ -399,24 +382,5 @@ in {
         }
       '';
     };
-  };
-
-  home.file."bin/clipboard" = {
-    text = ''
-      #!/usr/bin/env bash
-
-      # Show clipboard history in Rofi
-      SELECTION=$(cliphist list | rofi -dmenu -p "Clipboard")
-
-      if [ -n "$SELECTION" ]; then
-          # Decode the selected item and copy to clipboard and primary
-          cliphist decode <<< "$SELECTION" | xsel --clipboard --input
-          cliphist decode <<< "$SELECTION" | xsel --primary --input
-
-          notify-send "Clipboard" "Copied selection to clipboard"
-      fi
-
-    '';
-    executable = true;
   };
 }
