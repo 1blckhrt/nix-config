@@ -33,13 +33,14 @@
   services = {
     xserver = {
       enable = true;
-      displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
       xkb = {
         layout = "us";
         variant = "";
       };
     };
+
+    displayManager.ly.enable = true;
 
     printing.enable = true;
 
@@ -102,4 +103,15 @@
   ];
 
   system.stateVersion = "25.05";
+
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+    xwayland.enable = true;
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [xdg-desktop-portal-hyprland];
+  };
 }
