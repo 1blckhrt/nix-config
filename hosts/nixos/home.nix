@@ -31,6 +31,7 @@
     ../../common/tmux/default.nix
     ../../common/zoxide/default.nix
     ../../common/zsh/default.nix
+    ../../common/temp-dir/default.nix
   ];
 
   xdg.configFile."environment.d/envvars.conf".text = ''
@@ -39,4 +40,6 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  wayland.windowManager.hyprland.enable = true;
 }
