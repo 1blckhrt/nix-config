@@ -57,19 +57,23 @@
 
   security.rtkit.enable = true;
 
-  users.users.blckhrt = {
-    isNormalUser = true;
-    description = "Parker Williams";
-    extraGroups = ["networkmanager" "wheel"];
-    packages = with pkgs; [
-      vim
-      gh
-      vscode-fhs
-    ];
+  users = {
+    defaultUserShell = pkgs.zsh;
+    users.blckhrt = {
+      isNormalUser = true;
+      description = "Parker Williams";
+      extraGroups = ["networkmanager" "wheel"];
+      packages = with pkgs; [
+        vim
+        gh
+        vscode-fhs
+      ];
+    };
   };
 
   programs = {
     firefox.enable = true;
+    zsh.enable = true;
   };
 
   nixpkgs.config.allowUnfree = true;
