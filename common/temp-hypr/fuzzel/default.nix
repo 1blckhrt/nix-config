@@ -5,6 +5,4 @@
   in {
     "fuzzel".source = mkSymlink confPath;
   };
-
-  programs.fuzzel.enable = true;
 }

@@ -11,6 +11,27 @@ _: {
 
     {
       mode = ["n"];
+      key = "<C-n>";
+      action = ":NvimTreeToggle<CR>";
+      options = {
+        noremap = true;
+        silent = true;
+        desc = "Open file tree";
+      };
+    }
+
+    {
+      mode = ["n"];
+      key = "<leader>e";
+      action = ":NvimTreeToggle<CR>";
+      options = {
+        noremap = true;
+        silent = true;
+      };
+    }
+
+    {
+      mode = ["n"];
       key = "<CR>";
       action = "<cmd>lua require('hop').hint_words()<CR>";
       options = {
@@ -139,13 +160,6 @@ _: {
       key = "q";
       mode = "n";
       options.desc = "Easier redo.";
-    }
-
-    {
-      action = ":Oil<CR>";
-      key = "-";
-      mode = "n";
-      options.desc = "Open parent directory";
     }
 
     {

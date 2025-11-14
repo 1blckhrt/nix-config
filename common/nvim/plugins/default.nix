@@ -3,7 +3,6 @@
     ./cmp.nix
     ./lsp.nix
     ./lualine.nix
-    ./oil.nix
     ./telescope.nix
     ./treesitter.nix
     ./toggleterm.nix
@@ -14,7 +13,6 @@
       mini-nvim
       plenary-nvim
       nui-nvim
-      nvim-notify
     ];
 
     plugins = {
@@ -29,6 +27,7 @@
       smart-splits.enable = true;
       guess-indent.enable = true;
       gitsigns.enable = true;
+      nvim-tree.enable = true;
 
       noice = {
         enable = true;

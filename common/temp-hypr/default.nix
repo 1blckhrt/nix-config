@@ -9,5 +9,6 @@
     nerd-fonts.zed-mono
     wallust
     swaybg
+    fuzzel
   ];
 }
