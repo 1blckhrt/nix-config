@@ -1,5 +1,8 @@
 # todo
 
+- figure out how to keep github authenticated (gh + git)
+- fix scaling on fuzzel
+- find background and start theming
 - fix hyprshot bind not working
 - fix all statix issues
 - re-enable statix in flake.nix
