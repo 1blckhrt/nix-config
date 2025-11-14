@@ -1,3 +1,3 @@
 _: {
-  imports = [./tmux-sessionizer.nix ./cheat-sheet.nix ./load-dev.nix ./time.nix];
+  imports = [./cheat-sheet.nix ./tmux-session-launcher.nix ./time.nix];
 }
