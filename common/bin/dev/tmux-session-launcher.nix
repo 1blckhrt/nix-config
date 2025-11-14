@@ -24,14 +24,7 @@ _: {
         exit 0
       fi
 
-      # Open tmux session in kitty
-      if kitty @ ls | grep -q 'tmux'; then
-        # Open in a new tab of the first kitty window
-        kitty @ new-tab -- tmux attach-session -t "$chosen"
-      else
-        # Open a new kitty window
-        kitty -1 tmux attach-session -t "$chosen"
-      fi
+      kitty --hold tmux attach-session -t "$chosen"
     '';
     executable = true;
   };
