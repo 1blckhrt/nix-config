@@ -48,6 +48,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              backupFileExtension = "old";
               users.blckhrt = {
                 home.stateVersion = "25.05";
                 imports = [./hosts/nixos/home.nix inputs.nixvim.homeModules.nixvim];
