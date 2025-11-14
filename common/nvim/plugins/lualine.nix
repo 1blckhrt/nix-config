@@ -4,7 +4,7 @@ _: {
     settings = {
       options = {
         icons_enabled = true;
-        theme = "nord";
+        theme = "gruvbox";
         globalstatus = true;
         component_separators = {
           left = "";

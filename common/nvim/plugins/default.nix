@@ -11,7 +11,6 @@
 
   programs.nixvim = {
     extraPlugins = with pkgs.vimPlugins; [
-      nord-nvim
       mini-nvim
       plenary-nvim
       nui-nvim

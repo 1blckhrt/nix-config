@@ -19,7 +19,7 @@ _: {
       virtual_lines.current_line = true;
     };
 
-    colorschemes.nord.enable = true;
+    colorschemes.gruvbox.enable = true;
 
     extraConfigLua = ''
 
