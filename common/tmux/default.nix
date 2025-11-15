@@ -3,11 +3,9 @@
   pkgs,
   ...
 }: {
-  xdg.configFile = let
-    mkSymlink = config.lib.file.mkOutOfStoreSymlink;
-    confPath = "${config.home.homeDirectory}/nix-config/common/tmux/conf";
-  in {
-    "tmux".source = mkSymlink confPath;
-  };
+  xdg.configFile."tmux/tmux.conf".source =
+    config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/nix-config/common/tmux/conf/tmux.conf";
+
   home.packages = [pkgs.tmux];
 }

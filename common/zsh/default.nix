@@ -42,8 +42,9 @@ _: {
       # Direnv hook
       eval "$(direnv hook zsh)"
 
-      # Tmux sessionizer keybind
-      bindkey -s '^F' '~/bin/tmux-sessionizer\n'
+      if [[ -z "$TMUX_RESURRECT_RESTORE" ]]; then
+        eval "$(direnv hook zsh)"
+      fi
 
       # Tmux session switcher function
       tmux-session() {
