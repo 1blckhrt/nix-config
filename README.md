@@ -1,6 +1,7 @@
 # todo
 
 - figure out how to keep github authenticated (gh + git)
+- figure out how to source tmux file on tmux boot
 - fix scaling on fuzzel
 - gruvbox
 - make lib function for mkSymlink
