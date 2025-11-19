@@ -104,6 +104,8 @@
     nixd
     statix
     just
+    bash
+    git
   ];
 
   system.stateVersion = "25.05";
