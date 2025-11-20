@@ -20,7 +20,6 @@ in {
     nil
     nixd
     nixfmt
-    direnv
     zip
     unzip
     mpc
@@ -34,5 +33,12 @@ in {
   xdg = {
     enable = true;
     mime.enable = true;
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    silent = true;
+    nix-direnv.enable = true;
   };
 }

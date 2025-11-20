@@ -98,6 +98,14 @@ _: {
 
       add-zsh-hook chpwd chpwd_vault_pull
       add-zsh-hook chpwd chpwd_note_commit
+
+      start-dev() {
+        ~/bin/tmux-setup
+        tmux-session
+      }
+
+      zle -N start-dev
+      bindkey -s '^T' 'start-dev\n'
     '';
   };
 }
