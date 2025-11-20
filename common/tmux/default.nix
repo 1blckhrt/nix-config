@@ -5,17 +5,12 @@
     baseIndex = 1;
     prefix = "C-x";
     newSession = true;
-    tmuxp.enable = true;
-
     plugins = with pkgs.tmuxPlugins; [
       vim-tmux-navigator
       gruvbox
     ];
 
     extraConfig = ''
-      # Ensure PATH includes nix profile and system binaries
-      set-environment -g PATH "$HOME/.nix-profile/bin:/run/current-system/sw/bin:$PATH"
-
       set -ga terminal-overrides ",xterm-256color:Tc"
       set -as terminal-features ",xterm-256color:RGB"
       set -g set-clipboard on
@@ -43,9 +38,6 @@
       bind -r m resize-pane -Z
 
       set -g status-position top
-
-      bind-key C-l run-shell "$HOME/bin/tmux_manager load"
-      bind-key C-s run-shell "$HOME/bin/tmux_manager save"
     '';
   };
 }

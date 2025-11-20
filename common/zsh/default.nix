@@ -42,10 +42,6 @@ _: {
       # Direnv hook
       eval "$(direnv hook zsh)"
 
-      if [[ -z "$TMUX_RESURRECT_RESTORE" ]]; then
-        eval "$(direnv hook zsh)"
-      fi
-
       # Tmux session switcher function
       tmux-session() {
         local session sessions fzf_output
