@@ -13,11 +13,12 @@
       mini-nvim
       plenary-nvim
       nui-nvim
+      gruvbox-material-nvim
     ];
 
     plugins = {
-      wakatime.enable = true;
       web-devicons.enable = true;
+      wakatime.enable = true;
       which-key.enable = true;
       render-markdown.enable = true;
       hop.enable = true;

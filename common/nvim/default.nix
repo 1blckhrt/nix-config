@@ -19,10 +19,7 @@ _: {
       virtual_lines.current_line = true;
     };
 
-    colorschemes.gruvbox.enable = true;
-
     extraConfigLua = ''
-
       -- Telescope setup
       local builtin = require("telescope.builtin")
       local actions = require("telescope.actions")
@@ -69,6 +66,8 @@ _: {
           vim.highlight.on_yank({ timeout = 200, visual = true })
         end,
       })
+
+      vim.cmd("colorscheme gruvbox-material")
 
     '';
   };

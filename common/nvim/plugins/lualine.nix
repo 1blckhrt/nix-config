@@ -4,7 +4,7 @@ _: {
     settings = {
       options = {
         icons_enabled = true;
-        theme = "gruvbox";
+        theme = "auto";
         globalstatus = true;
         component_separators = {
           left = "";

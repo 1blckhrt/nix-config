@@ -1,13 +1,50 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  tmux2k = pkgs.tmuxPlugins.mkTmuxPlugin {
+    pluginName = "tmux2k";
+    version = "unstable-latest";
+    src = pkgs.fetchFromGitHub {
+      owner = "2KAbhishek";
+      repo = "tmux2k";
+      rev = "90707b93e4c4c3a20dc5dbff1cc9106057c70c71";
+      hash = "sha256-AdKskM3gSIB+ysusNgQRp9Jb2rM2dldr/wtV2PUqTjo=";
+    };
+    rtpFilePath = "2k.tmux";
+  };
+in {
   programs.tmux = {
     enable = true;
+    shell = "${pkgs.zsh}/bin/zsh";
     terminal = "tmux-256color";
     baseIndex = 1;
     prefix = "C-x";
-    newSession = true;
     plugins = with pkgs.tmuxPlugins; [
       vim-tmux-navigator
-      gruvbox
+      {
+        plugin = tmux2k;
+        extraConfig = ''
+          set -g @tmux2k-theme 'gruvbox'
+          set -g @tmux2k-icons-only true
+        '';
+      }
+      {
+        plugin = resurrect;
+        extraConfig = ''
+          resurrect_dir="$HOME/.tmux/resurrect"
+          set -g @resurrect-dir $resurrect_dir
+          set -g @resurrect-hook-post-save-all "sed -i 's/--cmd lua.*--cmd set packpath/--cmd \"lua/g; s/--cmd set rtp.*\$/\"/' $resurrect_dir/last"
+          set -g @resurrect-capture-pane-contents 'on'
+          set -g @resurrect-processes '"~nvim"'
+          set -g @resurrect-save-zsh-history 'on'
+        '';
+      }
+      {
+        plugin = continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-boot 'on'
+          set -g @continuum-save-interval '5'
+        '';
+      }
     ];
 
     extraConfig = ''
