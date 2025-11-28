@@ -1,3 +1,3 @@
 _: {
-  imports = [./cheat-sheet.nix ./tmux-setup.nix ./time.nix];
+  imports = [./cheat-sheet.nix ./time.nix];
 }

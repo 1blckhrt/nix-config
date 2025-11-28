@@ -19,24 +19,12 @@ in {
         symbols = {
           Windows = "󰍲";
           Ubuntu = "󰕈";
-          SUSE = "";
           Raspbian = "󰐿";
           Mint = "󰣭";
-          Macos = "󰀵";
-          Manjaro = "";
           Linux = "󰌽";
-          Gentoo = "󰣨";
-          Fedora = "󰣛";
-          Alpine = "";
-          Amazon = "";
-          Android = "";
           Arch = "󰣇";
-          Artix = "󰣇";
-          CentOS = "";
           Debian = "󰣚";
-          Redhat = "󱄛";
-          RedHatEnterprise = "󱄛";
-          NixOS = "❄️";
+          NixOS = " ";
         };
       };
 
