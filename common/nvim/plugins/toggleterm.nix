@@ -17,7 +17,7 @@ _: {
     keymaps = [
       {
         action = ":ToggleTerm direction=float<CR>";
-        key = "<C-t>";
+        key = "<leader>t";
         mode = "n";
         options.desc = "Open terminal";
       }

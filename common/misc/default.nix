@@ -27,6 +27,7 @@ in {
     devenv
     statix
     myPkgs.commit
+    moreutils
   ];
 
   fonts.fontconfig.enable = true;

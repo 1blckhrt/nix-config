@@ -2,7 +2,7 @@
   imports = [
     ./cmp.nix
     ./lsp.nix
-    ./lualine.nix
+    ./lualine/default.nix
     ./telescope.nix
     ./treesitter.nix
     ./toggleterm.nix
@@ -10,9 +10,6 @@
 
   programs.nixvim = {
     extraPlugins = with pkgs.vimPlugins; [
-      mini-nvim
-      plenary-nvim
-      nui-nvim
       gruvbox-material-nvim
     ];
 
@@ -25,7 +22,6 @@
       indent-blankline.enable = true;
       nvim-autopairs.enable = true;
       tmux-navigator.enable = true;
-      smart-splits.enable = true;
       guess-indent.enable = true;
       gitsigns.enable = true;
       nvim-tree.enable = true;
