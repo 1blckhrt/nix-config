@@ -1,7 +1,7 @@
 _: {
   home.file."bin/note-commit" = {
     text = ''
-      #!/bin/zsh
+      #!/bin/bash
 
       # Get current date/time and short hostname
       DATE=$(date "+%Y%m%d-%H%M%S")
