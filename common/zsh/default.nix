@@ -70,31 +70,21 @@ _: {
         fi
       }
 
-      # Vault auto-sync and backup
       autoload -Uz add-zsh-hook
-      VAULT_DIR="$HOME/doc"
+      VAULT_DIR="''$HOME/doc"
 
+      # When entering the vault or a subdirectory
       chpwd_vault_pull() {
-        if [[ "$PWD" == ''${VAULT_DIR}(|/*) ]]; then
-          echo "Entered vault: syncing latest changes..."
-          git -C "$VAULT_DIR" pull --ff-only || echo "⚠️ Git pull failed — check your network or branch."
-        fi
-      }
-
-      chpwd_note_commit() {
-        if [[ "$OLDPWD" == ''${VAULT_DIR}(|/*) && "$PWD" != ''${VAULT_DIR}(|/*) ]]; then
-          if [[ -n "$(git -C "$VAULT_DIR" status --porcelain 2>/dev/null)" ]]; then
-            echo "Leaving vault: committing changes..."
-            "$HOME/bin/note-commit"
-          else
-            echo "Leaving vault: no changes to commit."
-          fi
-        fi
+        case "$PWD" in
+          "$VAULT_DIR"|"$VAULT_DIR"/*)
+            echo "Entered vault: syncing latest changes..."
+            git -C "$VAULT_DIR" pull --ff-only \
+              || echo "⚠️ Git pull failed — check your network or branch."
+            ;;
+        esac
       }
 
       add-zsh-hook chpwd chpwd_vault_pull
-      add-zsh-hook chpwd chpwd_note_commit
-
     '';
   };
 }

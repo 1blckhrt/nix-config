@@ -15,7 +15,6 @@
 
     plugins = {
       web-devicons.enable = true;
-      wakatime.enable = true;
       which-key.enable = true;
       render-markdown.enable = true;
       hop.enable = true;
