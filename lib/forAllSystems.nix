@@ -1,7 +1,4 @@
-{
-  nixpkgs,
-  self,
-}: f:
+{nixpkgs}: f:
 nixpkgs.lib.genAttrs [
   "aarch64-linux"
   "i686-linux"
@@ -13,6 +10,5 @@ nixpkgs.lib.genAttrs [
     f {
       inherit system;
       pkgs = nixpkgs.legacyPackages.${system};
-      check = self.checks.${system}.pre-commit-check;
     }
 )

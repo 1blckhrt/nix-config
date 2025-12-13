@@ -1,89 +1,76 @@
 {
   description = "NixOS & Standalone Nix configurations for 1blckhrt";
-
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    nixGL = {
-      url = "github:nix-community/nixGL";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    pre-commit-hooks = {
-      url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixGL.url = "github:nix-community/nixGL";
+    hooks.url = "github:cachix/git-hooks.nix";
+    colors.url = "github:misterio77/nix-colors";
   };
-
-  outputs = {
+  outputs = inputs @ {
     self,
     nixpkgs,
-    nixpkgs-unstable,
     home-manager,
     nixvim,
-    nixGL,
-    pre-commit-hooks,
+    hooks,
+    colors,
     ...
-  } @ inputs: rec {
-    lib = nixpkgs.lib // home-manager.lib // (import ./lib {inherit nixpkgs self;});
-
-    nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
-        specialArgs = {tools = lib;};
+  }: let
+    system = "x86_64-linux";
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
+    mkHome = host:
+      home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        specialArgs = {inherit inputs;};
         modules = [
-          ./hosts/nixos/configuration.nix
+          ./hosts/${host}/home.nix
           {
-            system.stateVersion = "25.05";
-          }
-          inputs.home-manager.nixosModules.home-manager
-          {
-            users.users.blckhrt.isNormalUser = true;
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = "old";
-              users.blckhrt = {
-                home.stateVersion = "25.05";
-                imports = [./hosts/nixos/home.nix inputs.nixvim.homeModules.nixvim];
-              };
+            home = {
+              username = "blckhrt";
+              homeDirectory = "/home/blckhrt";
+              stateVersion = "25.11";
             };
           }
         ];
       };
-    };
-
-    standaloneHomeConfigurations = ["laptop" "wsl" "pc"];
-
-    standaloneHomeManagers = lib.genAttrs standaloneHomeConfigurations (
-      host:
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            system = "x86_64-linux";
-            config = {
-              allowUnfree = true;
-              allowUnfreePredicate = _: true;
+  in {
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs = {inherit inputs;};
+      modules = [
+        ./hosts/nixos/configuration.nix
+        home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            backupFileExtension = "old";
+            extraSpecialArgs = {inherit inputs;};
+            users.blckhrt = {
+              imports = [./hosts/nixos/home.nix inputs.nixvim.homeModules.nixvim];
             };
           };
-          extraSpecialArgs = {
-            inherit self nixpkgs nixpkgs-unstable home-manager nixvim nixGL;
-          };
-          modules = [./hosts/${host}/home.nix];
-          homeDirectory = "/home/blckhrt";
-          username = "blckhrt";
-          stateVersion = "25.05"; # DO NOT TOUCH
-          imports = [inputs.nixvim.homeModules.nixvim];
         }
-    );
-
-    checks = lib.forAllSystems ({system, ...}: {
-      pre-commit-check = pre-commit-hooks.lib.${system}.run {
+      ];
+    };
+    homeConfigurations = {
+      laptop = mkHome "laptop";
+      wsl = mkHome "wsl";
+      pc = mkHome "pc";
+    };
+    devShells.${system}.default = let
+      check = hooks.lib.${system}.run {
         src = ./.;
         hooks = {
           statix = {
@@ -94,19 +81,11 @@
           alejandra.enable = true;
         };
       };
-    });
-
-    devShells = lib.forAllSystems ({
-      pkgs,
-      check,
-      ...
-    }: {
-      default = pkgs.mkShell {
+    in
+      pkgs.mkShell {
         inherit (check) shellHook;
         buildInputs = check.enabledPackages;
       };
-    });
-
-    formatter = lib.forAllSystems ({pkgs, ...}: pkgs.alejandra);
+    formatter.${system} = pkgs.alejandra;
   };
 }

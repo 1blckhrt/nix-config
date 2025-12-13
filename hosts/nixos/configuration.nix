@@ -31,9 +31,9 @@
   };
 
   services = {
+    desktopManager.gnome.enable = true;
     xserver = {
       enable = true;
-      desktopManager.gnome.enable = true;
       xkb = {
         layout = "us";
         variant = "";
@@ -87,6 +87,7 @@
     settings = {
       experimental-features = ["nix-command" "flakes"];
       auto-optimise-store = true;
+      warn-dirty = false;
     };
     optimise = {
       automatic = true;
@@ -98,7 +99,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    helix
     git
     alejandra
     nixd

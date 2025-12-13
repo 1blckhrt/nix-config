@@ -31,7 +31,6 @@
     ../../common/i3/default.nix
     ../../common/misc/default.nix
     ../../common/nvim/default.nix
-    ../../common/ssh/default.nix
     ../../common/starship/default.nix
     ../../common/tmux/default.nix
     ../../common/zoxide/default.nix
