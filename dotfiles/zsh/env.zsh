@@ -12,6 +12,8 @@ export PATH=$HOME/.local/bin:$PATH
 export BUN_INSTALL="$HOME/.bun" 
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+export PATH=/home/blckhrt/.opencode/bin:$PATH
+
 # pnpm
 export PNPM_HOME="/home/blckhrt/.local/share/pnpm"
 case ":$PATH:" in
