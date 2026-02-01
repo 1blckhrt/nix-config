@@ -9,9 +9,10 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias gcam='git commit -a -m'
-alias mkdir="mkdir -p"
+alias mkdir="mkdir -pv"
 alias c="clear"
 alias x="exit"
 alias reload="source ~/dot/dotfiles/zsh/zsh.zsh"
 alias timew="ssh -t pi ./timetrack.sh"
 alias reboot="systemctl reboot"
+

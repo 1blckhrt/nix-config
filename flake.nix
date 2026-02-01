@@ -11,16 +11,14 @@
     };
 
     hooks.url = "github:cachix/git-hooks.nix";
-    colors.url = "github:misterio77/nix-colors";
   };
 
-  outputs = inputs @ {
+  outputs = {
     nixpkgs,
     home-manager,
     hooks,
-    colors,
     ...
-  }: let
+  } @ inputs: let
     system = "x86_64-linux";
     pkgs = import nixpkgs {inherit system;};
   in {

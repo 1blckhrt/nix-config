@@ -3,20 +3,19 @@
   config,
   inputs,
   ...
-}: {
+}: let
+  myPkgs = import ../../pkgs/default.nix {inherit pkgs;};
+in {
   imports = [
     ../../common/desktop-apps/internet/vesktop.nix
     ../../common/terminal/default.nix
     ../../common/scripts/default.nix
     ../../common/wm/default.nix
-    inputs.colors.homeManagerModules.default
   ];
 
   modules = {
     discord.enable = true;
   };
-
-  colorScheme = inputs.colors.colorSchemes.nord;
 
   nixpkgs.config = {
     allowUnfree = true;
@@ -39,8 +38,6 @@
     };
     packages = with pkgs; [
       alejandra
-      nerd-fonts.geist-mono
-      libnotify
     ];
     activation.linkDesktopApplications = {
       after = [
@@ -63,8 +60,8 @@
     gpu = {
       nvidia = {
         enable = true;
-        sha256 = "sha256-hJ7w746EK5gGss3p8RwTA9VPGpp2lGfk5dlhsv4Rgqc=";
-        version = "580.95.05";
+        sha256 = "sha256-ueL4BpN4FDHMh/TNKRCeEz3Oy1ClDWto1LO/LWlr1ok=";
+        version = "590.48.01";
       };
     };
   };
