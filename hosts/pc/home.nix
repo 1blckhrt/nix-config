@@ -38,6 +38,7 @@ in {
     };
     packages = with pkgs; [
       alejandra
+      myPkgs.helium
     ];
     activation.linkDesktopApplications = {
       after = [

@@ -1,7 +1,9 @@
 # Clean nix garbage
 clean:
   nix-collect-garbage -d
-	nix-store --optimise
+
+optimize:
+	nix-store --optimise 
 
 # Switch default shell to zsh
 switch-shell:
