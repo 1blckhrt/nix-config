@@ -44,6 +44,10 @@
         truncate_title_after_length = 40;
       };
 
+      media_player = {
+        max_title_length = 50;
+      };
+
       settings = {
         lock_cmd = "playerctl --all-players pause; hyprlock &";
         audio_sinks_more_cmd = "pavucontrol -t 3";
@@ -68,8 +72,10 @@
         right = [
           "SystemInfo"
           [
+            "MediaPlayer"
             "Privacy"
             "Settings"
+            "Tray"
           ]
         ];
       };
