@@ -13,6 +13,7 @@
     flash.enable = true;
     which-key.enable = true;
     nvim-autopairs.enable = true;
+    colorful-menu.enable = true;
   };
   imports = [./cmp.nix ./conform.nix ./lsp.nix ./lualine.nix ./snacks.nix];
 }
