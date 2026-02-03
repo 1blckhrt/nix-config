@@ -8,7 +8,8 @@
     extraPlugins = with pkgs.vimPlugins; [
       nordic-nvim
     ];
-    extraConfigLuaPre = ''
+    extraConfigLua = ''
+      require('nordic').load()
       require("nordic").setup({
       	bold_keywords = true,
       	italic_comments = false,
@@ -22,9 +23,6 @@
       	},
       })
 
-    '';
-    extraConfigLua = ''
-      require('nordic').load()
     '';
   };
   imports = [./clipboard.nix ./globals.nix ./keymaps.nix ./opts.nix ./performance.nix ./plugins/default.nix];
