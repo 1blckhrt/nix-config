@@ -14,5 +14,6 @@ _: {
     treesitter.enable = true;
     flash.enable = true;
     which-key.enable = true;
+    nvim-autopairs.enable = true;
   };
 }
