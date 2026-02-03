@@ -10,6 +10,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     hooks.url = "github:cachix/git-hooks.nix";
   };
 
@@ -17,6 +22,7 @@
     nixpkgs,
     home-manager,
     hooks,
+    nixvim,
     ...
   } @ inputs: let
     system = "x86_64-linux";
@@ -32,6 +38,12 @@
       pc = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [./hosts/pc/home.nix];
+        extraSpecialArgs = {inherit inputs;};
+      };
+
+      debian-server = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [./hosts/debian-server/home.nix];
         extraSpecialArgs = {inherit inputs;};
       };
     };

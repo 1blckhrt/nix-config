@@ -1,3 +1,5 @@
+hostname := `hostname`
+
 # Clean nix garbage
 clean:
   nix-collect-garbage -d
@@ -13,5 +15,7 @@ switch-shell:
 
 # Create Hyprland wayland session desktop entry
 create-hyprland-desktop:
-  @echo "Creating Hyprland desktop entry (requires sudo)"
-  echo '[Desktop Entry]\nName=Hyprland\nComment=An intelligent dynamic tiling Wayland compositor\nExec=/home/blckhrt/.nix-profile/bin/Hyprland\nType=Application' | sudo tee /usr/share/wayland-sessions/hyprland.desktop
+  @echo "need to redo"
+  
+bootstrap-hm:
+  @nix run home-manager/release-25.11 -- switch --flake ~/dot#{{hostname}}
