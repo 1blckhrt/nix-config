@@ -42,30 +42,30 @@
     ];
 
     extraConfig = ''
-          bind r source-file ~/.tmux.conf \; display-message "Config reloaded!"
-          set -g set-clipboard on
-          set -g detach-on-destroy off
-          set -g escape-time 0
-          set -g history-limit 1000000
-          set -g mouse on
-          set -g status-interval 3
-          set -g allow-passthrough on
+      bind r source-file ~/.tmux.conf \; display-message "Config reloaded!"
 
+      set -g set-clipboard on
+      set -g detach-on-destroy off
+      set -g escape-time 0
+      set -g history-limit 1000000
+      set -g mouse on
+      set -g status-interval 3
+      set -g allow-passthrough on
       set-option -g renumber-windows on
-          set -g base-index 1
+      set -g base-index 1
       setw -g pane-base-index 1
 
-          unbind %
-          bind | split-window -h -c "#{pane_current_path}"
-          unbind '"'
-          bind - split-window -v -c "#{pane_current_path}"
-          bind c new-window -c "#{pane_current_path}"
+      unbind %
+      bind | split-window -h -c "#{pane_current_path}"
+      unbind '"'
+      bind - split-window -v -c "#{pane_current_path}"
+      bind c new-window -c "#{pane_current_path}"
 
-          bind -r j resize-pane -D 5
-          bind -r k resize-pane -U 5
-          bind -r h resize-pane -L 5
-          bind -r l resize-pane -R 5
-          bind -r m resize-pane -Z
+      bind -r j resize-pane -D 5
+      bind -r k resize-pane -U 5
+      bind -r h resize-pane -L 5
+      bind -r l resize-pane -R 5
+      bind -r m resize-pane -Z
     '';
   };
 }
