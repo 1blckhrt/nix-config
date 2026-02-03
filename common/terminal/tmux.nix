@@ -9,18 +9,17 @@
       {
         plugin = dotbar;
         extraConfig = ''
-               set -g @tmux-dotbar-right true
-               set -g @tmux-dotbar-position top
-               set -g @tmux-dotbar-ssh-icon '󰌘'
-               set -g @tmux-dotbar-ssh-icon-only false
-               set -g @tmux-dotbar-ssh-enabled true
-          set -g @tmux-dotbar-status-left " #S "
-               # nord theme
-               set -g @tmux-dotbar-bg "#2e3440"
-               set -g @tmux-dotbar-fg "#4c566a"
-               set -g @tmux-dotbar-fg-current "#eceff4"
-               set -g @tmux-dotbar-fg-session "#d8dee9"
-               set -g @tmux-dotbar-fg-prefix "#b48ead"
+          set -g @tmux-dotbar-right true
+          set -g @tmux-dotbar-position top
+          set -g @tmux-dotbar-ssh-icon '󰌘'
+          set -g @tmux-dotbar-ssh-icon-only false
+          set -g @tmux-dotbar-ssh-enabled true
+          # nord theme
+          set -g @tmux-dotbar-bg "#2e3440"
+          set -g @tmux-dotbar-fg "#4c566a"
+          set -g @tmux-dotbar-fg-current "#eceff4"
+          set -g @tmux-dotbar-fg-session "#d8dee9"
+          set -g @tmux-dotbar-fg-prefix "#b48ead"
         '';
       }
       {
