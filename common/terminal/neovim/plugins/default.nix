@@ -1,6 +1,8 @@
-_: {
-  imports = [./cmp.nix ./conform.nix ./lsp.nix ./lualine.nix ./snacks.nix];
+{pkgs, ...}: {
   programs.nixvim.plugins = {
+    extraPlugins = with pkgs.vimPlugins; [
+      nordic-nvim
+    ];
     web-devicons.enable = true;
     neo-tree.enable = true;
     auto-session.enable = true;
@@ -16,4 +18,5 @@ _: {
     which-key.enable = true;
     nvim-autopairs.enable = true;
   };
+  imports = [./cmp.nix ./conform.nix ./lsp.nix ./lualine.nix ./snacks.nix];
 }

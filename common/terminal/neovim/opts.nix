@@ -25,7 +25,6 @@ _: {
     modeline = true;
     linebreak = true;
     autoread = true;
-    lazyredraw = true;
     hlsearch = false;
     swapfile = false;
     incsearch = true;
