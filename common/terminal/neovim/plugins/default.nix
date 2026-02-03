@@ -3,7 +3,6 @@
     web-devicons.enable = true;
     neo-tree.enable = true;
     auto-session.enable = true;
-    colorful-menu.enable = true;
     tiny-inline-diagnostic.enable = true;
     gitsigns.enable = true;
     markdown-preview.enable = true;
