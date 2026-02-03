@@ -11,9 +11,7 @@
       settings = {
         italic = false;
         disable_background = true;
-        contrast = true;
         borders = true;
-        cursorline_transparent = true;
       };
     };
   };
