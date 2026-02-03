@@ -3,7 +3,7 @@ _: {
     enable = true;
     settings = {
       options = {
-        theme = "nord";
+        theme = "nordic";
         globalstatus = true;
         disabled_filetypes.__unkeyed-1 = "nvim-tree";
       };

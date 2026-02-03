@@ -6,13 +6,23 @@
     defaultEditor = true;
     waylandSupport = true;
     extraPlugins = with pkgs.vimPlugins; [
-      nord-nvim
+      nordic-nvim
     ];
     extraConfigLua = ''
-      vim.g.nord_disable_background = true
-      vim.g.nord_italic = false
-      vim.g.nord_bold = true
-      require('nord').set()
+         require("nordic").setup({
+      	bold_keywords = true,
+      	italic_comments = false,
+      	transparent = {
+      		bg = true,
+      	},
+      	swap_backgrounds = true,
+      	cursorline = {
+      		bold = true,
+      		bold_number = true,
+      	},
+      })
+
+      vim.cmd.colorscheme('nordic')
     '';
   };
   imports = [./clipboard.nix ./globals.nix ./keymaps.nix ./opts.nix ./performance.nix ./plugins/default.nix];

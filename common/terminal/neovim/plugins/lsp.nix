@@ -3,7 +3,6 @@ _: {
     plugins = {
       lsp-signature.enable = true;
       lspkind.enable = true;
-      lspsaga.enable = true;
       friendly-snippets.enable = true;
       lazydev.enable = true;
     };
@@ -21,9 +20,6 @@ _: {
         sqruff.enable = true;
         stylua.enable = true;
         ty.enable = true;
-        "*".config.root_markers = [
-          ".git"
-        ];
       };
     };
   };

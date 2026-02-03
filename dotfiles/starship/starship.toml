@@ -4,25 +4,48 @@ format = """
 $username\
 $hostname\
 $directory\
+$git_branch\
+$git_state\
+$git_status\
 $cmd_duration\
 $line_break\
 $python\
 $character"""
 
 [directory]
-style = "blue"
+style = "#81A1C1" # nord9
 
 [character]
-success_symbol = "[❯](purple)"
-error_symbol = "[❯](red)"
-vimcmd_symbol = "[❮](green)"
+success_symbol = "[❯](#B48EAD)" # nord15
+error_symbol   = "[❯](#BF616A)" # nord11
+vimcmd_symbol  = "[❮](#A3BE8C)" # nord14
+
+[git_branch]
+format = "[$branch]($style)"
+style = "#4C566A" # nord3
+
+[git_status]
+format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](#88C0D0) ($ahead_behind$stashed)]($style)"
+style = "#88C0D0" # nord8
+conflicted = "​"
+untracked  = "​"
+modified   = "​"
+staged     = "​"
+renamed    = "​"
+deleted    = "​"
+stashed    = "≡"
+
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "#4C566A" # nord3
 
 [cmd_duration]
 format = "[$duration]($style) "
-style = "yellow"
+style = "#EBCB8B" # nord13
 
 [python]
 format = "[$virtualenv]($style) "
-style = "bright-black"
+style = "#4C566A" # nord3
 detect_extensions = []
 detect_files = []
+
