@@ -8,20 +8,22 @@
     extraPlugins = with pkgs.vimPlugins; [
       nordic-nvim
     ];
-    extraConfigLua = ''
-         require("nordic").setup({
-         	bold_keywords = true,
-         	italic_comments = false,
-         	transparent = {
-         		bg = true,
-         	},
-         	swap_backgrounds = true,
-         	cursorline = {
-         		bold = true,
-         		bold_number = true,
-         	},
-         })
+    extraConfigLuaPre = ''
+      require("nordic").setup({
+      	bold_keywords = true,
+      	italic_comments = false,
+      	transparent = {
+      		bg = true,
+      	},
+      	swap_backgrounds = true,
+      	cursorline = {
+      		bold = true,
+      		bold_number = true,
+      	},
+      })
 
+    '';
+    extraConfigLua = ''
       require('nordic').load()
     '';
   };
