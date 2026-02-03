@@ -7,7 +7,19 @@
     prefix = "C-x";
     plugins = with pkgs.tmuxPlugins; [
       vim-tmux-navigator
-      nord
+      {
+        plugin = nord.overrideAttrs (old: {
+          postInstall =
+            (old.postInstall or "")
+            + ''
+              # Ensure the script has a proper bash shebang
+              if ! head -n1 $out/share/tmux-plugins/nord/nord.tmux | grep -q '^#!/usr/bin/env bash'; then
+                sed -i '1s|^#!.*|#!/usr/bin/env bash|; t; 1s|^|#!/usr/bin/env bash\n|' \
+                  $out/share/tmux-plugins/nord/nord.tmux
+              fi
+            '';
+        });
+      }
       {
         plugin = resurrect;
         extraConfig = ''
@@ -28,6 +40,7 @@
     ];
 
     extraConfig = ''
+      bind r source-file ~/.tmux.conf \; display-message "Config reloaded!"
       set -g set-clipboard on
       set -g detach-on-destroy off
       set -g escape-time 0
