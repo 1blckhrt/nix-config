@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{...}: {
   imports = [./clipboard.nix ./globals.nix ./keymaps.nix ./opts.nix ./performance.nix ./plugins/default.nix];
   programs.nixvim = {
     enable = true;

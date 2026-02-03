@@ -2,6 +2,13 @@ _: {
   programs.nixvim.plugins.blink-cmp = {
     enable = true;
     settings = {
+      keymap = {
+        "<Down>" = ["select_next" "fallback"];
+        "<Up>" = ["select_prev" "fallback"];
+        "<Tab>" = ["accept" "fallback"];
+        "<C-space>" = ["show" "show_documentation" "hide_documentation"];
+        "<C-e>" = ["hide"];
+      };
       appearance = {
         nerd_font_variant = "normal";
       };

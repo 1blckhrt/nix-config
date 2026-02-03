@@ -3,6 +3,7 @@ _: {
     undofile = true;
     smartindent = true;
     termguicolors = true;
+    background = "dark";
     wrap = true;
     cursorline = true;
     relativenumber = true;
