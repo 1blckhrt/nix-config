@@ -6,22 +6,15 @@
     vimAlias = true;
     defaultEditor = true;
     waylandSupport = true;
-
-    extraConfigLua = ''
-      require('nordic').load()
-      require("nordic").setup({
-      	bold_keywords = true,
-      	italic_comments = false,
-      	transparent = {
-      		bg = true,
-      	},
-      	swap_backgrounds = true,
-      	cursorline = {
-      		bold = true,
-      		bold_number = true,
-      	},
-      })
-
-    '';
+    colorschemes.nord = {
+      enable = true;
+      settings = {
+        italic = false;
+        disable_background = true;
+        contrast = true;
+        borders = true;
+        cursorline_transparent = true;
+      };
+    };
   };
 }

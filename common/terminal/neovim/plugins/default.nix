@@ -1,8 +1,5 @@
 {pkgs, ...}: {
   programs.nixvim.plugins = {
-    extraPlugins = with pkgs.vimPlugins; [
-      nordic-nvim
-    ];
     web-devicons.enable = true;
     neo-tree.enable = true;
     auto-session.enable = true;
