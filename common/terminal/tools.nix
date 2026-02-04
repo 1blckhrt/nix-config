@@ -30,5 +30,6 @@ in {
     myPkgs.commit
     mypy
     ruff
+    ty
   ];
 }
