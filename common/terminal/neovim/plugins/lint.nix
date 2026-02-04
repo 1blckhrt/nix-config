@@ -1,24 +1,16 @@
 _: {
-  programs.nixvim = {
-    plugins.lint = {
-      enable = true;
-      lintersByFt = {
-        python = ["mypy"];
+  programs.nixvim.plugins.none-ls = {
+    enable = true;
+    sources.diagnostics = {
+      sqruff.enable = true;
+      statix.enable = true;
+      markdownlint.enable = true;
+      mypy = {
+        enable = true;
+        settings = {
+          extra_args = ["--python-executable" ".venv/bin/python"];
+        };
       };
-      linters.mypy.args = [
-        "--pretty"
-      ];
     };
-
-    autoCmd = [
-      {
-        event = ["BufWritePost" "BufEnter" "InsertLeave"];
-        callback.__raw = ''
-          function()
-            require("lint").try_lint()
-          end
-        '';
-      }
-    ];
   };
 }
