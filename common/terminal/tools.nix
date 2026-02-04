@@ -28,5 +28,7 @@ in {
     nodejs
     nix-prefetch-github
     myPkgs.commit
+    mypy
+    ruff
   ];
 }
