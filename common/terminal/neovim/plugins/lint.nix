@@ -1,5 +1,5 @@
 _: {
-  plugins.lint = {
+  programs.nixvim.plugins.lint = {
     enable = true;
     lintersByFt = {
       "python" = ["mypy"];

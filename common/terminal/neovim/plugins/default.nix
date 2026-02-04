@@ -1,5 +1,12 @@
-{pkgs, ...}: {
-  imports = [./cmp.nix ./conform.nix ./lsp.nix ./lualine.nix ./snacks.nix];
+{...}: {
+  imports = [
+    ./cmp.nix
+    ./conform.nix
+    ./lint.nix
+    ./lsp.nix
+    ./lualine.nix
+    ./snacks.nix
+  ];
 
   programs.nixvim = {
     plugins = {
