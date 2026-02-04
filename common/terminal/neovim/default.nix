@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  inputs,
+  ...
+}: let
   nord-nvim = pkgs.vimUtils.buildVimPlugin {
     name = "nord-nvim";
     src = pkgs.fetchFromGitHub {
@@ -8,6 +12,9 @@
       hash = "sha256-+nZb7P2z4S26amtguGAvAevf60Dn/uniSVZvR0DM+zw=";
     };
   };
+  pkgs-unstable = import inputs.nixpkgs-unstable {
+    inherit (pkgs) system;
+  };
 in {
   programs.nixvim = {
     enable = true;
@@ -15,6 +22,12 @@ in {
     vimAlias = true;
     defaultEditor = true;
     waylandSupport = true;
+
+    extraPackages = with pkgs-unstable; [
+      ruff
+      mypy
+      ty
+    ];
 
     extraPlugins = [
       nord-nvim
