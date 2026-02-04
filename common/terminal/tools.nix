@@ -1,5 +1,12 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  inputs,
+  ...
+}: let
   myPkgs = import ../../pkgs/default.nix {inherit pkgs;};
+  pkgs-unstable = import inputs.nixpkgs-unstable {
+    inherit (pkgs) system;
+  };
 in {
   home.packages = with pkgs; [
     coreutils
@@ -22,14 +29,12 @@ in {
     atuin
     devenv
     uv
-    neovim
     gum
     timewarrior
     nodejs
     nix-prefetch-github
     myPkgs.commit
     mypy
-    ruff
-    ty
+    pkgs-unstable.ty
   ];
 }

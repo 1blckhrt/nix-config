@@ -20,6 +20,7 @@
 
   outputs = {
     nixpkgs,
+    nixpkgs-unstable,
     home-manager,
     hooks,
     nixvim,
