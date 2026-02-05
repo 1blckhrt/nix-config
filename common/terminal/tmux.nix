@@ -21,11 +21,13 @@ in {
       {
         plugin = tmux2k;
         extraConfig = ''
-                 set -g @tmux2k-left-plugins "session"
-                 set -g @tmux2k-right-plugins "cwd"
-          set -g @tmux2k-theme 'duo'
-            set -g @tmux2k-duo-fg "#5e81ac"  # nord10 (muted steel blue)
-            set -g @tmux2k-duo-bg "#3b4252"  # nord1 (statusline-friendly dark)
+          set -g @tmux2k-left-plugins "session"
+          set -g @tmux2k-right-plugins "cwd"
+
+          set -g @tmux2k-theme "duo"
+
+          set -g @tmux2k-duo-fg "#88c0d0"  # nord8 (icy blue foreground)
+          set -g @tmux2k-duo-bg "#2e3440"  # nord0 (dark background)
         '';
       }
       {
