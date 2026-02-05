@@ -1,14 +1,14 @@
 {pkgs, ...}: let
   tmux2k = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "tmux2k";
-    version = "2025-12-20";
+    version = "unstable-latest";
     src = pkgs.fetchFromGitHub {
       owner = "2KAbhishek";
       repo = "tmux2k";
-      rev = "2f7a613793a982401d9233fa2755dc2f5a916219";
-      sha256 = "sha256-xg6ka8FJsii/LetYE3Cp+9kIiAg8AbK39Wpe7YEVEK8";
+      rev = "90707b93e4c4c3a20dc5dbff1cc9106057c70c71";
+      hash = "sha256-AdKskM3gSIB+ysusNgQRp9Jb2rM2dldr/wtV2PUqTjo=";
     };
-    rtpPath = "2k.tmux";
+    rtpFilePath = "2k.tmux";
   };
 in {
   programs.tmux = {
@@ -21,6 +21,7 @@ in {
       {
         plugin = tmux2k;
         extraConfig = ''
+          set -g @tmux2k-icons-only true
                    set -g @tmux2k-black        "#2e3440"  # nord0
                    set -g @tmux2k-gray         "#4c566a"  # nord3
                    set -g @tmux2k-white        "#eceff4"  # nord6
@@ -68,7 +69,6 @@ in {
 
                    set -g @tmux2k-prefix-highlight     "#{@tmux2k-yellow}"
 
-          set -g @tmux2k-icons-only true
                    set -g @tmux2k-session-icon " #S"
 
                    set -g @tmux2k-left-plugins "session git cpu ram"
@@ -120,8 +120,6 @@ in {
       bind -r h resize-pane -L 5
       bind -r l resize-pane -R 5
       bind -r m resize-pane -Z
-
-
     '';
   };
 }
