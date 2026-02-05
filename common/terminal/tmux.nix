@@ -26,8 +26,8 @@ in {
 
           set -g @tmux2k-theme "duo"
 
-          set -g @tmux2k-duo-fg "#88c0d0"  # nord8 (icy blue foreground)
-          set -g @tmux2k-duo-bg "#2e3440"  # nord0 (dark background)
+          set -g @tmux2k-duo-fg "#5E81AC"
+          set -g @tmux2k-duo-bg "#2e3440"
         '';
       }
       {
