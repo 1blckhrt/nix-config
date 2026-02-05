@@ -1,8 +1,6 @@
 _: {
   programs.nixvim = {
     plugins = {
-      lsp-signature.enable = true;
-      lspkind.enable = true;
       friendly-snippets.enable = true;
       lazydev.enable = true;
     };
