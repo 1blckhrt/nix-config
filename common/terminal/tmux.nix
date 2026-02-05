@@ -21,59 +21,10 @@ in {
       {
         plugin = tmux2k;
         extraConfig = ''
-          set -g @tmux2k-icons-only true
-                   set -g @tmux2k-black        "#2e3440"  # nord0
-                   set -g @tmux2k-gray         "#4c566a"  # nord3
-                   set -g @tmux2k-white        "#eceff4"  # nord6
-
-                   set -g @tmux2k-light-blue   "#8fbcbb"  # nord7
-                   set -g @tmux2k-blue         "#88c0d0"  # nord8
-                   set -g @tmux2k-dark-blue    "#5e81ac"  # nord10
-
-                   set -g @tmux2k-light-green  "#a3be8c"  # nord14
-                   set -g @tmux2k-green        "#a3be8c"
-                   set -g @tmux2k-dark-green   "#8fbcbb"
-
-                   set -g @tmux2k-light-orange "#d08770"  # nord12
-                   set -g @tmux2k-orange       "#d08770"
-                   set -g @tmux2k-dark-orange  "#bf616a"
-
-                   set -g @tmux2k-light-pink   "#b48ead"  # nord15
-                   set -g @tmux2k-pink         "#b48ead"
-                   set -g @tmux2k-dark-pink    "#9a6fae"
-
-                   set -g @tmux2k-light-purple "#b48ead"
-                   set -g @tmux2k-purple       "#81a1c1"  # nord9
-                   set -g @tmux2k-dark-purple  "#5e81ac"
-
-                   set -g @tmux2k-light-red    "#bf616a"  # nord11
-                   set -g @tmux2k-red          "#bf616a"
-                   set -g @tmux2k-dark-red     "#a54a54"
-
-                   set -g @tmux2k-light-yellow "#ebcb8b"  # nord13
-                   set -g @tmux2k-yellow       "#ebcb8b"
-                   set -g @tmux2k-dark-yellow  "#d9b66c"
-
-                   set -g @tmux2k-text                 "#{@tmux2k-white}"
-                   set -g @tmux2k-bg-main              "#{@tmux2k-black}"
-                   set -g @tmux2k-bg-alt               "#3b4252"  # nord1
-
-                   set -g @tmux2k-message-bg           "#{@tmux2k-dark-blue}"
-                   set -g @tmux2k-message-fg           "#{@tmux2k-white}"
-
-                   set -g @tmux2k-pane-active-border   "#{@tmux2k-blue}"
-                   set -g @tmux2k-pane-active-border-bg "#{@tmux2k-black}"
-
-                   set -g @tmux2k-pane-border          "#{@tmux2k-gray}"
-                   set -g @tmux2k-pane-border-bg       "#{@tmux2k-black}"
-
-                   set -g @tmux2k-prefix-highlight     "#{@tmux2k-yellow}"
-
-                   set -g @tmux2k-session-icon " #S"
-
-                   set -g @tmux2k-left-plugins "session git cpu ram"
-                   set -g @tmux2k-right-plugins "network cpu ram"
-
+          set -g @tmux2k-left-plugins "session"
+          set -g @tmux2k-right-plugins "network git"
+          set -g @tmux2k-duo-fg "#88c0d0"  # nord8 (icy blue foreground)
+          set -g @tmux2k-duo-bg "#2e3440"  # nord0 (dark background)
         '';
       }
       {
