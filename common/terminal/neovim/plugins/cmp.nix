@@ -25,6 +25,7 @@ _: {
       };
       signature = {
         enabled = true;
+        window.show_documentation = false;
       };
       sources = {
         cmdline = [];
