@@ -22,9 +22,6 @@ _: {
             };
           };
         };
-        documentation = {
-          auto_show = true;
-        };
       };
       signature = {
         enabled = true;
