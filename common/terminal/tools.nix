@@ -31,5 +31,6 @@ in {
     nix-prefetch-github
     npins
     pkgs-unstable.devenv
+    keychain
   ];
 }
