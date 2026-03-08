@@ -5,7 +5,7 @@
 
   home.file.".zshrc" = {
     text = ''
-      source ~/dot/dotfiles/zsh/zsh.zsh
+      source ~/nix-config/dotfiles/zsh/zsh.zsh
     '';
     executable = true;
   };

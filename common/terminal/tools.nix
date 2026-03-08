@@ -27,14 +27,9 @@ in {
     wget
     curl
     atuin
-    devenv
-    uv
-    gum
-    timewarrior
     nodejs
     nix-prefetch-github
-    myPkgs.commit
-    mypy
-    pkgs-unstable.ty
+    npins
+    pkgs-unstable.devenv
   ];
 }

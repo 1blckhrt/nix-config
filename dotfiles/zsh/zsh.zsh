@@ -4,17 +4,17 @@ source_if_exists() {
 	fi
 }
 
-source_if_exists ~/dot/dotfiles/zsh/history.zsh
-source_if_exists ~/dot/dotfiles/zsh/aliases.zsh
-source_if_exists ~/dot/dotfiles/zsh/alias-functions.zsh
-source_if_exists ~/dot/dotfiles/zsh/env.zsh
+source_if_exists ~/nix-config/dotfiles/zsh/history.zsh
+source_if_exists ~/nix-config/dotfiles/zsh/aliases.zsh
+source_if_exists ~/nix-config/dotfiles/zsh/alias-functions.zsh
+source_if_exists ~/nix-config/dotfiles/zsh/env.zsh
 
 CASE_SENSITIVE="true"
 HYPHEN_INSENSITIVE="true"
 
 precmd() {
-	source ~/dot/dotfiles/zsh/aliases.zsh
-	source ~/dot/dotfiles/zsh/alias-functions.zsh
+	source ~/nix-config/dotfiles/zsh/aliases.zsh
+	source ~/nix-config/dotfiles/zsh/alias-functions.zsh
 }
 
 bindkey "^[[1;5C" forward-word    # Ctrl+Right

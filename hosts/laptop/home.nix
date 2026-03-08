@@ -1,16 +1,21 @@
 {
-  lib,
   pkgs,
   config,
   inputs,
   ...
-}: {
+}: let
+  myPkgs = import ../../pkgs/default.nix {inherit pkgs;};
+in {
   imports = [
     ../../common/desktop-apps/internet/vesktop.nix
     ../../common/terminal/default.nix
     ../../common/scripts/default.nix
-    inputs.zen-browser.homeModules.beta
+    ../../common/wm/default.nix
+    inputs.nix-colors.homeManagerModules.default
+    inputs.nvf.homeManagerModules.default
   ];
+
+  colorScheme = inputs.nix-colors.colorSchemes.nord;
 
   modules = {
     discord.enable = true;
@@ -36,8 +41,6 @@
     };
     packages = with pkgs; [
       alejandra
-      nerd-fonts.geist-mono
-      libnotify
     ];
     activation.linkDesktopApplications = {
       after = [
@@ -53,10 +56,8 @@
     };
   };
 
-  programs = {
-    home-manager.enable = true;
-    zen-browser.enable = true;
-  };
+  programs.home-manager.enable = true;
+
   targets.genericLinux = {
     enable = true;
     gpu.enable = true;
@@ -68,8 +69,5 @@
     enable = true;
     systemDirs.data = ["${config.xdg.dataHome}/nix-desktop-files"];
     mime.enable = true;
-    configFile."environment.d/envvars.conf".text = ''
-      PATH="$HOME/.nix-profile/bin:$PATH"
-    '';
   };
 }

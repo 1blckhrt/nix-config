@@ -10,12 +10,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     hooks.url = "github:cachix/git-hooks.nix";
+    nix-colors.url = "github:misterio77/nix-colors";
+    nvf.url = "github:notashelf/nvf";
   };
 
   outputs = {
@@ -23,14 +20,15 @@
     nixpkgs-unstable,
     home-manager,
     hooks,
-    nixvim,
+    nix-colors,
+    nvf,
     ...
   } @ inputs: let
     system = "x86_64-linux";
     pkgs = import nixpkgs {inherit system;};
   in {
     homeConfigurations = {
-      laptop = home-manager.lib.homeManagerConfiguration {
+      mint-laptop = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [./hosts/laptop/home.nix];
         extraSpecialArgs = {inherit inputs;};
@@ -41,12 +39,6 @@
         modules = [./hosts/pc/home.nix];
         extraSpecialArgs = {inherit inputs;};
       };
-
-      debian-server = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [./hosts/debian-server/home.nix];
-        extraSpecialArgs = {inherit inputs;};
-      };
     };
 
     devShells.${system}.default = let
@@ -54,10 +46,7 @@
         src = ./.;
         package = pkgs.prek;
         hooks = {
-          statix = {
-            enable = true;
-            settings.ignore = ["/.direnv" "hardware-configuration.nix"];
-          };
+          statix.enable = true;
           convco.enable = true;
           alejandra.enable = true;
         };

@@ -50,7 +50,7 @@ in {
     ];
 
     extraConfig = ''
-      bind r source-file ~/.tmux.conf \; display-message "Config reloaded!"
+      bind r source-file ~/.config/tmux/tmux.conf \; display-message "Config reloaded!"
 
       set -g set-clipboard on
       set -g detach-on-destroy off
@@ -62,6 +62,8 @@ in {
       set-option -g renumber-windows on
       set -g base-index 1
       setw -g pane-base-index 1
+
+      set-option -g status-position top
 
       unbind %
       bind | split-window -h -c "#{pane_current_path}"

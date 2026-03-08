@@ -2,8 +2,8 @@ _: {
   services.hyprpaper = {
     enable = true;
     settings = {
-      preload = ["~/dot/dotfiles/bg2.jpg"];
-      wallpaper = [", ~/dot/dotfiles/bg2.jpg"];
+      preload = ["~/nix-config/dotfiles/bg.png"];
+      wallpaper = [", ~/nix-config/dotfiles/bg.png"];
     };
   };
 }

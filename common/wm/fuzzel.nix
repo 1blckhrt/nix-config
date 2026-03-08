@@ -1,20 +1,20 @@
-_: {
+{config, ...}: {
   programs.fuzzel = {
     enable = true;
-    settings = {
+    settings = with config.colorScheme.palette; {
       main = {
         terminal = "kitty";
         layer = "overlay";
-        font = "JetBrainsMono NF 12";
+        font = "JetBrainsMono Nerd Font 12";
       };
       colors = {
-        background = "2e3440dd";
-        text = "eceff4ff";
-        selection = "434c5eff";
-        selection-text = "eceff4ff";
-        border = "88c0d0ff";
-        match = "bf616aff";
-        selection-match = "bf616aff";
+        background = "${base00}ff";
+        text = "${base06}ff";
+        selection = "${base02}ff";
+        selection-text = "${base06}ff";
+        border = "${base0C}ff"; # cyan
+        match = "${base08}ff"; # red
+        selection-match = "${base08}ff"; # red
       };
       border = {
         radius = "10";

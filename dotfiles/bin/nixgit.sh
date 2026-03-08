@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="/home/blckhrt/dot"
+REPO="/home/blckhrt/nix-config"
 
 # Ensure the directory is a git repository
 if [ ! -d "$REPO/.git" ]; then
@@ -14,13 +14,5 @@ fi
   cd "$REPO"
   git add -A
 
-  if [ $# -gt 0 ]; then
-    COMMIT_MSG="$*"
-  else
-    COMMIT_MSG="chore: backup on $(date +'%Y-%m-%d %H:%M:%S')"
-  fi
-
-  git commit -m "$COMMIT_MSG"
-  git push
+  convco commit
 )
-

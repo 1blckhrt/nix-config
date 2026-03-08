@@ -1,4 +1,25 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: let
+  mkMenu = menu: let
+    configFile =
+      pkgs.writeText "config.yaml"
+      (lib.generators.toYAML {} {
+        anchor = "center";
+        font = "JetBrainsMono Nerd Font 12";
+        color = "#434c5e";
+        border = "#5e81ac";
+        separator = " > ";
+        # ...
+        inherit menu;
+      });
+  in
+    pkgs.writeShellScriptBin "my-menu" ''
+      exec ${lib.getExe pkgs.wlr-which-key} ${configFile}
+    '';
+in {
   imports = [./hyprpaper.nix ./fuzzel.nix ./wlogout.nix];
   home.packages = with pkgs; [
     brightnessctl
@@ -19,7 +40,189 @@
     font-awesome
     nerd-fonts.jetbrains-mono
     pavucontrol
+    flameshot
   ];
+
+  programs.waybar = {
+    enable = true;
+    systemd = {
+      enable = true;
+      target = "hyprland-session.target";
+    };
+
+    settings = [
+      {
+        layer = "top";
+        height = 28;
+
+        modules-left = ["hyprland/workspaces" "hyprland/window"];
+        modules-center = ["clock"];
+        modules-right = [
+          "pulseaudio"
+          "bluetooth"
+          "network"
+          "battery"
+          "tray"
+        ];
+
+        "hyprland/window" = {
+          max-length = 30;
+        };
+
+        "hyprland/workspaces" = {
+          format = "{icon}";
+          on-click = "activate";
+          sort-by-number = true;
+          format-icons = {
+            "1" = "1";
+            "2" = "2";
+            "3" = "3";
+            "4" = "4";
+            "5" = "5";
+          };
+          persistent-workspaces = {
+            "1" = [];
+            "2" = [];
+            "3" = [];
+            "4" = [];
+            "5" = [];
+          };
+        };
+
+        clock = {
+          interval = 30;
+          format = "{:%I:%M %p}";
+          tooltip-format = "{:%a, %d %b %G}";
+        };
+
+        tray = {
+          icon-size = 20;
+          spacing = 8;
+        };
+
+        pulseaudio = {
+          format-source = "󰍬";
+          format-source-muted = "󰍭";
+          format = "{format_source} 󰕾 {volume}%";
+          format-bluetooth = "{format_source} 󰂰 {volume}%";
+          format-muted = "{format_source} 󰸈";
+          max-volume = 150;
+          scroll-step = 1;
+        };
+
+        bluetooth = {
+          format = "";
+          format-disabled = "";
+          format-off = "";
+          format-on = "󰂯";
+          format-connected = "󰂱 {device_alias}";
+          max-length = 16;
+        };
+
+        network = {
+          format = "{ifname}";
+          format-wifi = "󰖩 {essid}";
+          format-ethernet = "󰈀 {ipaddr}";
+          format-disconnected = "Disconnected";
+          max-length = 32;
+        };
+
+        battery = {
+          interval = 60;
+          format-time = "{H}:{m}";
+          format-icons = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
+          format-discharging = "{icon} {capacity}% ({time})";
+          format-charging = "󰂄 {capacity}%";
+          format = "";
+        };
+      }
+    ];
+
+    style = ''
+      /* Reset all styles */
+      * {
+        border: none;
+        border-radius: 0;
+        min-height: 0;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* The whole bar */
+      #waybar {
+        background: rgba(46, 52, 64, 0.8);
+        color: #D8DEE9;
+        font-family: JetBrainsMono Nerd Font;
+        font-size: 15px;
+      }
+
+      /* Each module */
+      #battery,
+      #clock,
+      #cpu,
+      #memory,
+      #mode,
+      #network,
+      #pulseaudio,
+      #temperature,
+      #tray,
+      #bluetooth,
+      #mic,
+      #sound {
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+        border-radius: 3px;
+        background-color: rgba(68, 76, 88, 0.8);
+      }
+
+      #clock {
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      #network {
+        background-color: rgba(74, 95, 112, 0.8);
+      }
+
+      #network.disconnected {
+        color: #BF616A;
+      }
+
+      #pulseaudio {
+        background-color: rgba(64, 74, 87, 0.8);
+      }
+
+      #tray {
+        margin-right: 10px;
+      }
+
+      #window {
+        font-weight: bold;
+      }
+
+      button:hover {
+        background: inherit;
+        box-shadow: inherit;
+      }
+
+      #workspaces button {
+        color: #D8DEE9;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      #workspaces button:hover {
+        background: rgba(0, 0, 0, 0.2);
+      }
+
+      #workspaces button.active {
+        border-color: #A3BE8C;
+        background-color: #4C566A;
+      }
+    '';
+  };
 
   services = {
     swaync.enable = true;
@@ -29,77 +232,74 @@
 
   systemd.user.services.snixembed.Unit.After = ["graphical-session.target" "dbus.service"];
 
-  programs.ashell = {
-    enable = true;
-    systemd = {
-      enable = true;
-      target = "hyprland-session.target";
-    };
-    settings = {
-      workspaces = {
-        enable_workspace_filling = false;
-      };
+  # programs.ashell = {
+  #   enable = true;
+  #   systemd = {
+  #     enable = true;
+  #     target = "hyprland-session.target";
+  #   };
+  #   settings = {
+  #     window_title = {
+  #       truncate_title_after_length = 40;
+  #     };
 
-      window_title = {
-        truncate_title_after_length = 40;
-      };
+  #     media_player = {
+  #       max_title_length = 50;
+  #     };
 
-      media_player = {
-        max_title_length = 50;
-      };
+  #     settings = {
+  #       lock_cmd = "playerctl --all-players pause; hyprlock &";
+  #       audio_sinks_more_cmd = "pavucontrol -t 3";
+  #       audio_sources_more_cmd = "pavucontrol -t 4";
+  #       wifi_mode_cmd = "nm-connection-editor";
+  #     };
 
-      settings = {
-        lock_cmd = "playerctl --all-players pause; hyprlock &";
-        audio_sinks_more_cmd = "pavucontrol -t 3";
-        audio_sources_more_cmd = "pavucontrol -t 4";
-        wifi_mode_cmd = "nm-connection-editor";
-      };
+  #     appearance = {
+  #       style = "Gradient";
+  #       font_name = "JetBrainsMono NF"
+  #     };
 
-      appearance = {
-        style = "Islands";
-      };
-
-      modules = {
-        left = [
-          [
-            "Workspaces"
-          ]
-          "WindowTitle"
-        ];
-        center = [
-          "Clock"
-        ];
-        right = [
-          "SystemInfo"
-          [
-            "MediaPlayer"
-            "Privacy"
-            "Settings"
-            "Tray"
-          ]
-        ];
-      };
-    };
-  };
+  #     modules = {
+  #       left = [
+  #         [
+  #           "Workspaces"
+  #         ]
+  #         "WindowTitle"
+  #       ];
+  #       center = [
+  #         "Clock"
+  #       ];
+  #       right = [
+  #         "SystemInfo"
+  #         [
+  #           "MediaPlayer"
+  #           "Privacy"
+  #           "Settings"
+  #           "Tray"
+  #         ]
+  #       ];
+  #     };
+  #   };
+  # };
 
   wayland.windowManager.hyprland = {
     enable = true;
 
     settings = {
+      monitor = [", preferred, auto, 1"];
       exec = [
         "systemctl --user restart hyprpaper.service"
         "systemctl --user restart xdg-desktop-portal.service"
         "systemctl --user restart swaync.service"
         "systemctl --user restart hyprpolkitagent.service"
         "systemctl --user restart cliphist.service"
-        "systemctl --user restart ashell.service"
+        "systemctl --user restart waybar.service"
         "dbus-update-activation-environment --all"
         "gnome-keyring-daemon --start --components=secrets"
         "nm-applet --indicator"
       ];
 
       cursor.no_hardware_cursors = true;
-      monitor = ["HDMI-A-1, preferred, 0x0, auto" "DP-2, preferred, 1920x0, auto"];
 
       "$terminal" = "${pkgs.kitty}/bin/kitty";
       "$fileManager" = "${pkgs.nautilus}/bin/nautilus";
@@ -108,8 +308,8 @@
         gaps_in = 5;
         gaps_out = 20;
         border_size = 2;
-        "col.active_border" = "rgba(88C0D0ff)"; # Nord cyan
-        "col.inactive_border" = "rgba(4C566Aff)"; # Nord dark gray
+        "col.active_border" = "rgba(88c0d0ff)";
+        "col.inactive_border" = "rgba(2e3440ff)";
         resize_on_border = false;
         allow_tearing = false;
         layout = "dwindle";
@@ -194,7 +394,29 @@
 
       bind = [
         "$mainMod, Return, exec, $terminal"
-        "$mainMod, D, exec, pkill fuzzel || ${pkgs.fuzzel}/bin/fuzzel"
+        ("$mainMod, D, exec, "
+          + lib.getExe (mkMenu [
+            {
+              key = "b";
+              desc = "browser";
+              cmd = "helium";
+            }
+            {
+              key = "s";
+              desc = "search";
+              cmd = "fuzzel";
+            }
+            {
+              key = "e";
+              desc = "file browser";
+              cmd = "nautilus";
+            }
+            {
+              key = "d";
+              desc = "discord";
+              cmd = "vesktop";
+            }
+          ]))
         "$mainMod SHIFT, R, exec, hyprctl reload"
         "$mainMod, Q, killactive,"
         "$mainMod SHIFT, E, exec, ${pkgs.wlogout}/bin/wlogout"
@@ -258,7 +480,7 @@
         "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch cliphist store"
       ];
 
-      env = ["XCURSOR_SIZE,20" "HYPRCURSOR_SIZE,20"];
+      env = ["XCURSOR_SIZE,15" "HYPRCURSOR_SIZE,20"];
     };
   };
 }

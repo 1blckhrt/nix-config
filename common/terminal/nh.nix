@@ -1,7 +1,7 @@
 _: {
   programs.nh = {
     enable = true;
-    homeFlake = "/home/blckhrt/dot/";
+    homeFlake = "/home/blckhrt/nix-config/";
     clean = {
       enable = true;
       dates = "weekly";
