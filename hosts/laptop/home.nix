@@ -12,7 +12,6 @@ in {
     ../../common/scripts/default.nix
     ../../common/wm/default.nix
     inputs.nix-colors.homeManagerModules.default
-    inputs.nvf.homeManagerModules.default
   ];
 
   colorScheme = inputs.nix-colors.colorSchemes.nord;

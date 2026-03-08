@@ -12,7 +12,6 @@
 
     hooks.url = "github:cachix/git-hooks.nix";
     nix-colors.url = "github:misterio77/nix-colors";
-    nvf.url = "github:notashelf/nvf";
   };
 
   outputs = {
@@ -21,7 +20,6 @@
     home-manager,
     hooks,
     nix-colors,
-    nvf,
     ...
   } @ inputs: let
     system = "x86_64-linux";
