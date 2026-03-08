@@ -200,6 +200,12 @@ in {
 
       #window {
         font-weight: bold;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+        border-radius: 3px;
+        background-color: rgba(68, 76, 88, 0.8);
       }
 
       button:hover {
