@@ -16,7 +16,6 @@ in {
       settings = {
         arRPC = true;
         checkUpdates = false;
-        discordBranch = "canary";
         hardwareAcceleration = true;
       };
     };
