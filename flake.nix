@@ -26,7 +26,7 @@
     pkgs = import nixpkgs {inherit system;};
   in {
     homeConfigurations = {
-      mint-laptop = home-manager.lib.homeManagerConfiguration {
+      laptop = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [./hosts/laptop/home.nix];
         extraSpecialArgs = {inherit inputs;};

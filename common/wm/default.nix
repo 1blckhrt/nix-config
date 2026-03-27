@@ -20,7 +20,7 @@
       exec ${lib.getExe pkgs.wlr-which-key} ${configFile}
     '';
 in {
-  imports = [./hyprpaper.nix ./fuzzel.nix ./wlogout.nix];
+  imports = [./fuzzel.nix ./hyprpaper.nix ./wlogout.nix];
   home.packages = with pkgs; [
     brightnessctl
     grim
@@ -400,17 +400,12 @@ in {
 
       bind = [
         "$mainMod, Return, exec, $terminal"
-        ("$mainMod, D, exec, "
+        ("$mainMod, X, exec, "
           + lib.getExe (mkMenu [
             {
               key = "b";
               desc = "browser";
               cmd = "helium";
-            }
-            {
-              key = "s";
-              desc = "search";
-              cmd = "fuzzel";
             }
             {
               key = "e";
@@ -423,6 +418,7 @@ in {
               cmd = "vesktop";
             }
           ]))
+        "$mainMod, D, exec, ${pkgs.fuzzel}/bin/fuzzel"
         "$mainMod SHIFT, R, exec, hyprctl reload"
         "$mainMod, Q, killactive,"
         "$mainMod SHIFT, E, exec, ${pkgs.wlogout}/bin/wlogout"
