@@ -4,9 +4,8 @@
   ...
 }: let
   mkMenu = menu: let
-    configFile =
-      pkgs.writeText "config.yaml"
-      (lib.generators.toYAML {} {
+    configFile = pkgs.writeText "config.yaml" (
+      lib.generators.toYAML {} {
         anchor = "center";
         font = "JetBrainsMono Nerd Font 12";
         color = "#434c5e";
@@ -14,13 +13,18 @@
         separator = " > ";
         # ...
         inherit menu;
-      });
+      }
+    );
   in
     pkgs.writeShellScriptBin "my-menu" ''
       exec ${lib.getExe pkgs.wlr-which-key} ${configFile}
     '';
 in {
-  imports = [./fuzzel.nix ./hyprpaper.nix ./wlogout.nix];
+  imports = [
+    ./fuzzel.nix
+    ./hyprpaper.nix
+    ./wlogout.nix
+  ];
   home.packages = with pkgs; [
     brightnessctl
     grim
@@ -41,6 +45,7 @@ in {
     nerd-fonts.jetbrains-mono
     pavucontrol
     flameshot
+    nwg-displays
   ];
 
   programs.waybar = {
@@ -55,7 +60,10 @@ in {
         layer = "top";
         height = 28;
 
-        modules-left = ["hyprland/workspaces" "hyprland/window"];
+        modules-left = [
+          "hyprland/workspaces"
+          "hyprland/window"
+        ];
         modules-center = ["clock"];
         modules-right = [
           "pulseaudio"
@@ -130,7 +138,18 @@ in {
         battery = {
           interval = 60;
           format-time = "{H}:{m}";
-          format-icons = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
+          format-icons = [
+            "󰁺"
+            "󰁻"
+            "󰁼"
+            "󰁽"
+            "󰁾"
+            "󰁿"
+            "󰂀"
+            "󰂁"
+            "󰂂"
+            "󰁹"
+          ];
           format-discharging = "{icon} {capacity}% ({time})";
           format-charging = "󰂄 {capacity}%";
           format = "";
@@ -236,7 +255,10 @@ in {
     cliphist.enable = true;
   };
 
-  systemd.user.services.snixembed.Unit.After = ["graphical-session.target" "dbus.service"];
+  systemd.user.services.snixembed.Unit.After = [
+    "graphical-session.target"
+    "dbus.service"
+  ];
 
   # programs.ashell = {
   #   enable = true;
@@ -290,7 +312,9 @@ in {
 
   wayland.windowManager.hyprland = {
     enable = true;
-
+    extraConfig = ''
+      source = ~/.config/hypr/monitors.conf
+    '';
     settings = {
       monitor = [", preferred, auto, 1"];
       exec = [
@@ -400,7 +424,8 @@ in {
 
       bind = [
         "$mainMod, Return, exec, $terminal"
-        ("$mainMod, X, exec, "
+        (
+          "$mainMod, X, exec, "
           + lib.getExe (mkMenu [
             {
               key = "b";
@@ -417,7 +442,8 @@ in {
               desc = "discord";
               cmd = "vesktop";
             }
-          ]))
+          ])
+        )
         "$mainMod, D, exec, ${pkgs.fuzzel}/bin/fuzzel"
         "$mainMod SHIFT, R, exec, hyprctl reload"
         "$mainMod, Q, killactive,"
@@ -482,7 +508,10 @@ in {
         "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch cliphist store"
       ];
 
-      env = ["XCURSOR_SIZE,15" "HYPRCURSOR_SIZE,20"];
+      env = [
+        "XCURSOR_SIZE,15"
+        "HYPRCURSOR_SIZE,20"
+      ];
     };
   };
 }
