@@ -32,5 +32,7 @@ in {
     npins
     pkgs-unstable.devenv
     keychain
+    nil
+    pkgs-unstable.zed-editor
   ];
 }

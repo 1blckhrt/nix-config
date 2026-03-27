@@ -34,7 +34,6 @@ in {
       "$HOME/bin"
     ];
     sessionVariables = {
-      EDITOR = "nvim";
       TERMINAL = "kitty";
       NIXOS_OZONE_WL = "1";
     };

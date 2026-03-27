@@ -12,5 +12,5 @@ alias gcam='git commit -a -m'
 alias mkdir="mkdir -pv"
 alias c="clear"
 alias x="exit"
-alias reload="source ~/dot/dotfiles/zsh/zsh.zsh"
+alias reload="source ~/nix-config/dotfiles/zsh/zsh.zsh"
 alias reboot="systemctl reboot"
