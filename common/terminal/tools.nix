@@ -34,5 +34,7 @@ in {
     keychain
     nil
     pkgs-unstable.zed-editor
+    neovim
+    opencode
   ];
 }
