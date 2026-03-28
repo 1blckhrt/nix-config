@@ -1,7 +1,6 @@
 {
   inputs,
   pkgs,
-  lib,
   config,
   ...
 }: {
@@ -9,10 +8,6 @@
 
   programs.vicinae = {
     enable = true;
-    systemd = {
-      enable = true;
-      autoStart = true;
-    };
     extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
       bluetooth
       nix

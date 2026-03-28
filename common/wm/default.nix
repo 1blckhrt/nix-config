@@ -325,10 +325,12 @@ in {
         "systemctl --user restart hyprpolkitagent.service"
         "systemctl --user restart cliphist.service"
         "systemctl --user restart waybar.service"
-        "${pkgs.vicinae}/bin/vicinae server --replace"
         "dbus-update-activation-environment --all"
+        "systemctl --user import-environment XDG_DATA_DIRS PATH"
+        "dbus-update-activation-environment --systemd XDG_DATA_DIRS PATH"
         "gnome-keyring-daemon --start --components=secrets"
         "nm-applet --indicator"
+        "bash -c 'dbus-update-activation-environment --systemd PATH XDG_DATA_DIRS && source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh && vicinae server'"
       ];
 
       cursor.no_hardware_cursors = true;
@@ -447,7 +449,6 @@ in {
           ])
         )
         "$mainMod, D, exec, ${pkgs.vicinae}/bin/vicinae toggle"
-        "$mainMod SHIFT, R, exec, hyprctl reload"
         "$mainMod, Q, killactive,"
         "$mainMod SHIFT, E, exec, ${pkgs.wlogout}/bin/wlogout"
         "$mainMod, E, exec, $fileManager"
@@ -460,21 +461,11 @@ in {
         "$mainMod, 3, workspace, 3"
         "$mainMod, 4, workspace, 4"
         "$mainMod, 5, workspace, 5"
-        "$mainMod, 6, workspace, 6"
-        "$mainMod, 7, workspace, 7"
-        "$mainMod, 8, workspace, 8"
-        "$mainMod, 9, workspace, 9"
-        "$mainMod, 0, workspace, 10"
         "$mainMod SHIFT, 1, movetoworkspace, 1"
         "$mainMod SHIFT, 2, movetoworkspace, 2"
         "$mainMod SHIFT, 3, movetoworkspace, 3"
         "$mainMod SHIFT, 4, movetoworkspace, 4"
         "$mainMod SHIFT, 5, movetoworkspace, 5"
-        "$mainMod SHIFT, 6, movetoworkspace, 6"
-        "$mainMod SHIFT, 7, movetoworkspace, 7"
-        "$mainMod SHIFT, 8, movetoworkspace, 8"
-        "$mainMod SHIFT, 9, movetoworkspace, 9"
-        "$mainMod SHIFT, 0, movetoworkspace, 10"
         "$mainMod, mouse_down, workspace, +1"
         "$mainMod, mouse_up, workspace, -1"
       ];

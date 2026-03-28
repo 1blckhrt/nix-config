@@ -94,4 +94,8 @@ in {
     enable = true;
     mime.enable = true;
   };
+
+  systemd.user.services.vicinae.Service.Environment = [
+    "XDG_DATA_DIRS=%h/.nix-profile/share:%h/.local/share:/usr/share"
+  ];
 }
