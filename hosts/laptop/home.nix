@@ -7,19 +7,16 @@
   myPkgs = import ../../pkgs/default.nix {inherit pkgs;};
 in {
   imports = [
-    ../../common/desktop-apps/internet/vesktop.nix
-    ../../common/terminal/default.nix
-    ../../common/scripts/default.nix
-    ../../common/wm/default.nix
+    ../../modules/desktop-apps
+    ../../modules/nix-utilities
+    ../../modules/scripts
+    ../../modules/terminal
+    ../../modules/wayland
     inputs.nix-colors.homeManagerModules.default
     inputs.vicinae.homeManagerModules.default
   ];
 
   colorScheme = inputs.nix-colors.colorSchemes.nord;
-
-  modules = {
-    discord.enable = true;
-  };
 
   nixpkgs.config = {
     allowUnfree = true;
@@ -83,6 +80,7 @@ in {
   };
 
   fonts.fontconfig = {
+    enable = true;
     defaultFonts = {
       monospace = ["JetBrainsMono"];
       serif = ["JetBrainsMono"];

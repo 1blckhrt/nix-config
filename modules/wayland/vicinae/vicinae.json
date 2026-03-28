@@ -10,11 +10,5 @@
   },
   "theme": {
     "name": "nord"
-  },
-  "launcher_window": {
-    "compact_mode": {
-      "enabled": false
-    },
-    "dim_around": true
   }
 }

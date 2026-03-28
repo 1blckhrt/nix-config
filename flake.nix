@@ -38,12 +38,6 @@
         modules = [./hosts/laptop/home.nix];
         extraSpecialArgs = {inherit inputs;};
       };
-
-      pc = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [./hosts/pc/home.nix];
-        extraSpecialArgs = {inherit inputs;};
-      };
     };
 
     devShells.${system}.default = let

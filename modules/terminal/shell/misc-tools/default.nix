@@ -33,8 +33,7 @@ in {
     pkgs-unstable.devenv
     keychain
     nil
-    pkgs-unstable.zed-editor
-    neovim
+    neovim # eventually I'll use mnw or something else
     opencode
   ];
 }
