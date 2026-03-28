@@ -12,6 +12,7 @@ in {
     ../../common/scripts/default.nix
     ../../common/wm/default.nix
     inputs.nix-colors.homeManagerModules.default
+    inputs.vicinae.homeManagerModules.default
   ];
 
   colorScheme = inputs.nix-colors.colorSchemes.nord;
@@ -81,7 +82,13 @@ in {
     gpu.enable = true;
   };
 
-  fonts.fontconfig.enable = true;
+  fonts.fontconfig = {
+    defaultFonts = {
+      monospace = ["JetBrainsMono"];
+      serif = ["JetBrainsMono"];
+      sansSerif = ["JetBrainsMono"];
+    };
+  };
 
   xdg = {
     enable = true;

@@ -21,7 +21,7 @@
     '';
 in {
   imports = [
-    ./fuzzel.nix
+    ./vicinae.nix
     ./hyprpaper.nix
     ./wlogout.nix
   ];
@@ -46,6 +46,7 @@ in {
     pavucontrol
     flameshot
     nwg-displays
+    nwg-look
   ];
 
   programs.waybar = {
@@ -324,6 +325,7 @@ in {
         "systemctl --user restart hyprpolkitagent.service"
         "systemctl --user restart cliphist.service"
         "systemctl --user restart waybar.service"
+        "${pkgs.vicinae}/bin/vicinae server --replace"
         "dbus-update-activation-environment --all"
         "gnome-keyring-daemon --start --components=secrets"
         "nm-applet --indicator"
@@ -444,7 +446,7 @@ in {
             }
           ])
         )
-        "$mainMod, D, exec, ${pkgs.fuzzel}/bin/fuzzel"
+        "$mainMod, D, exec, ${pkgs.vicinae}/bin/vicinae toggle"
         "$mainMod SHIFT, R, exec, hyprctl reload"
         "$mainMod, Q, killactive,"
         "$mainMod SHIFT, E, exec, ${pkgs.wlogout}/bin/wlogout"
