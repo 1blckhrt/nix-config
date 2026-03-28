@@ -32,7 +32,7 @@ tmux-session() {
 }
 
 switch () {
-	nh home switch /home/blckhrt/nix-config -c mint-laptop && \
+	nh home switch /home/blckhrt/nix-config -c laptop && \
 	/home/blckhrt/bin/nixgit.sh
 }
 
