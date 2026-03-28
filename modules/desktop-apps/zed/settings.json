@@ -72,4 +72,5 @@
     "light": "Nordic Syntax",
   },
   "ui_font_size": 16,
+  "ui_font_family": "JetBrainsMono Nerd Font",
 }
