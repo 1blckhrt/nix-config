@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+nix run home-manager/release-25.11 -- switch --flake ~/nix-config#pc
