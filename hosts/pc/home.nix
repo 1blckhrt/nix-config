@@ -5,6 +5,7 @@ _: {
 
   modules = {
     vesktop.enable = true;
+    kitty.enable = true;
     nh.enable = true;
   };
 
