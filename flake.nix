@@ -10,6 +10,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    stylix.url = "github:nix-community/stylix/release-25.11";
     hooks.url = "github:cachix/git-hooks.nix";
   };
 
@@ -18,6 +19,7 @@
       nixpkgs,
       nixpkgs-unstable,
       home-manager,
+      stylix,
       hooks,
       ...
     }@inputs:
@@ -35,7 +37,10 @@
       homeConfigurations = {
         pc = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [ ./hosts/pc/home.nix ];
+          modules = [
+            stylix.homeModules.stylix
+            ./hosts/pc/home.nix
+          ];
           extraSpecialArgs = { inherit inputs; };
         };
       };

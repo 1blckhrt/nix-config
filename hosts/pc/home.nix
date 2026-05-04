@@ -7,6 +7,7 @@ _: {
     vesktop.enable = true;
     kitty.enable = true;
     nh.enable = true;
+    stylix.enable = true;
   };
 
   programs.home-manager.enable = true;
@@ -29,4 +30,6 @@ _: {
       sha256 = "sha256-jA1Plnt5MsSrVxQnKu6BAzkrCnAskq+lVRdtNiBYKfk=";
     };
   };
+
+  fonts.fontconfig.enable = true;
 }

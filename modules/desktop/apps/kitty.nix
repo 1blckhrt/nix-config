@@ -18,7 +18,6 @@ in
       settings = {
         cursor_text_color = "background";
         cursor_shape = "beam";
-        background_opacity = "0.8";
         background_blur = 5;
         url_style = "curly";
         open_url_with = "default";

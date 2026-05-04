@@ -2,5 +2,6 @@
 {
   imports = [
     ./apps
+    ./theming.nix
   ];
 }
