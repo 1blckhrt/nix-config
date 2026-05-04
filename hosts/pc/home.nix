@@ -1,4 +1,12 @@
 _: {
+  imports = [
+    ../../modules
+  ];
+
+  modules = {
+    vesktop.enable = true;
+  };
+
   programs.home-manager.enable = true;
 
   home = {
