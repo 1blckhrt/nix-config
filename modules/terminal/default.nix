@@ -1,7 +1,6 @@
 { ... }:
 {
   imports = [
-    ./desktop
-    ./terminal
+    ./nix-utilities
   ];
 }

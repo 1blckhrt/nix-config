@@ -5,6 +5,7 @@ _: {
 
   modules = {
     vesktop.enable = true;
+    nh.enable = true;
   };
 
   programs.home-manager.enable = true;
