@@ -23,7 +23,7 @@ in
         open_url_with = "default";
         copy_on_select = true;
         window_padding_width = 10;
-        hide_window_decorations = true;
+        hide_window_decorations = false; # TODO: change once I am in Hyprland
         confirm_os_window_close = 0;
         cursor_trail = 1;
       };
