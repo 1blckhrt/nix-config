@@ -2,5 +2,6 @@
 {
   imports = [
     ./nix-utilities
+    ./editors
   ];
 }

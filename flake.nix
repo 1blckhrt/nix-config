@@ -11,6 +11,9 @@
     };
 
     stylix.url = "github:nix-community/stylix/release-25.11";
+
+    mnw.url = "github:Gerg-L/mnw";
+
     hooks.url = "github:cachix/git-hooks.nix";
   };
 
@@ -20,6 +23,7 @@
       nixpkgs-unstable,
       home-manager,
       stylix,
+      mnw,
       hooks,
       ...
     }@inputs:
@@ -39,6 +43,7 @@
           inherit pkgs;
           modules = [
             stylix.homeModules.stylix
+            mnw.homeManagerModules.mnw
             ./hosts/pc/home.nix
           ];
           extraSpecialArgs = { inherit inputs; };
