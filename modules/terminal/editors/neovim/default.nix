@@ -17,6 +17,9 @@ let
         snacks-nvim
         persistence-nvim
         blink-cmp
+        colorful-menu-nvim
+        nvim-web-devicons
+        lspkind-nvim
         luasnip
         (nvim-treesitter.withPlugins (
           plugins: with plugins; [
@@ -30,7 +33,6 @@ let
       opt = with pkgs-unstable.vimPlugins; [
         nvim-autopairs
         lualine-nvim
-        nvim-web-devicons
         oil-nvim
         conform-nvim
         nvim-lspconfig
