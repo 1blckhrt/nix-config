@@ -49,7 +49,7 @@ let
       };
     };
     extraBinPath = with pkgs-unstable; [
-      nixd
+      nil
       nixfmt
       ruff
       ty

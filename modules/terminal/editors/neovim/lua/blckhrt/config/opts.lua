@@ -23,15 +23,15 @@ vim.opt.showmatch = true
 vim.o.laststatus = 3
 vim.o.confirm = true
 vim.schedule(function()
-  vim.o.clipboard = "unnamedplus"
+    vim.o.clipboard = "unnamedplus"
 end)
 vim.diagnostic.config({
-	signs = {
-		text = {
-			[vim.diagnostic.severity.ERROR] = " ",
-			[vim.diagnostic.severity.WARN] = " ",
-			[vim.diagnostic.severity.INFO] = " ",
-			[vim.diagnostic.severity.HINT] = " ",
-		},
-	},
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = " ",
+            [vim.diagnostic.severity.WARN] = " ",
+            [vim.diagnostic.severity.INFO] = " ",
+            [vim.diagnostic.severity.HINT] = " ",
+        },
+    },
 })
