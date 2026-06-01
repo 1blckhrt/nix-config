@@ -1,7 +1,9 @@
 { ... }:
 {
   imports = [
-    ./desktop
-    ./terminal
+    ./kitty.nix
+    ./nh.nix
+    #./theming.nix
+    ./vesktop.nix
   ];
 }

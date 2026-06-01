@@ -1,7 +1,0 @@
-{ ... }:
-{
-  imports = [
-    ./apps
-    # ./theming.nix
-  ];
-}
