@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./kitty.nix
@@ -6,5 +6,9 @@
     ./nvim.nix
     #./theming.nix
     ./vesktop.nix
+  ];
+
+  home.packages = with pkgs; [
+    ioskeley-mono.normal-NF
   ];
 }
