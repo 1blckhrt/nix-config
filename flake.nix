@@ -57,6 +57,7 @@
             hooks = {
               statix.enable = true;
               nixfmt.enable = true;
+              stylua.enable = true;
               convco.enable = true;
             };
           };
