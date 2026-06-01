@@ -2,18 +2,18 @@
   description = "My Home Manager configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    stylix.url = "github:nix-community/stylix/release-25.11";
+    # stylix.url = "github:nix-community/stylix/release-25.11";
+    # TODO: uncomment after 26.05 is released
 
     mnw.url = "github:Gerg-L/mnw";
-
     hooks.url = "github:cachix/git-hooks.nix";
   };
 
@@ -22,7 +22,7 @@
       nixpkgs,
       nixpkgs-unstable,
       home-manager,
-      stylix,
+      # stylix,
       mnw,
       hooks,
       ...
@@ -42,7 +42,7 @@
         pc = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
-            stylix.homeModules.stylix
+            # stylix.homeModules.stylix
             mnw.homeManagerModules.mnw
             ./hosts/pc/home.nix
           ];

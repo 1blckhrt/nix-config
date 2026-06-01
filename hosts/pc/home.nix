@@ -7,7 +7,7 @@ _: {
     vesktop.enable = true;
     kitty.enable = true;
     nh.enable = true;
-    stylix.enable = true;
+    #stylix.enable = false;
   };
 
   programs.home-manager.enable = true;
