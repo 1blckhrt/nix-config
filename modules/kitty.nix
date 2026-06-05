@@ -15,10 +15,6 @@ in
   config = lib.mkIf cfg.enable {
     programs.kitty = {
       enable = true;
-      font = {
-        name = "IoskeleyMono Nerd Font";
-        size = 14;
-      };
       themeFile = "GruvboxMaterialDarkHard";
       settings = {
         cursor_text_color = "background";

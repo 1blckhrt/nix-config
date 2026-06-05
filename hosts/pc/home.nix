@@ -7,7 +7,8 @@ _: {
     vesktop.enable = true;
     kitty.enable = true;
     nh.enable = true;
-    #stylix.enable = false;
+    stylix.enable = true;
+    neovim.enable = true;
   };
 
   programs.home-manager.enable = true;

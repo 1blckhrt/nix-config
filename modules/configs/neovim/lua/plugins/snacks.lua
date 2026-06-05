@@ -142,11 +142,13 @@ return {
 		indent = { enabled = true },
 		scratch = { enabled = true },
 		picker = {
+			enabled = true,
 			frecency = true,
 		},
 		dashboard = {
+			enabled = true,
 			sections = {
-				--				{ section = "header" },
+				{ section = "header" },
 				{ section = "keys", gap = 1 },
 				{ icon = " ", title = "Projects", section = "projects", indent = 2, padding = 2 },
 				{ section = "startup" },

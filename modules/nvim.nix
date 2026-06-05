@@ -1,4 +1,10 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  config,
+  lib,
+  ...
+}:
 let
   pkgs-unstable = import inputs.nixpkgs-unstable {
     inherit (pkgs) system;
@@ -21,6 +27,7 @@ let
       nil
       nixfmt
       ruff
+      ty
       pyrefly
       lua-language-server
       stylua
@@ -30,9 +37,15 @@ let
       ripgrep
     ];
   };
+  cfg = config.modules.neovim;
 in
 {
-  home.packages = [
-    main-neovim
-  ];
+  options.modules.neovim = {
+    enable = lib.mkEnableOption "Neovim";
+  };
+  config = lib.mkIf cfg.enable {
+    home.packages = [
+      main-neovim
+    ];
+  };
 }
