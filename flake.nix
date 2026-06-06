@@ -1,6 +1,11 @@
 {
   description = "My Home Manager configuration";
 
+  nixConfig = {
+    extra-substituters = [ "https://vicinae.cachix.org" ];
+    extra-trusted-public-keys = [ "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc=" ];
+  };
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -11,6 +16,8 @@
     };
 
     stylix.url = "github:nix-community/stylix/release-26.05";
+
+    vicinae.url = "github:vicinaehq/vicinae";
 
     mnw.url = "github:Gerg-L/mnw";
     hooks.url = "github:cachix/git-hooks.nix";
@@ -24,6 +31,7 @@
       stylix,
       mnw,
       hooks,
+      vicinae,
       ...
     }@inputs:
     let
@@ -43,6 +51,7 @@
           modules = [
             stylix.homeModules.stylix
             mnw.homeManagerModules.mnw
+            vicinae.homeManagerModules.default
             ./hosts/pc/home.nix
           ];
           extraSpecialArgs = { inherit inputs; };

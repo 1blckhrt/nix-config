@@ -9,6 +9,7 @@ _: {
     nh.enable = true;
     stylix.enable = true;
     neovim.enable = true;
+    vicinae.enable = true;
   };
 
   programs.home-manager.enable = true;

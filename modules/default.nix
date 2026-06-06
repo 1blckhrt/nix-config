@@ -6,5 +6,6 @@
     ./nvim.nix
     ./theming.nix
     ./vesktop.nix
+    ./vicinae.nix
   ];
 }
