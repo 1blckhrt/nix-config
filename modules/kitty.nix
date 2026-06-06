@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 
@@ -15,7 +14,6 @@ in
   config = lib.mkIf cfg.enable {
     programs.kitty = {
       enable = true;
-      themeFile = "GruvboxMaterialDarkHard";
       settings = {
         cursor_text_color = "background";
         cursor_shape = "beam";
