@@ -5,7 +5,7 @@ return {
 		local servers = {
 			nil_ls = {},
 			ruff = {},
-			pyrefly = {},
+			ty = {},
 			lua_ls = {},
 		}
 

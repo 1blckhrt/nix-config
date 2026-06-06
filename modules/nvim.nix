@@ -28,7 +28,6 @@ let
       nixfmt
       ruff
       ty
-      pyrefly
       lua-language-server
       stylua
       markdown-oxide
