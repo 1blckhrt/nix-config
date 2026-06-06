@@ -106,8 +106,9 @@ end
 
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
-		require("persistence").setup({})
-		require("persistence").load()
-		vim.cmd([[filetype detect]])
+		if vim.fn.argc() == 0 and not vim.g.started_with_stdin then
+			require("persistence").load()
+			vim.cmd([[doautocmd BufRead]])
+		end
 	end,
 })
