@@ -19,16 +19,16 @@ in
       base16Scheme = ./themes/gruvbox-material-dark-hard.yaml;
       fonts = {
         monospace = {
-          package = pkgs.ioskeley-mono.normal-NF;
-          name = "IoskeleyMono Nerd Font";
+          package = pkgs.nerd-fonts.iosevka;
+          name = "Iosevka Nerd Font";
         };
         serif = {
-          package = pkgs.ioskeley-mono.normal-NF;
-          name = "IoskeleyMono Nerd Font";
+          package = pkgs.nerd-fonts.iosevka;
+          name = "Iosevka Nerd Font";
         };
         sansSerif = {
-          package = pkgs.ioskeley-mono.normal-NF;
-          name = "IoskeleyMono Nerd Font";
+          package = pkgs.nerd-fonts.iosevka;
+          name = "Iosevka Nerd Font";
         };
       };
     };

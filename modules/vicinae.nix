@@ -80,7 +80,7 @@ in
         pop_to_root_on_close = true;
         font.normal = {
           size = 14;
-          family = "IoskeleyMono Nerd Font";
+          family = "Iosevka Nerd Font";
         };
       };
       systemd = {
