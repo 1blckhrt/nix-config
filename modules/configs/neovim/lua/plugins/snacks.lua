@@ -4,6 +4,20 @@ return {
 	lazy = false,
 	keys = {
 		{
+			"<leader>.",
+			function()
+				Snacks.scratch()
+			end,
+			desc = "Toggle Scratch Buffer",
+		},
+		{
+			"<leader>S",
+			function()
+				Snacks.scratch.select()
+			end,
+			desc = "Select Scratch Buffer",
+		},
+		{
 			"gd",
 			function()
 				Snacks.picker.lsp_definitions()
@@ -96,20 +110,6 @@ return {
 			desc = "Keymaps",
 		},
 		{
-			"<leader>.",
-			function()
-				Snacks.scratch()
-			end,
-			desc = "Toggle Scratch",
-		},
-		{
-			"<leader>S",
-			function()
-				Snacks.scratch.select()
-			end,
-			desc = "Select Scratch",
-		},
-		{
 			"<leader>sv",
 			function()
 				Snacks.picker.files({
@@ -140,17 +140,18 @@ return {
 	},
 	opts = {
 		indent = { enabled = true },
-		scratch = { enabled = true },
 		picker = {
 			enabled = true,
 			frecency = true,
+		},
+		scratch = {
+			ft = "markdown",
 		},
 		dashboard = {
 			enabled = true,
 			sections = {
 				{ section = "header" },
 				{ section = "keys", gap = 1 },
-				{ icon = " ", title = "Projects", section = "projects", indent = 2, padding = 2 },
 				{ section = "startup" },
 			},
 			notifier = { enabled = true },

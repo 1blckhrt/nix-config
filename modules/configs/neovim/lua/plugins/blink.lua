@@ -12,7 +12,15 @@ return {
 				["<CR>"] = { "accept", "fallback" },
 			},
 			appearance = { nerd_font_variant = "mono" },
-			sources = { default = { "lsp", "path", "snippets", "buffer" } },
+			sources = {
+				default = { "lsp", "path", "snippets", "buffer", "dbab" },
+				providers = {
+					dbab = {
+						name = "dbab",
+						module = "blink_dbab",
+					},
+				},
+			},
 			snippets = { preset = "luasnip" },
 			signature = {
 				enabled = true,

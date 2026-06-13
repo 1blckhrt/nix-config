@@ -76,6 +76,13 @@ in
     ];
     programs.vicinae = {
       enable = true;
+      settings = {
+        pop_to_root_on_close = true;
+        font.normal = {
+          size = 14;
+          family = "IoskeleyMono Nerd Font";
+        };
+      };
       systemd = {
         enable = true;
         autoStart = true;

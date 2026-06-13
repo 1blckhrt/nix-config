@@ -1,14 +1,13 @@
 return {
-	"akinsho/toggleterm.nvim",
-	keys = {
-		{ "<C-t>", "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
-	},
-	opts = {
-		size = 20,
-		direction = "float",
-		open_mapping = [[<c-t>]],
-		float_opts = {
-			border = "curved",
-		},
-	},
+	"ingur/floatty.nvim",
+	config = function()
+		local term = require("floatty").setup({})
+
+		vim.keymap.set("n", "<C-t>", function()
+			term.toggle()
+		end)
+		vim.keymap.set("t", "<C-t>", function()
+			term.toggle()
+		end)
+	end,
 }
