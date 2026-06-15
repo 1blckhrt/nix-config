@@ -8,5 +8,6 @@
     ./vesktop.nix
     ./vicinae.nix
     ./tmux.nix
+    ./bookmark-scripts.nix
   ];
 }
