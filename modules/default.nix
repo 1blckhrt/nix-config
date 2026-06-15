@@ -7,5 +7,6 @@
     ./theming.nix
     ./vesktop.nix
     ./vicinae.nix
+    ./tmux.nix
   ];
 }

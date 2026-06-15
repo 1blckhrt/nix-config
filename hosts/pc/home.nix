@@ -10,6 +10,7 @@ _: {
     stylix.enable = true;
     neovim.enable = true;
     vicinae.enable = true;
+    tmux.enable = true;
   };
 
   programs.home-manager.enable = true;
@@ -22,6 +23,10 @@ _: {
       "$HOME/.local/bin"
       "$HOME/.nix-profile/bin"
     ];
+    sessionVariables = {
+      EDITOR = "nvim";
+      TERMINAL = "kitty";
+    };
   };
 
   targets.genericLinux = {
