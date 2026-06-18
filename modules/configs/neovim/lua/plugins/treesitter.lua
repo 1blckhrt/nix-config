@@ -4,7 +4,7 @@ return {
 	config = function()
 		require("nvim-treesitter.config").setup({
 			sync_install = true,
-			ensure_installed = { "lua", "python", "markdown", "nix", "sql" },
+			ensure_installed = { "lua", "python", "markdown", "nix", "sql", "json" },
 			highlight = { enable = true },
 		})
 	end,

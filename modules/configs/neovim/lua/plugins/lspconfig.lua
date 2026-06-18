@@ -7,6 +7,7 @@ return {
 			ruff = {},
 			ty = {},
 			lua_ls = {},
+			jsonls = {},
 		}
 
 		for server_name, cfg in pairs(servers) do

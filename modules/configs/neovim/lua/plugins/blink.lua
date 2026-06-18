@@ -13,13 +13,7 @@ return {
 			},
 			appearance = { nerd_font_variant = "mono" },
 			sources = {
-				default = { "lsp", "path", "snippets", "buffer", "dbab" },
-				providers = {
-					dbab = {
-						name = "dbab",
-						module = "blink_dbab",
-					},
-				},
+				default = { "lsp", "path", "snippets", "buffer" },
 			},
 			snippets = { preset = "luasnip" },
 			signature = {
