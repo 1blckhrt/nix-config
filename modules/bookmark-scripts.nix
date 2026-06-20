@@ -35,7 +35,7 @@ let
       SELECTED=$(bm list --jsonl | jq -r '"\(.title)  \(.url)"' | fzf) || exit 0
       TARGET_URL=$(printf '%s' "$SELECTED" | awk '{print $NF}')
       if [ -n "$TARGET_URL" ]; then
-        helium "$TARGET_URL" > /dev/null 2>&1 &
+        brave-origin "$TARGET_URL" > /dev/null 2>&1 &
         exit 0
       fi
     '';
@@ -74,7 +74,7 @@ let
       SELECTED=$(bm list --jsonl | jq -r '"\(.title)  \(.url)"' | vicinae dmenu --placeholder "Select bookmark") || exit 0
       TARGET_URL=$(printf '%s' "$SELECTED" | awk '{print $NF}')
       if [ -n "$TARGET_URL" ]; then
-        helium "$TARGET_URL" > /dev/null 2>&1 &
+        brave-origin "$TARGET_URL" > /dev/null 2>&1 &
         exit 0
       fi
     '';
