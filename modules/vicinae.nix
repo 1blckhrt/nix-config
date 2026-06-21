@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 let
@@ -12,8 +11,6 @@ in
     enable = lib.mkEnableOption "Vicinae";
   };
   config = lib.mkIf cfg.enable {
-    home.packages = [
-    ];
     programs.vicinae = {
       enable = true;
       settings = {
