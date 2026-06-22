@@ -13,5 +13,5 @@ switch-shell:
   @echo "/home/blckhrt/.nix-profile/bin/zsh" | sudo tee -a /etc/shells
   @chsh --shell /home/blckhrt/.nix-profile/bin/zsh
 
-install-hyprland-session:
-  printf '[Desktop Entry]\nName=Hyprland (Nix)\nComment=Hyprland Wayland session\nExec=/home/blckhrt/.nix-profile/bin/hyprland\nType=Application\n' | sudo tee /usr/share/wayland-sessions/hyprland.desktop
+install-oxwm-session:
+  printf '[Desktop Entry]\nName=OXWM (Nix)\nComment=OXWM X11 session\nExec=/home/blckhrt/.nix-profile/bin/oxwm\nType=Application\n' | sudo tee /usr/share/xsessions/oxwm.desktop

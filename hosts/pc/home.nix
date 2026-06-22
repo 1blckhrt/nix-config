@@ -11,6 +11,7 @@ _: {
     neovim.enable = true;
     vicinae.enable = true;
     tmux.enable = true;
+    oxwm.enable = true;
   };
 
   programs.home-manager.enable = true;

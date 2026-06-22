@@ -14,9 +14,10 @@ in
   };
   config = lib.mkIf cfg.enable {
     stylix = {
+      image = ./themes/gruvbox-material/wallpaper.png;
       enable = true;
       autoEnable = true;
-      base16Scheme = ./themes/gruvbox-material-dark-hard.yaml;
+      base16Scheme = ./themes/gruvbox-material/colors.yaml;
       fonts = {
         monospace = {
           package = pkgs.nerd-fonts.iosevka;

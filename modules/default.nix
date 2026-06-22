@@ -9,5 +9,6 @@
     ./vicinae.nix
     ./tmux.nix
     ./bookmark-scripts.nix
+    ./oxwm.nix
   ];
 }
