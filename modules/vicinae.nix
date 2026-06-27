@@ -1,29 +1,23 @@
 {
-  lib,
   config,
+  lib,
+  pkgs,
   ...
 }:
+
 let
   cfg = config.modules.vicinae;
+  vicinaePath = "${config.home.homeDirectory}/nix-config/dotfiles/vicinae/settings.json";
 in
 {
   options.modules.vicinae = {
-    enable = lib.mkEnableOption "Vicinae";
+    enable = lib.mkEnableOption "vicinae";
   };
   config = lib.mkIf cfg.enable {
-    programs.vicinae = {
-      enable = true;
-      settings = {
-        pop_to_root_on_close = true;
-        font.normal = {
-          size = 14;
-          family = "Iosevka Nerd Font";
-        };
-      };
-      systemd = {
-        enable = true;
-        autoStart = true;
-      };
-    };
+    home.packages = with pkgs; [
+      vicinae
+    ];
+
+    xdg.configFile."vicinae/settings.json".source = config.lib.file.mkOutOfStoreSymlink vicinaePath;
   };
 }

@@ -7,7 +7,7 @@
 
 let
   cfg = config.modules.tmux;
-  tmuxPath = "${config.home.homeDirectory}/nix-config/dotfiles/tmux";
+  tmuxPath = "${config.home.homeDirectory}/nix-config/dotfiles/tmux/tmux.conf";
 in
 {
   options.modules.tmux = {

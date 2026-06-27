@@ -1,0 +1,21 @@
+{
+  "pop_to_root_on_close": true,
+  "font": {
+    "normal": {
+      "size": 14,
+      "family": "Iosevka Nerd Font"
+    }
+  },
+  "telemetry": {
+    "system_info": false
+  },
+  "launcher_window": {
+    "opacity": 0.95,
+    "material": "auto"
+  },
+  "theme": {
+    "dark": {
+      "name": "gruvbox-dark"
+    }
+  }
+}
