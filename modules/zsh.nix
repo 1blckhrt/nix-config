@@ -9,8 +9,9 @@ let
   cfg = config.modules.zsh;
   zshRCPath = "${config.home.homeDirectory}/nix-config/dotfiles/zsh/.zshrc";
   zshEnvPath = "${config.home.homeDirectory}/nix-config/dotfiles/zsh/.zshenv";
-  zshAliasPath = "${config.home.homeDirectory}/nix-config/dotfiles/zsh/aliases.zsh";
+  zshAliasPath = "${config.home.homeDirectory}/nix-config/dotfiles/zsh/.aliases.zsh";
   promptPath = "${config.home.homeDirectory}/nix-config/dotfiles/starship/starship.toml";
+  zProfilePath = "${config.home.homeDirectory}/nix-config/dotfiles/zsh/.zprofile";
 in
 {
   options.modules.zsh = {
@@ -29,7 +30,8 @@ in
     home.file = {
       ".zshrc".source = config.lib.file.mkOutOfStoreSymlink zshRCPath;
       ".zshenv".source = config.lib.file.mkOutOfStoreSymlink zshEnvPath;
-      "aliases.zsh".source = config.lib.file.mkOutOfStoreSymlink zshAliasPath;
+      ".aliases.zsh".source = config.lib.file.mkOutOfStoreSymlink zshAliasPath;
+      ".zprofile".source = config.lib.file.mkOutOfStoreSymlink zProfilePath;
     };
     xdg.configFile."starship.toml".source = config.lib.file.mkOutOfStoreSymlink promptPath;
   };

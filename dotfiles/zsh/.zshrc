@@ -15,9 +15,9 @@ autoload -Uz compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
-source ~/aliases.zsh
-
-. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+source ~/.aliases.zsh
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.nix-profile/bin:$PATH"
 
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
