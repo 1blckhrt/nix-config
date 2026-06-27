@@ -15,8 +15,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    stylix.url = "github:nix-community/stylix/release-26.05";
-
     vicinae.url = "github:vicinaehq/vicinae";
 
     mnw.url = "github:Gerg-L/mnw";
@@ -28,7 +26,6 @@
       nixpkgs,
       nixpkgs-unstable,
       home-manager,
-      stylix,
       mnw,
       hooks,
       vicinae,
@@ -49,7 +46,6 @@
         pc = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
-            stylix.homeModules.stylix
             mnw.homeManagerModules.mnw
             vicinae.homeManagerModules.default
             ./hosts/pc/home.nix

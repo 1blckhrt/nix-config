@@ -4,11 +4,8 @@
     ./kitty.nix
     ./nh.nix
     ./nvim.nix
-    ./theming.nix
+    ./tmux.nix
     ./vesktop.nix
     ./vicinae.nix
-    ./tmux.nix
-    ./bookmark-scripts.nix
-    ./oxwm.nix
   ];
 }

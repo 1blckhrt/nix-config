@@ -1,4 +1,5 @@
-_: {
+{ pkgs, ... }:
+{
   imports = [
     ../../modules
   ];
@@ -7,11 +8,9 @@ _: {
     vesktop.enable = true;
     kitty.enable = true;
     nh.enable = true;
-    stylix.enable = true;
     neovim.enable = true;
     vicinae.enable = true;
     tmux.enable = true;
-    oxwm.enable = true;
   };
 
   programs.home-manager.enable = true;
@@ -28,6 +27,9 @@ _: {
       EDITOR = "nvim";
       TERMINAL = "kitty";
     };
+    packages = with pkgs; [
+      nerd-fonts.iosevka
+    ];
   };
 
   targets.genericLinux = {

@@ -14,7 +14,10 @@ in
   config = lib.mkIf cfg.enable {
     programs.kitty = {
       enable = true;
-      font.size = lib.mkForce 16; # override stylix
+      font = {
+        size = 16;
+        name = "Iosevka Nerd Font";
+      };
       settings = {
         cursor_text_color = "background";
         cursor_shape = "beam";
