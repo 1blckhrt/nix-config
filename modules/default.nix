@@ -7,5 +7,6 @@
     ./tmux.nix
     ./vesktop.nix
     ./vicinae.nix
+    ./zsh.nix
   ];
 }

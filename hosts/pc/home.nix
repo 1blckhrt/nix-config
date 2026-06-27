@@ -11,6 +11,7 @@
     neovim.enable = true;
     vicinae.enable = true;
     tmux.enable = true;
+    zsh.enable = true;
   };
 
   programs.home-manager.enable = true;
@@ -23,10 +24,6 @@
       "$HOME/.local/bin"
       "$HOME/.nix-profile/bin"
     ];
-    sessionVariables = {
-      EDITOR = "nvim";
-      TERMINAL = "kitty";
-    };
     packages = with pkgs; [
       nerd-fonts.iosevka
     ];
