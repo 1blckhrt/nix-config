@@ -28,7 +28,7 @@ in
     programs.mnw = {
       enable = true;
       neovim = pkgs-unstable.neovim-unwrapped;
-      luaFiles = [ ./configs/neovim/init.lua ];
+      luaFiles = [ ../dotfiles/neovim/init.lua ];
       plugins = {
         start = with pkgs-unstable.vimPlugins; [
           lazy-nvim
@@ -40,12 +40,12 @@ in
               fs = lib.fileset;
             in
             fs.toSource {
-              root = ./configs/neovim;
+              root = ../dotfiles/neovim;
               fileset = fs.unions [
-                ./configs/neovim/lua
+                ../dotfiles/neovim/lua
               ];
             };
-          impure = "${config.home.homeDirectory}/nix-config/modules/configs/neovim";
+          impure = "${config.home.homeDirectory}/nix-config/dotfiles/neovim";
         };
       };
       extraBinPath = with pkgs-unstable; [

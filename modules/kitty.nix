@@ -1,42 +1,23 @@
 {
-  lib,
   config,
+  lib,
+  pkgs,
   ...
 }:
 
 let
   cfg = config.modules.kitty;
+  kittyPath = "${config.home.homeDirectory}/nix-config/dotfiles/kitty/kitty.conf";
 in
 {
   options.modules.kitty = {
-    enable = lib.mkEnableOption "Terminal";
+    enable = lib.mkEnableOption "kitty";
   };
   config = lib.mkIf cfg.enable {
-    programs.kitty = {
-      enable = true;
-      font = {
-        size = 16;
-        name = "Iosevka Nerd Font";
-      };
-      settings = {
-        cursor_text_color = "background";
-        cursor_shape = "beam";
-        background_blur = 5;
-        url_style = "curly";
-        open_url_with = "default";
-        copy_on_select = true;
-        window_padding_width = 10;
-        hide_window_decorations = false; # TODO: change once I am in Hyprland
-        confirm_os_window_close = 0;
-        cursor_trail = 1;
-      };
+    home.packages = with pkgs; [
+      kitty
+    ];
 
-      keybindings = {
-        "ctrl+shift+c" = "copy_to_clipboard";
-        "ctrl+shift+v" = "paste_from_clipboard";
-        "ctrl+equal" = "change_font_size all +1.0";
-        "ctrl+minus" = "change_font_size all -1.0";
-      };
-    };
+    xdg.configFile."kitty/kitty.conf".source = config.lib.file.mkOutOfStoreSymlink kittyPath;
   };
 }
