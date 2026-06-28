@@ -1,6 +1,7 @@
 { ... }:
 {
   imports = [
+    ./direnv.nix
     ./kitty.nix
     ./nh.nix
     ./nvim.nix
