@@ -7,16 +7,20 @@
 
 let
   cfg = config.modules.zsh;
-  zshRCPath = "${config.home.homeDirectory}/nix-config/dotfiles/zsh/.zshrc";
-  zshEnvPath = "${config.home.homeDirectory}/nix-config/dotfiles/zsh/.zshenv";
-  zshAliasPath = "${config.home.homeDirectory}/nix-config/dotfiles/zsh/.aliases.zsh";
-  promptPath = "${config.home.homeDirectory}/nix-config/dotfiles/starship/starship.toml";
-  zProfilePath = "${config.home.homeDirectory}/nix-config/dotfiles/zsh/.zprofile";
+
+  zshPath = "${config.home.homeDirectory}/nix-config/dotfiles/zsh";
+  starshipPath = "${config.home.homeDirectory}/nix-config/dotfiles/starship/starship.toml";
+
+  zshRCPath = "${zshPath}/.zshrc";
+  zshEnvPath = "${zshPath}/.zshenv";
+  zshAliasPath = "${zshPath}/.aliases.zsh";
+  zProfilePath = "${zshPath}/.zprofile";
 in
 {
   options.modules.zsh = {
     enable = lib.mkEnableOption "zsh";
   };
+
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       zsh
@@ -33,6 +37,7 @@ in
       ".aliases.zsh".source = config.lib.file.mkOutOfStoreSymlink zshAliasPath;
       ".zprofile".source = config.lib.file.mkOutOfStoreSymlink zProfilePath;
     };
-    xdg.configFile."starship.toml".source = config.lib.file.mkOutOfStoreSymlink promptPath;
+
+    xdg.configFile."starship.toml".source = config.lib.file.mkOutOfStoreSymlink starshipPath;
   };
 }

@@ -16,7 +16,6 @@
     };
 
     vicinae.url = "github:vicinaehq/vicinae";
-
     mnw.url = "github:Gerg-L/mnw";
     hooks.url = "github:cachix/git-hooks.nix";
   };

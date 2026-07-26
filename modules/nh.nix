@@ -7,12 +7,14 @@
 let
   cfg = config.modules.nh;
   rebuildHomeScript = pkgs.writeShellScriptBin "switch" ''
+    cd /home/blckhrt/nix-config || exit
+    git add .
     nh home switch /home/blckhrt/nix-config -c pc
   '';
 in
 {
   options.modules.nh = {
-    enable = lib.mkEnableOption "NH - Yet another Nix helper";
+    enable = lib.mkEnableOption "NH";
   };
   config = lib.mkIf cfg.enable {
     programs.nh = {
