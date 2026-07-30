@@ -18,6 +18,7 @@
     vicinae.url = "github:vicinaehq/vicinae";
     mnw.url = "github:Gerg-L/mnw";
     hooks.url = "github:cachix/git-hooks.nix";
+    helium-browser.url = "github:oxcl/nix-flake-helium-browser";
   };
 
   outputs =
@@ -28,6 +29,7 @@
       mnw,
       hooks,
       vicinae,
+      helium-browser,
       ...
     }@inputs:
     let
@@ -47,6 +49,7 @@
           modules = [
             mnw.homeManagerModules.mnw
             vicinae.homeManagerModules.default
+            helium-browser.homeModules.default
             ./hosts/pc/home.nix
           ];
           extraSpecialArgs = { inherit inputs; };
@@ -58,7 +61,6 @@
             src = ./.;
             package = pkgs.prek;
             hooks = {
-              statix.enable = true;
               nixfmt.enable = true;
               stylua.enable = true;
               convco.enable = true;

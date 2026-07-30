@@ -9,5 +9,6 @@
     ./vesktop.nix
     ./vicinae.nix
     ./zsh.nix
+    ./helium.nix
   ];
 }
