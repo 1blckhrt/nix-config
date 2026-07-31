@@ -4,20 +4,6 @@ return {
 	lazy = false,
 	keys = {
 		{
-			"<leader>.",
-			function()
-				Snacks.scratch()
-			end,
-			desc = "Toggle Scratch Buffer",
-		},
-		{
-			"<leader>S",
-			function()
-				Snacks.scratch.select()
-			end,
-			desc = "Select Scratch Buffer",
-		},
-		{
 			"gd",
 			function()
 				Snacks.picker.lsp_definitions()
@@ -148,13 +134,11 @@ return {
 			ft = "markdown",
 		},
 		dashboard = {
-			enabled = true,
 			sections = {
 				{ section = "header" },
 				{ section = "keys", gap = 1 },
 				{ section = "startup" },
 			},
-			notifier = { enabled = true },
 		},
 		input = { enabled = true },
 	},
