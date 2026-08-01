@@ -1,6 +1,8 @@
 {
-  "arRPC": true,
-  "checkUpdates": false,
-  "hardwareAcceleration": true,
-  "minimizeToTray": true
+    "arRPC": true,
+    "checkUpdates": false,
+    "hardwareAcceleration": true,
+    "minimizeToTray": true,
+    "splashColor": "rgb(243, 243, 244)",
+    "splashBackground": "rgb(44, 45, 50)"
 }

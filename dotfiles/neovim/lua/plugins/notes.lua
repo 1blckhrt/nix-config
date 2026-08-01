@@ -4,15 +4,15 @@ return {
 		wiki_dirs = {
 			{
 				name = "Courses",
-				path = "/run/media/blckhrt/Laptop Hard Drive/Notes/Courses",
+				path = "/home/blckhrt/dev/notes/Courses/",
 			},
 			{
 				name = "Documentation",
-				path = "/run/media/blckhrt/Laptop Hard Drive/Notes/Documentation",
+				path = "/home/blckhrt/dev/notes/Documentation",
 			},
 			{
 				name = "SoftwareProjects",
-				path = "/run/media/blckhrt/Laptop Hard Drive/Notes/SoftwareProjects",
+				path = "/home/blckhrt/dev/notes/SoftwareProjects",
 			},
 		},
 	},

@@ -57,9 +57,11 @@ in
         stylua
         markdown-oxide
         prettier
+        prettierd
         fd
         ripgrep
         vscode-langservers-extracted
+        sqruff
       ];
     };
   };
