@@ -15,9 +15,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    vicinae.url = "github:vicinaehq/vicinae";
+    hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     mnw.url = "github:Gerg-L/mnw";
-    hooks.url = "github:cachix/git-hooks.nix";
+    vicinae.url = "github:vicinaehq/vicinae";
     helium-browser.url = "github:oxcl/nix-flake-helium-browser";
   };
 

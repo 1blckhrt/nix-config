@@ -30,6 +30,7 @@ return {
 					window = { border = "single" },
 				},
 				menu = {
+					border = "rounded",
 					auto_show_delay_ms = 0,
 					draw = {
 						columns = { { "kind_icon" }, { "label", gap = 1 } },

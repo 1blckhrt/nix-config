@@ -27,6 +27,7 @@
     packages = with pkgs; [
       nerd-fonts.iosevka
       just
+      fzf
     ];
   };
 
