@@ -20,9 +20,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    mnw.url = "github:Gerg-L/mnw";
-    vicinae.url = "github:vicinaehq/vicinae";
-    helium-browser.url = "github:oxcl/nix-flake-helium-browser";
+    mnw = {
+      url = "github:Gerg-L/mnw";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    vicinae = { url = "github:vicinaehq/vicinae"; };
   };
 
   outputs =
@@ -33,7 +35,6 @@
       mnw,
       hooks,
       vicinae,
-      helium-browser,
       ...
     }@inputs:
     let
@@ -48,13 +49,12 @@
     in
     {
       homeConfigurations = {
-        pc = home-manager.lib.homeManagerConfiguration {
+        laptop = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
             mnw.homeManagerModules.mnw
             vicinae.homeManagerModules.default
-            helium-browser.homeModules.default
-            ./hosts/pc/home.nix
+            ./hosts/laptop/home.nix
           ];
           extraSpecialArgs = { inherit inputs; };
         };
@@ -74,6 +74,7 @@
         pkgs.mkShell {
           inherit (check) shellHook;
           buildInputs = check.enabledPackages;
+          packages = [pkgs.just];
         };
       formatter.${system} = pkgs.nixfmt;
     };

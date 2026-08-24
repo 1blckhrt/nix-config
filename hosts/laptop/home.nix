@@ -30,11 +30,7 @@
 
   targets.genericLinux = {
     enable = true;
-    gpu.nvidia = {
-      enable = true;
-      version = "595.84";
-      sha256 = "sha256-mcQE5SExvye8ptoCaNzOPr7cenOrF0BxqZXPGmxeugY=";
-    };
+    gpu.enable = true;
   };
 
   fonts.fontconfig.enable = true;

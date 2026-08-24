@@ -58,10 +58,9 @@ in
         markdown-oxide
         prettier
         prettierd
+        sqruff
         fd
         ripgrep
-        vscode-langservers-extracted
-        sqruff
       ];
     };
   };

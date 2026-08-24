@@ -124,7 +124,8 @@ return {
 			desc = "Split horizontally",
 		},
 	},
-	opts = {
+    opts = {
+        animate = { enabled = true },
 		indent = { enabled = true },
 		picker = {
 			enabled = true,

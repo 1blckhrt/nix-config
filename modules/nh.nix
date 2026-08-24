@@ -9,7 +9,7 @@ let
   rebuildHomeScript = pkgs.writeShellScriptBin "switch" ''
     cd /home/blckhrt/nix-config || exit
     git add .
-    nh home switch /home/blckhrt/nix-config -c pc
+    nh home switch /home/blckhrt/nix-config -c laptop
   '';
 in
 {
