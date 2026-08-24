@@ -11,6 +11,11 @@ let
     git add .
     nh home switch /home/blckhrt/nix-config -c laptop
   '';
+  updateScript = pkgs.writeShellScriptBin "update" ''
+    cd /home/blckhrt/nix-config || exit
+    git add .
+    nh home switch /home/blckhrt/nix-config -u -c laptop && git commit -am "chore: update flake" && git push
+  '';
 in
 {
   options.modules.nh = {
@@ -29,6 +34,7 @@ in
 
     home.packages = [
       rebuildHomeScript
+      updateScript
     ];
   };
 }
