@@ -20,7 +20,7 @@ in
       neovim.enable = true;
       tmux.enable = true;
       zsh.enable = true;
-      wezterm.enable = true;
+      alacritty.enable = true;
     };
 
     programs.home-manager.enable = true;
@@ -35,6 +35,7 @@ in
       ];
       packages = [
         pkgs.nerd-fonts.jetbrains-mono
+        pkgs.fzf
       ];
     };
 

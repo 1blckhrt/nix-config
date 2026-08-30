@@ -5,7 +5,7 @@
     ./nh.nix
     ./nvim.nix
     ./tmux.nix
-    ./wezterm.nix
+    ./alacritty.nix
     ./zsh.nix
   ];
 }
