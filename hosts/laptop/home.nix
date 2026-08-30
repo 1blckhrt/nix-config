@@ -1,37 +1,48 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+let
+  colors = import ../../modules/colors.nix;
+in
 {
   imports = [
     ../../modules
   ];
 
-  modules = {
-    kitty.enable = true;
-    nh.enable = true;
-    neovim.enable = true;
-    vicinae.enable = true;
-    tmux.enable = true;
-    zsh.enable = true;
+  options.theme = lib.mkOption {
+    type = lib.types.attrs;
+    description = "The active Base16 theme palette";
   };
 
-  programs.home-manager.enable = true;
+  config = {
+    theme = colors.schemes.github-dark;
 
-  home = {
-    username = "blckhrt";
-    homeDirectory = "/home/blckhrt";
-    stateVersion = "25.11";
-    sessionPath = [
-      "$HOME/.local/bin"
-      "$HOME/.nix-profile/bin"
-    ];
-    packages = [
-      pkgs.nerd-fonts.iosevka
-    ];
+    modules = {
+      nh.enable = true;
+      neovim.enable = true;
+      tmux.enable = true;
+      zsh.enable = true;
+      wezterm.enable = true;
+    };
+
+    programs.home-manager.enable = true;
+
+    home = {
+      username = "blckhrt";
+      homeDirectory = "/home/blckhrt";
+      stateVersion = "25.11";
+      sessionPath = [
+        "$HOME/.local/bin"
+        "$HOME/.nix-profile/bin"
+      ];
+      packages = [
+        pkgs.nerd-fonts.jetbrains-mono
+      ];
+    };
+
+    targets.genericLinux = {
+      enable = true;
+      gpu.enable = true;
+    };
+
+    fonts.fontconfig.enable = true;
   };
-
-  targets.genericLinux = {
-    enable = true;
-    gpu.enable = true;
-  };
-
-  fonts.fontconfig.enable = true;
 }

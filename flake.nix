@@ -20,11 +20,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    mnw = {
-      url = "github:Gerg-L/mnw";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    vicinae = { url = "github:vicinaehq/vicinae"; };
+    mnw.url = "github:Gerg-L/mnw";
   };
 
   outputs =
@@ -34,7 +30,6 @@
       home-manager,
       mnw,
       hooks,
-      vicinae,
       ...
     }@inputs:
     let
@@ -53,7 +48,6 @@
           inherit pkgs;
           modules = [
             mnw.homeManagerModules.mnw
-            vicinae.homeManagerModules.default
             ./hosts/laptop/home.nix
           ];
           extraSpecialArgs = { inherit inputs; };
@@ -74,7 +68,10 @@
         pkgs.mkShell {
           inherit (check) shellHook;
           buildInputs = check.enabledPackages;
-          packages = [pkgs.just];
+          packages = [
+            pkgs.just
+            pkgs.convco
+          ];
         };
       formatter.${system} = pkgs.nixfmt;
     };

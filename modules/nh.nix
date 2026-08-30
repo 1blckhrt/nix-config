@@ -19,7 +19,7 @@ let
 in
 {
   options.modules.nh = {
-    enable = lib.mkEnableOption "NH";
+    enable = lib.mkEnableOption "nh";
   };
   config = lib.mkIf cfg.enable {
     programs.nh = {

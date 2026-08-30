@@ -5,10 +5,8 @@
   ];
 
   modules = {
-    kitty.enable = true;
     nh.enable = true;
     neovim.enable = true;
-    vicinae.enable = true;
     tmux.enable = true;
     zsh.enable = true;
   };

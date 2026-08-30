@@ -2,11 +2,10 @@
 {
   imports = [
     ./direnv.nix
-    ./kitty.nix
     ./nh.nix
     ./nvim.nix
     ./tmux.nix
-    ./vicinae.nix
+    ./wezterm.nix
     ./zsh.nix
   ];
 }
