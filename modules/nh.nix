@@ -6,15 +6,15 @@
 }:
 let
   cfg = config.modules.nh;
-  rebuildHomeScript = pkgs.writeShellScriptBin "switch" ''
+  rebuildHomeScriptLaptop = pkgs.writeShellScriptBin "switch-laptop" ''
     cd /home/blckhrt/nix-config || exit
     git add .
     nh home switch /home/blckhrt/nix-config -c laptop
   '';
-  updateScript = pkgs.writeShellScriptBin "update" ''
+  rebuildHomeScriptPC = pkgs.writeShellScriptBin "switch-pc" ''
     cd /home/blckhrt/nix-config || exit
     git add .
-    nh home switch /home/blckhrt/nix-config -u -c laptop && git commit -am "chore: update flake" && git push
+    nh home switch /home/blckhrt/nix-config -c pc
   '';
 in
 {
@@ -33,8 +33,8 @@ in
     };
 
     home.packages = [
-      rebuildHomeScript
-      updateScript
+      rebuildHomeScriptLaptop
+      rebuildHomeScriptPC
     ];
   };
 }

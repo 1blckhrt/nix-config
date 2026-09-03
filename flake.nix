@@ -2,8 +2,8 @@
   description = "My Home Manager configuration";
 
   nixConfig = {
-    extra-substituters = [ "https://vicinae.cachix.org" ];
-    extra-trusted-public-keys = [ "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc=" ];
+    # extra-substituters = [ "https://vicinae.cachix.org" ];
+    # extra-trusted-public-keys = [ "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc=" ];
   };
 
   inputs = {
@@ -49,6 +49,14 @@
           modules = [
             mnw.homeManagerModules.mnw
             ./hosts/laptop/home.nix
+          ];
+          extraSpecialArgs = { inherit inputs; };
+        };
+        pc = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            mnw.homeManagerModules.mnw
+            ./hosts/pc/home.nix
           ];
           extraSpecialArgs = { inherit inputs; };
         };

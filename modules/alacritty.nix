@@ -19,8 +19,8 @@ in
       settings = {
         window = {
           padding = {
-            x = 10;
-            y = 10;
+            x = 4;
+            y = 4;
           };
           decorations = "Full";
           opacity = 0.95;
@@ -31,7 +31,7 @@ in
             family = "JetBrainsMono Nerd Font";
             style = "Regular";
           };
-          size = 16.0;
+          size = 14.0;
         };
 
         cursor = {
