@@ -77,6 +77,8 @@ in
         lua-language-server
         stylua
         markdown-oxide
+        vscode-langservers-extracted
+        superhtml
         prettier
         prettierd
         sqruff

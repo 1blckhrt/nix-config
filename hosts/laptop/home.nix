@@ -13,7 +13,7 @@ in
   };
 
   config = {
-    theme = colors.schemes.github-dark;
+    theme = colors.schemes.gruvbox-material-dark;
 
     modules = {
       nh.enable = true;
