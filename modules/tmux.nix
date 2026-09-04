@@ -22,8 +22,8 @@ in
       historyLimit = 1000000;
       mouse = true;
       keyMode = "vi";
-      plugins = with pkgs.tmuxPlugins; [
-        tmux-session-manager
+      plugins = [
+        pkgs.tmuxPlugins.tmux-session-manager
       ];
       extraConfig = ''
         bind s display-popup -E "tms"

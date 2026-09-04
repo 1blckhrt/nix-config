@@ -13,6 +13,14 @@ in
     enable = lib.mkEnableOption "sway";
   };
   config = lib.mkIf cfg.enable {
+    home.packages = builtins.attrValues {
+      inherit (pkgs)
+        swappy
+        grim
+        slurp
+        wl-clipboard
+        ;
+    };
     services = {
       avizo.enable = true;
       kanshi = {
@@ -53,20 +61,29 @@ in
         systemdTargets = [ "sway-session.target" ];
       };
       swaync.enable = true;
-      flameshot = {
-        enable = true;
-        settings = {
-          General = {
-            useGrimAdapter = true;
-          };
-        };
-      };
       autotiling = {
         enable = true;
         systemdTarget = "sway-session.target";
       };
     };
-    xdg.configFile."background".source = theme.wallpaper;
+    xdg = {
+      configFile."background".source = theme.wallpaper;
+      portal = {
+        enable = true;
+        extraPortals = [
+          pkgs.xdg-desktop-portal-wlr
+          pkgs.xdg-desktop-portal-gtk
+        ];
+        config.sway = {
+          default = [
+            "wlr"
+            "gtk"
+          ];
+          "org.freedesktop.impl.portal.Screencast" = "wlr";
+          "org.freedesktop.impl.portal.Screenshot" = "wlr";
+        };
+      };
+    };
     programs = {
       i3status-rust = {
         enable = true;
@@ -86,7 +103,7 @@ in
         settings = {
           main = {
             font = "JetBrainsMono Nerd Font:size=12";
-            terminal = "kitty";
+            terminal = "alacritty";
             prompt = "> ";
             layer = "overlay";
             lines = 10;
@@ -120,6 +137,7 @@ in
         blur enable
         blur_passes 3
         blur_radius 4
+        for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
       '';
       config = {
         modifier = "Mod4";
@@ -130,6 +148,7 @@ in
           ];
           size = "12";
         };
+        defaultWorkspace = "workspace number 1";
         output."*".bg = "${theme.wallpaper} fill";
         bars = [
           {
@@ -180,6 +199,9 @@ in
         };
         startup = [
           {
+            command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_DATA_DIRS";
+          }
+          {
             command = "systemctl --user reload-or-restart kanshi";
             always = true;
           }
@@ -187,9 +209,7 @@ in
           { command = "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch cliphist store"; }
           { command = "systemctl --user start cliphist"; }
           { command = "systemctl --user start swaync"; }
-          {
-            command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_DATA_DIRS";
-          }
+
           { command = "nm-applet --indicator"; }
           { command = "avizo-service"; }
         ];
@@ -228,8 +248,9 @@ in
           "Mod4+Shift+r" = "reload";
           "Mod4+Shift+e" = "exec 'swaymsg exit'";
           "Mod4+q" = "kill";
-
           "Mod4+f" = "fullscreen toggle";
+
+          "Print" = "exec grim -g \"$(slurp)\" - | swappy -f - --output-file - | wl-copy";
         };
       };
     };

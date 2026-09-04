@@ -22,15 +22,17 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      zsh
-      bat
-      eza
-      ripgrep
-      zoxide
-      starship
-      tmux-sessionizer
-    ];
+    home.packages = builtins.attrValues {
+      inherit (pkgs)
+        zsh
+        bat
+        eza
+        ripgrep
+        zoxide
+        starship
+        tmux-sessionizer
+        ;
+    };
 
     home.file = {
       ".zshrc".source = config.lib.file.mkOutOfStoreSymlink zshRCPath;

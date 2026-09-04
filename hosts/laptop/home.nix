@@ -33,10 +33,10 @@ in
         "$HOME/.local/bin"
         "$HOME/.nix-profile/bin"
       ];
-      packages = [
-        pkgs.nerd-fonts.jetbrains-mono
-        pkgs.fzf
-      ];
+      packages = builtins.attrValues {
+        inherit (pkgs) fzf;
+        inherit (pkgs.nerd-fonts) jetbrains-mono;
+      };
     };
 
     targets.genericLinux = {
