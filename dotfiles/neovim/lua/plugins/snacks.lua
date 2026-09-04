@@ -124,12 +124,34 @@ return {
 			desc = "Split horizontally",
 		},
 	},
-    opts = {
-        animate = { enabled = true },
+	opts = {
 		indent = { enabled = true },
 		picker = {
 			enabled = true,
-			frecency = true,
+			layout = {
+				hidden = { "preview" },
+				layout = {
+					backdrop = false,
+					row = 1,
+					width = 0.4,
+					min_width = 80,
+					height = 0.4,
+					border = "none",
+					box = "vertical",
+					{
+						win = "input",
+						height = 1,
+						border = true,
+						title = "{title} {live} {flags}",
+						title_pos = "center",
+					},
+					{ win = "list", border = "hpad" },
+					{ win = "preview", title = "{preview}", border = true },
+				},
+			},
+			matcher = {
+				frecency = true,
+			},
 		},
 		scratch = {
 			ft = "markdown",
