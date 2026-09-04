@@ -33,7 +33,7 @@ in
             profile.outputs = [
               {
                 criteria = "Acer Technologies SA243Y P1 46180133B5W01";
-                mode = "1920x1080@120Hz";
+                mode = "1920x1080@144Hz";
                 position = "0,0";
                 status = "enable";
               }
