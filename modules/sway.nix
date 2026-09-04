@@ -15,6 +15,38 @@ in
   config = lib.mkIf cfg.enable {
     services = {
       avizo.enable = true;
+      kanshi = {
+        enable = true;
+        systemdTarget = "sway-session.target";
+        settings = [
+          {
+            profile.name = "laptop-screen";
+            profile.outputs = [
+              {
+                criteria = "eDP-1";
+                status = "enable";
+              }
+            ];
+          }
+          {
+            profile.name = "pc";
+            profile.outputs = [
+              {
+                criteria = "Acer Technologies SA243Y P1 46180133B5W01";
+                mode = "1920x1080@120Hz";
+                position = "0,0";
+                status = "enable";
+              }
+              {
+                criteria = "Sceptre Tech Inc Sceptre F24 0000000000001";
+                mode = "1920x1080@60Hz";
+                position = "1920,0";
+                status = "enable";
+              }
+            ];
+          }
+        ];
+      };
       cliphist = {
         enable = true;
         allowImages = true;
