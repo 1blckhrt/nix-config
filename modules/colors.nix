@@ -17,6 +17,7 @@
       base0D = "7aa2f7";
       base0E = "bb9af7";
       base0F = "db4b4b";
+      wallpaper = ../dotfiles/wallpapers/tokyo-night-storm.png;
     };
 
     gruvbox-material-dark = {
@@ -36,6 +37,7 @@
       base0D = "7daea3";
       base0E = "d3869b";
       base0F = "bd6f3e";
+      wallpaper = ../dotfiles/wallpapers/gruvbox-material-dark.png;
     };
 
     nordic = {
@@ -55,6 +57,7 @@
       base0D = "81a1c1";
       base0E = "b48ead";
       base0F = "5e81ac";
+      wallpaper = ../dotfiles/wallpapers/nordic.jpg;
     };
 
     github-dark = {
@@ -74,6 +77,7 @@
       base0D = "58a6ff";
       base0E = "bc8cff";
       base0F = "f0883e";
+      wallpaper = ../dotfiles/wallpapers/github-dark.png;
     };
   };
 }

@@ -2,7 +2,6 @@
 let
   colors = import ../../modules/colors.nix;
 in
-
 {
   imports = [
     ../../modules
@@ -14,13 +13,14 @@ in
   };
 
   config = {
-    theme = colors.schemes.gruvbox-material-dark;
+    theme = colors.schemes.github-dark;
     modules = {
       nh.enable = true;
       neovim.enable = true;
       tmux.enable = true;
       zsh.enable = true;
       alacritty.enable = true;
+      sway.enable = true;
     };
 
     programs.home-manager.enable = true;

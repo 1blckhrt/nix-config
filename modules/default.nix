@@ -6,6 +6,7 @@
     ./nvim.nix
     ./tmux.nix
     ./alacritty.nix
+    ./sway.nix
     ./zsh.nix
   ];
 }
