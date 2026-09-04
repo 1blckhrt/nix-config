@@ -26,6 +26,7 @@ in
         tmux-session-manager
       ];
       extraConfig = ''
+        bind s display-popup -E "tms"
         bind r source-file ~/.config/tmux/tmux.conf
         set -g default-terminal "screen-256color"
         set -ga terminal-overrides ",*256col*:Tc"
@@ -34,12 +35,20 @@ in
         set -g status-interval 3
         set -g allow-passthrough on
         set-option -g renumber-windows on
+
+        set -g automatic-rename on
+        set -g automatic-rename-format "#{window_icon} #{pane_current_command}"
+
+        # Center the window list on the status bar
+        set -g status-justify centre
+
         setw -g pane-base-index 1
         unbind %
         bind | split-window -h -c "#{pane_current_path}"
         unbind '"'
         bind - split-window -v -c "#{pane_current_path}"
         bind c new-window -c "#{pane_current_path}"
+
         # Vim navigation integration
         is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
             | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
@@ -51,7 +60,7 @@ in
         if-shell -b '[ "$(echo "$tmux_version < 3.0" | bc)" = 1 ]' \
             "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\'  'select-pane -l'"
         if-shell -b '[ "$(echo "$tmux_version >= 3.0" | bc)" = 1 ]' \
-            "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'"
+            "bind-key -n 'C-\\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'"
         bind-key -n 'C-Space' if-shell "$is_vim" 'send-keys C-Space' 'select-pane -t:.+'
         bind-key -T copy-mode-vi 'C-h' select-pane -L
         bind-key -T copy-mode-vi 'C-j' select-pane -D
@@ -65,9 +74,11 @@ in
         set -g status-left-length 40
         set -g status-right-length 80
         set -g status-left "#[bg=#${colors.base0D},fg=#${colors.base00},bold] #S #[bg=#${colors.base01},fg=#${colors.base0D}]"
-        set -g status-right "#[fg=#${colors.base03}]#[bg=#${colors.base02},fg=#${colors.base05}] %H:%M #[bg=#${colors.base02},fg=#${colors.base04}] %d-%b-%y "
+        set -g status-right "#[bg=#${colors.base01},fg=#${colors.base0D}]#[bg=#${colors.base0D},fg=#${colors.base00},bold] #h "
+
         setw -g window-status-format "#[fg=#${colors.base04}] #I:#W "
         setw -g window-status-current-format "#[bg=#${colors.base02},fg=#${colors.base0B},bold] #I:#W "
+
         set -g pane-border-style "fg=#${colors.base02}"
         set -g pane-active-border-style "fg=#${colors.base0D}"
         set -g message-style "bg=#${colors.base02},fg=#${colors.base0D}"

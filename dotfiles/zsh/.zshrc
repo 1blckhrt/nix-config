@@ -10,6 +10,7 @@ setopt HIST_FIND_NO_DUPS
 
 setopt NOBEEP
 setopt NUMERIC_GLOB_SORT
+setopt noflowcontrol
 
 autoload -Uz compinit
 zstyle ':completion:*' menu select
@@ -22,3 +23,11 @@ export PATH="$HOME/.nix-profile/bin:$PATH"
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
+
+tms-switch() {
+  BUFFER="tms"
+  zle accept-line
+}
+zle -N tms-switch
+
+bindkey '^S' tms-switch

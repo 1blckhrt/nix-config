@@ -22,10 +22,6 @@ return {
 				},
 			},
 			snippets = { preset = "luasnip" },
-			signature = {
-				enabled = true,
-				window = { show_documentation = true, border = "single" },
-			},
 			fuzzy = {
 				implementation = "prefer_rust_with_warning",
 			},

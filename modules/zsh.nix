@@ -29,6 +29,7 @@ in
       ripgrep
       zoxide
       starship
+      tmux-sessionizer
     ];
 
     home.file = {
