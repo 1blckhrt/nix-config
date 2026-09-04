@@ -75,6 +75,9 @@ in
         setw -g clock-mode-colour "#${colors.base0D}"
         set -g display-panes-colour "#${colors.base04}"
         set -g display-panes-active-colour "#${colors.base0D}"
+        set -g window-style 'bg=default'
+        set -g window-active-style 'bg=default'
+        set -g status-style 'bg=default'
       '';
     };
   };

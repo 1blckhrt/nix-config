@@ -116,6 +116,11 @@ in
         "--unsupported-gpu"
       ];
       checkConfig = false;
+      extraConfig = ''
+        blur enable
+        blur_passes 3
+        blur_radius 4
+      '';
       config = {
         modifier = "Mod4";
         focus.followMouse = true;
