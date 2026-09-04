@@ -22,9 +22,7 @@ vim.opt.expandtab = true
 vim.opt.showmatch = true
 vim.o.laststatus = 3
 vim.o.confirm = true
-vim.schedule(function()
-	vim.o.clipboard = "unnamedplus"
-end)
+vim.opt.clipboard = "unnamedplus"
 vim.diagnostic.config({
 	signs = {
 		text = {
@@ -43,7 +41,6 @@ map("n", ";", ":")
 map("n", "<Esc>", "<cmd>nohlsearch<CR>")
 map("v", "<", "<gv")
 map("v", ">", ">gv")
-map("v", "p", '"_dP')
 map("n", "<left>", '<cmd>echo "Use h to move!"<CR>')
 map("n", "<right>", '<cmd>echo "Use l to move!"<CR>')
 map("n", "<up>", '<cmd>echo "Use k to move!"<CR>')

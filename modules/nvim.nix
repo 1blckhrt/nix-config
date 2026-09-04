@@ -70,6 +70,7 @@ in
         };
       };
       extraBinPath = with pkgs-unstable; [
+        wl-clipboard
         nil
         nixfmt
         ruff

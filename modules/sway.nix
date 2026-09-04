@@ -174,6 +174,8 @@ in
           border = 2;
         };
         startup = [
+          { command = "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch cliphist store"; }
+          { command = "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch cliphist store"; }
           { command = "systemctl --user start cliphist"; }
           { command = "systemctl --user start swaync"; }
           {
