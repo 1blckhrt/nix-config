@@ -22,11 +22,10 @@ in
       historyLimit = 1000000;
       mouse = true;
       keyMode = "vi";
-      plugins = [
-        pkgs.tmuxPlugins.tmux-session-manager
+      plugins = with pkgs.tmuxPlugins; [
+        tmux-session-manager
       ];
       extraConfig = ''
-        bind s display-popup -E "tms"
         bind r source-file ~/.config/tmux/tmux.conf
         set -g default-terminal "screen-256color"
         set -ga terminal-overrides ",*256col*:Tc"
@@ -35,6 +34,12 @@ in
         set -g status-interval 3
         set -g allow-passthrough on
         set-option -g renumber-windows on
+
+        bind -n C-h if-shell -F "#{@is_vim}" "send-keys C-h"  "select-pane -L"
+        bind -n C-j if-shell -F "#{@is_vim}" "send-keys C-j"  "select-pane -D"
+        bind -n C-k if-shell -F "#{@is_vim}" "send-keys C-k"  "select-pane -U"
+        bind -n C-l if-shell -F "#{@is_vim}" "send-keys C-l"  "select-pane -R"
+        bind -n C-\\ if-shell -F "#{@is_vim}" "send-keys C-\\" "select-pane -l"
 
         set -g automatic-rename on
         set -g automatic-rename-format "#{window_icon} #{pane_current_command}"
@@ -49,32 +54,13 @@ in
         bind - split-window -v -c "#{pane_current_path}"
         bind c new-window -c "#{pane_current_path}"
 
-        # Vim navigation integration
-        is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
-            | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
-        bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h' 'select-pane -L'
-        bind-key -n 'C-j' if-shell "$is_vim" 'send-keys C-j' 'select-pane -D'
-        bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k' 'select-pane -U'
-        bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l' 'select-pane -R'
-        tmux_version='$(tmux -V | sed -En "s/^tmux ([0-9]+(.[0-9]+)?).*/\1/p")'
-        if-shell -b '[ "$(echo "$tmux_version < 3.0" | bc)" = 1 ]' \
-            "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\'  'select-pane -l'"
-        if-shell -b '[ "$(echo "$tmux_version >= 3.0" | bc)" = 1 ]' \
-            "bind-key -n 'C-\\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'"
-        bind-key -n 'C-Space' if-shell "$is_vim" 'send-keys C-Space' 'select-pane -t:.+'
-        bind-key -T copy-mode-vi 'C-h' select-pane -L
-        bind-key -T copy-mode-vi 'C-j' select-pane -D
-        bind-key -T copy-mode-vi 'C-k' select-pane -U
-        bind-key -T copy-mode-vi 'C-l' select-pane -R
-        bind-key -T copy-mode-vi 'C-\' select-pane -l
-        bind-key -T copy-mode-vi 'C-Space' select-pane -t:.+
         set-option -g status-position top
 
         set -g status-style "bg=#${colors.base01},fg=#${colors.base05}"
         set -g status-left-length 40
         set -g status-right-length 80
-        set -g status-left "#[bg=#${colors.base0D},fg=#${colors.base00},bold] #S #[bg=#${colors.base01},fg=#${colors.base0D}]"
-        set -g status-right "#[bg=#${colors.base01},fg=#${colors.base0D}]#[bg=#${colors.base0D},fg=#${colors.base00},bold] #h "
+        set -g status-left "#[bg=#${colors.base0D},fg=#${colors.base00},bold] 󰨇  #S #[bg=#${colors.base01},fg=#${colors.base0D}]"
+        set -g status-right "#[bg=#${colors.base01},fg=#${colors.base0D}]#[bg=#${colors.base0D},fg=#${colors.base00},bold]   #h "
 
         setw -g window-status-format "#[fg=#${colors.base04}] #I:#W "
         setw -g window-status-current-format "#[bg=#${colors.base02},fg=#${colors.base0B},bold] #I:#W "

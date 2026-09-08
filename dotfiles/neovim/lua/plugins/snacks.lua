@@ -75,13 +75,6 @@ return {
 			desc = "Find Files",
 		},
 		{
-			"<leader>fp",
-			function()
-				Snacks.picker.projects()
-			end,
-			desc = "Projects",
-		},
-		{
 			"<leader>sg",
 			function()
 				Snacks.picker.grep()
@@ -128,27 +121,6 @@ return {
 		indent = { enabled = true },
 		picker = {
 			enabled = true,
-			layout = {
-				hidden = { "preview" },
-				layout = {
-					backdrop = false,
-					row = 1,
-					width = 0.4,
-					min_width = 80,
-					height = 0.4,
-					border = "none",
-					box = "vertical",
-					{
-						win = "input",
-						height = 1,
-						border = true,
-						title = "{title} {live} {flags}",
-						title_pos = "center",
-					},
-					{ win = "list", border = "hpad" },
-					{ win = "preview", title = "{preview}", border = true },
-				},
-			},
 			matcher = {
 				frecency = true,
 			},
