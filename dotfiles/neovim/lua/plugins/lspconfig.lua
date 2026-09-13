@@ -20,6 +20,8 @@ return {
 
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 		vim.lsp.config("markdown_oxide", {
+			filetypes = { "markdown" },
+			root_markers = { ".obsidian", ".git" },
 			capabilities = vim.tbl_deep_extend("force", capabilities, {
 				workspace = {
 					didChangeWatchedFiles = {

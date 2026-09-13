@@ -30,7 +30,7 @@ in
         ripgrep
         zoxide
         starship
-        tmux-sessionizer
+        atuin
         ;
     };
 
