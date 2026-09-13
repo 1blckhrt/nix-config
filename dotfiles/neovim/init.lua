@@ -74,6 +74,15 @@ vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
 	end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "markdown", "text" },
+	callback = function(args)
+		local opts = { buffer = args.buf }
+		vim.keymap.set({ "n", "v" }, "j", "gj", opts)
+		vim.keymap.set({ "n", "v" }, "k", "gk", opts)
+	end,
+})
+
 if mnw ~= nil then
 	require("lazy").setup({
 		dev = {

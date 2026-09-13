@@ -11,6 +11,9 @@ return {
 				sync_install = true,
 				ensure_installed = { "lua", "python", "markdown", "nix", "sql", "json", "bash", "html", "css" },
 				highlight = { enable = true },
+				indent = {
+					enable = true,
+				},
 			})
 		end,
 	},
