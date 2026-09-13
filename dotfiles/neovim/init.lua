@@ -46,6 +46,7 @@ map("n", "<right>", '<cmd>echo "Use l to move!"<CR>')
 map("n", "<up>", '<cmd>echo "Use k to move!"<CR>')
 map("n", "<down>", '<cmd>echo "Use j to move!"<CR>')
 map("n", "<Esc>", "<cmd>nohlsearch<CR>")
+map("n", "U", "<C-r>", { desc = "Redo" })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
@@ -56,13 +57,20 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 vim.api.nvim_create_autocmd("Filetype", {
-	pattern = { "html", "shtml", "htm" },
+	pattern = { "html", "shtml", "htm", "htmldjango" },
 	callback = function()
 		vim.lsp.start({
 			name = "superhtml",
 			cmd = { "superhtml", "lsp" },
 			root_dir = vim.fs.dirname(vim.fs.find({ ".git" }, { upward = true })[1]),
 		})
+	end,
+})
+
+vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
+	group = vim.api.nvim_create_augroup("active_cursorline", { clear = true }),
+	callback = function()
+		vim.opt_local.cursorline = true
 	end,
 })
 

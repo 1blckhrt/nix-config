@@ -2,6 +2,12 @@ return {
 	"saghen/blink.cmp",
 	version = "1.*",
 	event = "InsertEnter",
+	dependencies = {
+		{
+			"mikavilpas/blink-ripgrep.nvim",
+			version = "*", -- use the latest stable version
+		},
+	},
 	config = function()
 		local blink = require("blink.cmp")
 		blink.setup({
@@ -13,12 +19,22 @@ return {
 			},
 			appearance = { nerd_font_variant = "mono" },
 			sources = {
-				default = { "lsp", "path", "snippets", "buffer" },
+				default = { "lazydev", "lsp", "path", "snippets", "buffer", "ripgrep" },
 				per_filetype = {
-					sql = { "snippets", "dadbod", "buffer" },
+					sql = { "snippets", "dadbod", "lsp", "buffer" },
 				},
 				providers = {
 					dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+					ripgrep = {
+						module = "blink-ripgrep",
+						name = "Ripgrep",
+						opts = {},
+					},
+					lazydev = {
+						name = "LazyDev",
+						module = "lazydev.integrations.blink",
+						score_offset = 100,
+					},
 				},
 			},
 			snippets = { preset = "luasnip" },

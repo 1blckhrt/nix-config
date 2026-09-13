@@ -3,12 +3,14 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		local servers = {
+			lua_ls = {},
 			nil_ls = {},
 			ruff = {},
 			ty = {},
-			lua_ls = {},
-			jsonls = {},
 			sqruff = {},
+			html = {},
+			cssls = {},
+			jsonls = {},
 		}
 
 		for server_name, cfg in pairs(servers) do
@@ -28,5 +30,15 @@ return {
 		})
 
 		vim.lsp.enable("markdown_oxide")
+
+		vim.lsp.config("*", {
+			on_attach = function(client, bufnr)
+				if client:supports_method("workspace/diagnostic", bufnr) then
+					vim.lsp.buf.workspace_diagnostics({ client_id = client.id })
+				else
+					require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
+				end
+			end,
+		})
 	end,
 }

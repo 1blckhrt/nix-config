@@ -7,6 +7,7 @@ return {
 			keymaps = { ["q"] = { "actions.close", mode = "n" } },
 			default_file_explorer = true,
 			skip_confirm_for_simple_edits = true,
+			restore_win_options = true,
 			view_options = { show_hidden = true },
 			float = { max_width = 0.65, max_height = 0.65, border = "rounded", preview_split = "right" },
 		})

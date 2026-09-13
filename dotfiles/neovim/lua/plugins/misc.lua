@@ -1,5 +1,6 @@
 return {
 	{ "nvim-lua/plenary.nvim" },
+	{ "artemave/workspace-diagnostics.nvim" },
 	{
 		"alexghergh/nvim-tmux-navigation",
 		config = function()
@@ -40,4 +41,47 @@ return {
 	{ "onsails/lspkind.nvim", opts = {} },
 	{ "L3MON4D3/LuaSnip" },
 	{ "xzbdmw/colorful-menu.nvim", opts = {} },
+	{
+		"rachartier/tiny-code-action.nvim",
+		event = "LspAttach",
+		config = function()
+			vim.keymap.set({ "n", "x" }, "<leader>ca", function()
+				require("tiny-code-action").code_action()
+			end, { noremap = true, silent = true, desc = "Code Actions" })
+		end,
+	},
+	{
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
+		opts = {
+			library = {
+				-- See the configuration section for more details
+				-- Load luvit types when the `vim.uv` word is found
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+			},
+		},
+	},
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		config = function()
+			require("noice").setup({
+				lsp = {
+					override = {
+						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+						["vim.lsp.util.stylize_markdown"] = true,
+					},
+				},
+				presets = {
+					bottom_search = true,
+					long_message_to_split = true,
+					inc_rename = false,
+					lsp_doc_border = false,
+				},
+			})
+		end,
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+		},
+	},
 }
