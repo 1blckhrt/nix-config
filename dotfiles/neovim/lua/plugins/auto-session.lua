@@ -6,7 +6,6 @@ return {
 		allowed_dirs = {
 			"/home/blckhrt/nix-config/",
 			"/home/blckhrt/dev/*",
-			"/home/blckhrt/Documents/Vault",
 		},
 	},
 }

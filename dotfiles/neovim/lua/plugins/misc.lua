@@ -1,6 +1,5 @@
 return {
 	{ "nvim-lua/plenary.nvim" },
-	{ "artemave/workspace-diagnostics.nvim" },
 	{
 		"alexghergh/nvim-tmux-navigation",
 		config = function()

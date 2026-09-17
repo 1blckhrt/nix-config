@@ -87,6 +87,7 @@ in
           sqruff
           fd
           ripgrep
+          rumdl
           ;
       };
     };
