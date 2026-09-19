@@ -33,41 +33,6 @@ return {
 			desc = "Goto Implementation",
 		},
 		{
-			"gy",
-			function()
-				Snacks.picker.lsp_type_definitions()
-			end,
-			desc = "Goto T[y]pe Definition",
-		},
-		{
-			"gai",
-			function()
-				Snacks.picker.lsp_incoming_calls()
-			end,
-			desc = "C[a]lls Incoming",
-		},
-		{
-			"gao",
-			function()
-				Snacks.picker.lsp_outgoing_calls()
-			end,
-			desc = "C[a]lls Outgoing",
-		},
-		{
-			"<leader>ss",
-			function()
-				Snacks.picker.lsp_symbols()
-			end,
-			desc = "LSP Symbols",
-		},
-		{
-			"<leader>sS",
-			function()
-				Snacks.picker.lsp_workspace_symbols()
-			end,
-			desc = "LSP Workspace Symbols",
-		},
-		{
 			"<leader><leader>",
 			function()
 				Snacks.picker.files()
@@ -80,13 +45,6 @@ return {
 				Snacks.picker.grep()
 			end,
 			desc = "Grep",
-		},
-		{
-			"<leader>sk",
-			function()
-				Snacks.picker.keymaps()
-			end,
-			desc = "Keymaps",
 		},
 		{
 			"<leader>sv",
@@ -116,13 +74,64 @@ return {
 			end,
 			desc = "Split horizontally",
 		},
+		{
+			"<leader>gs",
+			function()
+				Snacks.picker.git_status()
+			end,
+			desc = "Git Status",
+		},
+		{
+			"<leader>gb",
+			function()
+				Snacks.gitbrowse()
+			end,
+			desc = "Git Browse",
+			mode = { "n", "v" },
+		},
+		{
+			"<C-t>",
+			function()
+				Snacks.terminal()
+			end,
+			desc = "Toggle Terminal",
+			mode = { "n", "t" },
+		},
+		{
+			"<leader>.",
+			function()
+				Snacks.scratch()
+			end,
+			desc = "Toggle Scratch Buffer",
+		},
+		{
+			"<leader>se",
+			function()
+				Snacks.picker.diagnostics({ severity = vim.diagnostic.severity.ERROR })
+			end,
+			desc = "Search Errors",
+		},
 	},
 	opts = {
 		indent = { enabled = true },
+		terminal = {
+			enabled = true,
+			win = {
+				position = "float",
+				width = 0.6,
+				height = 0.8,
+				border = "rounded",
+			},
+		},
 		picker = {
 			enabled = true,
 			matcher = {
 				frecency = true,
+			},
+			sources = {
+				files = { hidden = true },
+				grep = { hidden = true },
+				explorer = { hidden = true },
 			},
 		},
 		scratch = {
