@@ -106,8 +106,11 @@ in
             terminal = "alacritty";
             prompt = "> ";
             layer = "overlay";
-            lines = 10;
-            width = 45;
+            lines = 15;
+            width = 35;
+            inner-pad = 10;
+            vertical-pad = 15;
+            match-counter = "yes";
           };
           colors = {
             background = "${theme.base00}ff";
