@@ -17,7 +17,7 @@ in
     modules = {
       nh.enable = true;
       neovim.enable = true;
-      tmux.enable = true;
+      tmux.enable = false;
       zsh.enable = true;
       alacritty.enable = true;
       sway.enable = true;
