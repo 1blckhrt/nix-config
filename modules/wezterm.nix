@@ -33,6 +33,8 @@ in
         }
         config.window_background_opacity = 0.90
 
+        config.window_close_confirmation = 'NeverPrompt'
+
         config.font = wezterm.font("JetBrainsMono Nerd Font")
         config.font_size = 14.0
 
