@@ -21,6 +21,7 @@ in
       zsh.enable = true;
       alacritty.enable = true;
       sway.enable = true;
+      wezterm.enable = true;
     };
 
     programs.home-manager.enable = true;

@@ -224,7 +224,7 @@ in
         };
         keybindings = lib.mkOptionDefault {
           "Mod4+d" = "exec fuzzel";
-          "Mod4+Return" = "exec alacritty";
+          "Mod4+Return" = "exec wezterm start --always-new-process";
 
           "XF86AudioRaiseVolume" = "exec ${pkgs.avizo}/bin/volumectl -u up";
           "XF86AudioLowerVolume" = "exec ${pkgs.avizo}/bin/volumectl -u down";

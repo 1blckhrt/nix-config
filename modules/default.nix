@@ -8,5 +8,6 @@
     ./alacritty.nix
     ./sway.nix
     ./zsh.nix
+    ./wezterm.nix
   ];
 }
