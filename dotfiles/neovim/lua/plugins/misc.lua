@@ -1,5 +1,6 @@
 return {
 	{ "nvim-lua/plenary.nvim" },
+	{ "wakatime/vim-wakatime", lazy = false },
 	{
 		"alexghergh/nvim-tmux-navigation",
 		config = function()
