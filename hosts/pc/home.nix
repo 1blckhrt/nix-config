@@ -50,5 +50,7 @@ in
     };
 
     fonts.fontconfig.enable = true;
+
+    manual.manpages.enable = false;
   };
 }
