@@ -22,8 +22,15 @@ in
       historyLimit = 1000000;
       mouse = true;
       keyMode = "vi";
-      plugins = with pkgs.tmuxPlugins; [
-        tmux-session-manager
+      plugins = [
+        # hacky workaround to fix mnw + this tmux plugin both using single quotes in launch arguments
+        (pkgs.tmuxPlugins.tmux-session-manager.overrideAttrs (old: {
+          postPatch = (old.postPatch or "") + ''
+            substituteInPlace save_session.sh \
+              --replace-fail '== "nixos"' '!= "never"' \
+              --replace-fail 'tail +8' 'tail +4'
+          '';
+        }))
       ];
       extraConfig = ''
         bind r source-file ~/.config/tmux/tmux.conf

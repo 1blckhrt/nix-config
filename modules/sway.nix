@@ -140,7 +140,6 @@ in
         blur enable
         blur_passes 3
         blur_radius 4
-        for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
       '';
       config = {
         modifier = "Mod4";
@@ -224,7 +223,7 @@ in
         };
         keybindings = lib.mkOptionDefault {
           "Mod4+d" = "exec fuzzel";
-          "Mod4+Return" = "exec wezterm start --always-new-process";
+          "Mod4+Return" = "exec alacritty";
 
           "XF86AudioRaiseVolume" = "exec ${pkgs.avizo}/bin/volumectl -u up";
           "XF86AudioLowerVolume" = "exec ${pkgs.avizo}/bin/volumectl -u down";

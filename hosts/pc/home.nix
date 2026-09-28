@@ -17,11 +17,11 @@ in
     modules = {
       nh.enable = true;
       neovim.enable = true;
-      tmux.enable = false;
+      tmux.enable = true;
       zsh.enable = true;
       alacritty.enable = true;
       sway.enable = true;
-      wezterm.enable = true;
+      wezterm.enable = false;
     };
 
     programs.home-manager.enable = true;
