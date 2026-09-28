@@ -23,7 +23,7 @@ in
             y = 4;
           };
           decorations = "Full";
-          opacity = 0.95;
+          opacity = 0.85;
         };
 
         font = {
