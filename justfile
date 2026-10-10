@@ -6,10 +6,13 @@ _default:
 bootstrap:
     nix run home-manager/release-26.05 -- switch --flake ~/nix-config#laptop
 
-# Run hooks and commit
-commit:
+# Run checks
+run-checks:
     nix fmt
     nix flake check
+
+# Commit changes
+commit:
     convco commit
 
 # Update Tack pins

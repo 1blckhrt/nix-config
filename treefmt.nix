@@ -1,4 +1,4 @@
-{ ... }:
+_:
 let
   tackFiles = ".tack/**";
   envRC = ".envrc";
