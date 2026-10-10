@@ -2,12 +2,6 @@ return {
 	"saghen/blink.cmp",
 	version = "1.*",
 	event = "InsertEnter",
-	dependencies = {
-		{
-			"mikavilpas/blink-ripgrep.nvim",
-			version = "*", -- use the latest stable version
-		},
-	},
 	config = function()
 		local blink = require("blink.cmp")
 		blink.setup({
@@ -19,17 +13,12 @@ return {
 			},
 			appearance = { nerd_font_variant = "mono" },
 			sources = {
-				default = { "lazydev", "lsp", "path", "snippets", "buffer", "ripgrep" },
+				default = { "lazydev", "lsp", "path", "snippets", "buffer" },
 				per_filetype = {
 					sql = { "snippets", "dadbod", "lsp", "buffer" },
 				},
 				providers = {
 					dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
-					ripgrep = {
-						module = "blink-ripgrep",
-						name = "Ripgrep",
-						opts = {},
-					},
 					lazydev = {
 						name = "LazyDev",
 						module = "lazydev.integrations.blink",
@@ -53,50 +42,12 @@ return {
 					draw = {
 						columns = { { "kind_icon" }, { "label", gap = 1 } },
 						components = {
-							kind_icon = {
-								text = function(ctx)
-									local icon = ctx.kind_icon
-									if vim.tbl_contains({ "Path" }, ctx.source_name) then
-										local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
-										if dev_icon then
-											icon = dev_icon
-										end
-									else
-										icon = require("lspkind").symbol_map[ctx.kind] or ""
-									end
-									return icon .. ctx.icon_gap
-								end,
-								highlight = function(ctx)
-									local hl = ctx.kind_hl
-									if vim.tbl_contains({ "Path" }, ctx.source_name) then
-										local dev_icon, dev_hl = require("nvim-web-devicons").get_icon(ctx.label)
-										if dev_icon then
-											hl = dev_hl
-										end
-									end
-									return hl
-								end,
-							},
 							label = {
-								width = { fill = true, max = 60 },
 								text = function(ctx)
-									local highlights_info = require("colorful-menu").blink_highlights(ctx)
-									if highlights_info ~= nil then
-										return highlights_info.label
-									else
-										return ctx.label
-									end
+									return require("colorful-menu").blink_components_text(ctx)
 								end,
 								highlight = function(ctx)
-									local highlights = {}
-									local highlights_info = require("colorful-menu").blink_highlights(ctx)
-									if highlights_info ~= nil then
-										highlights = highlights_info.highlights
-									end
-									for _, idx in ipairs(ctx.label_matched_indices) do
-										table.insert(highlights, { idx, idx + 1, group = "BlinkCmpLabelMatch" })
-									end
-									return highlights
+									return require("colorful-menu").blink_components_highlight(ctx)
 								end,
 							},
 						},

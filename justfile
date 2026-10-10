@@ -2,24 +2,30 @@
 _default:
   @just --list
 
-# Update all flake inputs
+# Setup a system for the first time
+bootstrap:
+    nix run home-manager/release-26.05 -- switch --flake ~/nix-config#laptop
+
+# Run hooks and commit
+commit:
+    nix fmt
+    nix flake check
+    convco commit
+
+# Update Tack pins
 update:
-  @nix flake update
+    nix run github:manic-systems/tack -- update
 
-# Collect garbage
-clean:
-  @nix-collect-garbage -d
+# Start development shell
+dev:
+    nix develop
 
-# Optimize the Nix store
-optimize:
-  @nix-store --optimise
+# Start Neovim development shell for configuration purposes
+nvim-dev:
+    nix shell .#homeConfigurations.laptop.config.programs.mnw.finalPackage.devMode
 
-# Switch default shell to zsh
+# Switch default shell to ZSH. Requires sudo access
 switch-shell:
   @echo "This will ask you for your sudo password. Afterwards, you will need to reboot to have the changes applied."
   @echo "/home/blckhrt/.nix-profile/bin/zsh" | sudo tee -a /etc/shells
   @chsh --shell /home/blckhrt/.nix-profile/bin/zsh
-
-# Setup Sway desktop entry
-setup-wm:
-  @printf '[Desktop Entry]\nName=Sway (Nix)\nComment=Sway Wayland session\nExec=/home/blckhrt/.nix-profile/bin/sway\nType=Application\n' | sudo tee /usr/share/wayland-sessions/sway.desktop

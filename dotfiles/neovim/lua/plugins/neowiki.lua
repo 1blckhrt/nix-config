@@ -2,7 +2,7 @@ return {
 	"echaya/neowiki.nvim",
 	opts = {
 		wiki_dirs = {
-			{ name = "Personal", path = "/mnt/hdd/00-Notes/" },
+			{ name = "Personal", path = "/home/blckhrt/Notes" },
 		},
 		index_file = "README.md",
 	},

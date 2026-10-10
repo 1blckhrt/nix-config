@@ -1,10 +1,10 @@
 { pkgs, lib, ... }:
 let
-  colors = import ../../modules/colors.nix;
+  colors = import ../modules/colors.nix;
 in
 {
   imports = [
-    ../../modules
+    ../modules
   ];
 
   options.theme = lib.mkOption {
@@ -14,21 +14,17 @@ in
 
   config = {
     theme = colors.schemes.gruvbox-material-dark;
-
     modules = {
-      nh.enable = true;
+      alacritty.enable = true;
       neovim.enable = true;
+      nh.enable = true;
       tmux.enable = true;
       zsh.enable = true;
-      alacritty.enable = true;
     };
 
     programs.home-manager.enable = true;
 
     home = {
-      username = "blckhrt";
-      homeDirectory = "/home/blckhrt";
-      stateVersion = "25.11";
       sessionPath = [
         "$HOME/.local/bin"
         "$HOME/.nix-profile/bin"
@@ -45,5 +41,7 @@ in
     };
 
     fonts.fontconfig.enable = true;
+
+    manual.manpages.enable = false;
   };
 }

@@ -11,9 +11,7 @@ let
     config.allowUnfree = true;
   };
   cfg = config.modules.neovim;
-  devModeScript = pkgs.writeShellScriptBin "nvim-dev" ''
-    nix shell .#homeConfigurations.pc.config.programs.mnw.finalPackage.devMode
-  '';
+  inherit (config) theme;
 in
 {
   options.modules.neovim = {
@@ -21,10 +19,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [
-      devModeScript
-    ];
-
     programs.mnw = {
       enable = true;
       neovim = pkgs-unstable.neovim-unwrapped;
@@ -37,22 +31,22 @@ in
           ++ [
             (pkgs.writeTextDir "lua/theme-palette.lua" ''
               return {
-                base00 = "#${config.theme.base00}",
-                base01 = "#${config.theme.base01}",
-                base02 = "#${config.theme.base02}",
-                base03 = "#${config.theme.base03}",
-                base04 = "#${config.theme.base04}",
-                base05 = "#${config.theme.base05}",
-                base06 = "#${config.theme.base06}",
-                base07 = "#${config.theme.base07}",
-                base08 = "#${config.theme.base08}",
-                base09 = "#${config.theme.base09}",
-                base0A = "#${config.theme.base0A}",
-                base0B = "#${config.theme.base0B}",
-                base0C = "#${config.theme.base0C}",
-                base0D = "#${config.theme.base0D}",
-                base0E = "#${config.theme.base0E}",
-                base0F = "#${config.theme.base0F}",
+                base00 = "#${theme.base00}",
+                base01 = "#${theme.base01}",
+                base02 = "#${theme.base02}",
+                base03 = "#${theme.base03}",
+                base04 = "#${theme.base04}",
+                base05 = "#${theme.base05}",
+                base06 = "#${theme.base06}",
+                base07 = "#${theme.base07}",
+                base08 = "#${theme.base08}",
+                base09 = "#${theme.base09}",
+                base0A = "#${theme.base0A}",
+                base0B = "#${theme.base0B}",
+                base0C = "#${theme.base0C}",
+                base0D = "#${theme.base0D}",
+                base0E = "#${theme.base0E}",
+                base0F = "#${theme.base0F}",
               }
             '')
           ];
@@ -79,11 +73,8 @@ in
           ty
           lua-language-server
           stylua
-          markdown-oxide
           vscode-langservers-extracted
           superhtml
-          prettier
-          prettierd
           sqruff
           fd
           ripgrep

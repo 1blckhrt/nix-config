@@ -8,6 +8,8 @@
 let
   cfg = config.modules.zsh;
 
+  mkSymlink = config.lib.file.mkOutOfStoreSymlink;
+
   zshPath = "${config.home.homeDirectory}/nix-config/dotfiles/zsh";
   starshipPath = "${config.home.homeDirectory}/nix-config/dotfiles/starship/starship.toml";
 
@@ -35,12 +37,12 @@ in
     };
 
     home.file = {
-      ".zshrc".source = config.lib.file.mkOutOfStoreSymlink zshRCPath;
-      ".zshenv".source = config.lib.file.mkOutOfStoreSymlink zshEnvPath;
-      ".aliases.zsh".source = config.lib.file.mkOutOfStoreSymlink zshAliasPath;
-      ".zprofile".source = config.lib.file.mkOutOfStoreSymlink zProfilePath;
+      ".zshrc".source = mkSymlink zshRCPath;
+      ".zshenv".source = mkSymlink zshEnvPath;
+      ".aliases.zsh".source = mkSymlink zshAliasPath;
+      ".zprofile".source = mkSymlink zProfilePath;
     };
 
-    xdg.configFile."starship.toml".source = config.lib.file.mkOutOfStoreSymlink starshipPath;
+    xdg.configFile."starship.toml".source = mkSymlink starshipPath;
   };
 }

@@ -1,10 +1,10 @@
 { pkgs, lib, ... }:
 let
-  colors = import ../../modules/colors.nix;
+  colors = import ../modules/colors.nix;
 in
 {
   imports = [
-    ../../modules
+    ../modules
   ];
 
   options.theme = lib.mkOption {
@@ -19,17 +19,11 @@ in
       neovim.enable = true;
       tmux.enable = true;
       zsh.enable = true;
-      alacritty.enable = true;
-      sway.enable = true;
-      wezterm.enable = false;
     };
 
     programs.home-manager.enable = true;
 
     home = {
-      username = "blckhrt";
-      homeDirectory = "/home/blckhrt";
-      stateVersion = "25.11";
       sessionPath = [
         "$HOME/.local/bin"
         "$HOME/.nix-profile/bin"

@@ -2,3 +2,6 @@ result
 
 /.pre-commit-config.yaml
 /.direnv
+
+.rumdl_cache/
+.ruff_cache/

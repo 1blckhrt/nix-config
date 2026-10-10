@@ -6,15 +6,15 @@
 }:
 let
   cfg = config.modules.nh;
-  rebuildHomeScriptLaptop = pkgs.writeShellScriptBin "switch-laptop" ''
+  rebuildHomeScript = pkgs.writeShellScriptBin "switch" ''
+    if [ -z "$1" ]; then
+      echo "Error: Please specify a configuration name (e.g., laptop, pc)"
+      exit 1
+    fi
+
     cd /home/blckhrt/nix-config || exit
     git add .
-    nh home switch /home/blckhrt/nix-config -c laptop
-  '';
-  rebuildHomeScriptPC = pkgs.writeShellScriptBin "switch-pc" ''
-    cd /home/blckhrt/nix-config || exit
-    git add .
-    nh home switch /home/blckhrt/nix-config -c pc
+    nh home switch /home/blckhrt/nix-config -c "$1"
   '';
 in
 {
@@ -33,8 +33,7 @@ in
     };
 
     home.packages = [
-      rebuildHomeScriptLaptop
-      rebuildHomeScriptPC
+      rebuildHomeScript
     ];
   };
 }

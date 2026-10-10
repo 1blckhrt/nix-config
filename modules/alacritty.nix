@@ -1,11 +1,15 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
 let
   cfg = config.modules.alacritty;
+  inherit (config) theme;
+
+  alacrittyPath = "${config.home.homeDirectory}/nix-config/dotfiles/alacritty";
 in
 {
   options.modules.alacritty = {
@@ -13,102 +17,46 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    programs.alacritty = {
-      enable = true;
+    home.packages = [ pkgs.alacritty ];
 
-      settings = {
-        window = {
-          padding = {
-            x = 4;
-            y = 4;
-          };
-          decorations = "Full";
-          opacity = 0.85;
-        };
+    xdg.configFile."alacritty/alacritty-base.toml".source =
+      config.lib.file.mkOutOfStoreSymlink "${alacrittyPath}/alacritty-base.toml";
 
-        font = {
-          normal = {
-            family = "JetBrainsMono Nerd Font";
-            style = "Regular";
-          };
-          size = 14.0;
-        };
+    xdg.configFile."alacritty/alacritty.toml".text = ''
+      [general]
+      import = ["${config.home.homeDirectory}/.config/alacritty/alacritty-base.toml"]
 
-        cursor = {
-          style = {
-            shape = "Beam";
-            blinking = "Off";
-          };
-        };
+      [colors.primary]
+      background = "#${theme.base00}"
+      foreground = "#${theme.base05}"
 
-        selection = {
-          save_to_clipboard = true;
-        };
+      [colors.cursor]
+      text = "#${theme.base00}"
+      cursor = "#${theme.base05}"
 
-        keyboard.bindings = [
-          {
-            key = "C";
-            mods = "Control|Shift";
-            action = "Copy";
-          }
-          {
-            key = "V";
-            mods = "Control";
-            action = "Paste";
-          }
-          {
-            key = "Equals";
-            mods = "Control";
-            action = "IncreaseFontSize";
-          }
-          {
-            key = "Minus";
-            mods = "Control";
-            action = "DecreaseFontSize";
-          }
-        ];
+      [colors.selection]
+      text = "#${theme.base00}"
+      background = "#${theme.base05}"
 
-        colors = {
-          primary = {
-            background = "#${config.theme.base00}";
-            foreground = "#${config.theme.base05}";
-          };
+      [colors.normal]
+      black = "#${theme.base01}"
+      red = "#${theme.base08}"
+      green = "#${theme.base0B}"
+      yellow = "#${theme.base0A}"
+      blue = "#${theme.base0D}"
+      magenta = "#${theme.base0E}"
+      cyan = "#${theme.base0C}"
+      white = "#${theme.base05}"
 
-          cursor = {
-            text = "#${config.theme.base00}";
-            cursor = "#${config.theme.base05}";
-          };
-
-          selection = {
-            text = "#${config.theme.base00}";
-            background = "#${config.theme.base05}";
-          };
-
-          # Color 0-7
-          normal = {
-            black = "#${config.theme.base01}";
-            red = "#${config.theme.base08}";
-            green = "#${config.theme.base0B}";
-            yellow = "#${config.theme.base0A}";
-            blue = "#${config.theme.base0D}";
-            magenta = "#${config.theme.base0E}";
-            cyan = "#${config.theme.base0C}";
-            white = "#${config.theme.base05}";
-          };
-
-          # Color 8-15
-          bright = {
-            black = "#${config.theme.base03}";
-            red = "#${config.theme.base08}";
-            green = "#${config.theme.base0B}";
-            yellow = "#${config.theme.base09}";
-            blue = "#${config.theme.base0D}";
-            magenta = "#${config.theme.base0E}";
-            cyan = "#${config.theme.base0C}";
-            white = "#${config.theme.base07}";
-          };
-        };
-      };
-    };
+      [colors.bright]
+      black = "#${theme.base03}"
+      red = "#${theme.base08}"
+      green = "#${theme.base0B}"
+      yellow = "#${theme.base09}"
+      blue = "#${theme.base0D}"
+      magenta = "#${theme.base0E}"
+      cyan = "#${theme.base0C}"
+      white = "#${theme.base07}"
+    '';
   };
 }

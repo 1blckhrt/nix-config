@@ -1,13 +1,11 @@
 { ... }:
 {
   imports = [
-    ./direnv.nix
-    ./nh.nix
-    ./nvim.nix
-    ./tmux.nix
     ./alacritty.nix
-    ./sway.nix
+    ./direnv.nix
+    ./neovim.nix
+    ./nh.nix
+    ./tmux.nix
     ./zsh.nix
-    ./wezterm.nix
   ];
 }

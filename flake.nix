@@ -1,86 +1,31 @@
 {
-  description = "My Home Manager configuration";
-
-  nixConfig = {
-    # extra-substituters = [ "https://vicinae.cachix.org" ];
-    # extra-trusted-public-keys = [ "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc=" ];
-  };
-
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-    home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hooks = {
-      url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    mnw.url = "github:Gerg-L/mnw";
-  };
+  description = "Dotfiles for my Linux setup, powered by Tack and Nix";
 
   outputs =
-    {
-      nixpkgs,
-      nixpkgs-unstable,
-      home-manager,
-      mnw,
-      hooks,
-      ...
-    }@inputs:
+    { self, ... }@args:
     let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config = {
-          allowUnfree = true;
-          nvidia.acceptLicense = true;
-        };
-      };
+      inputs = (import ./.tack) { };
+      lib = import ./lib { inherit inputs; };
     in
     {
       homeConfigurations = {
-        laptop = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [
-            mnw.homeManagerModules.mnw
-            ./hosts/laptop/home.nix
-          ];
-          extraSpecialArgs = { inherit inputs; };
+        laptop = lib.mkHome {
+          modules = [ ./hosts/laptop.nix ];
         };
-        pc = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [
-            mnw.homeManagerModules.mnw
-            ./hosts/pc/home.nix
-          ];
-          extraSpecialArgs = { inherit inputs; };
+
+        pc = lib.mkHome {
+          modules = [ ./hosts/pc.nix ];
         };
       };
-      devShells.${system}.default =
-        let
-          check = hooks.lib.${system}.run {
-            src = ./.;
-            package = pkgs.prek;
-            hooks = {
-              nixfmt.enable = true;
-              stylua.enable = true;
-              convco.enable = true;
-            };
-          };
-        in
-        pkgs.mkShell {
-          inherit (check) shellHook;
-          buildInputs = check.enabledPackages;
-          packages = [
-            pkgs.just
-            pkgs.convco
-          ];
-        };
-      formatter.${system} = pkgs.nixfmt;
+
+      formatter = lib.eachSystem (pkgs: (lib.treefmtEval pkgs.system).config.build.wrapper);
+
+      checks = lib.eachSystem (pkgs: {
+        formatting = (lib.treefmtEval pkgs.system).config.build.check self;
+      });
+
+      devShells = lib.eachSystem (pkgs: {
+        default = lib.mkDevShell pkgs;
+      });
     };
 }

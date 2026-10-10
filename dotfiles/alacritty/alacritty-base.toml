@@ -1,0 +1,41 @@
+[window]
+decorations = "Full"
+opacity = 0.85
+
+[window.padding]
+x = 4
+y = 4
+
+[font]
+size = 14.0
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+[cursor.style]
+shape = "Beam"
+blinking = "Off"
+
+[selection]
+save_to_clipboard = true
+
+[[keyboard.bindings]]
+key = "C"
+mods = "Control|Shift"
+action = "Copy"
+
+[[keyboard.bindings]]
+key = "V"
+mods = "Control"
+action = "Paste"
+
+[[keyboard.bindings]]
+key = "Equals"
+mods = "Control"
+action = "IncreaseFontSize"
+
+[[keyboard.bindings]]
+key = "Minus"
+mods = "Control"
+action = "DecreaseFontSize"
