@@ -1,45 +1,14 @@
 return {
 	{ "nvim-lua/plenary.nvim" },
 	{ "wakatime/vim-wakatime", lazy = false },
+
 	{
-		"alexghergh/nvim-tmux-navigation",
+		"rafamadriz/friendly-snippets",
 		config = function()
-			require("nvim-tmux-navigation").setup({
-				disable_when_zoomed = true, -- defaults to false
-				keybindings = {
-					left = "<C-h>",
-					down = "<C-j>",
-					up = "<C-k>",
-					right = "<C-l>",
-					last_active = "<C-\\>",
-					next = "<C-Space>",
-				},
-			})
-
-			local function tmux_command(command)
-				local tmux_socket = vim.fn.split(vim.env.TMUX, ",")[1]
-				return vim.fn.system("tmux -S " .. tmux_socket .. " " .. command)
-			end
-
-			local nvim_tmux_nav_group = vim.api.nvim_create_augroup("NvimTmuxNavigation", {})
-
-			vim.api.nvim_create_autocmd({ "VimEnter", "VimResume" }, {
-				group = nvim_tmux_nav_group,
-				callback = function()
-					tmux_command("set-option -p @is_vim yes")
-				end,
-			})
-
-			vim.api.nvim_create_autocmd({ "VimLeave", "VimSuspend" }, {
-				group = nvim_tmux_nav_group,
-				callback = function()
-					tmux_command("set-option -p -u @is_vim")
-				end,
-			})
+			require("luasnip.loaders.from_vscode").lazy_load()
 		end,
 	},
-	{ "onsails/lspkind.nvim", opts = {} },
-	{ "L3MON4D3/LuaSnip" },
+	{ "L3MON4D3/LuaSnip", opts = {} },
 	{ "xzbdmw/colorful-menu.nvim", opts = {} },
 	{
 		"rachartier/tiny-code-action.nvim",
@@ -62,26 +31,16 @@ return {
 		},
 	},
 	{
-		"folke/noice.nvim",
-		event = "VeryLazy",
-		config = function()
-			require("noice").setup({
-				lsp = {
-					override = {
-						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-						["vim.lsp.util.stylize_markdown"] = true,
-					},
-				},
-				presets = {
-					bottom_search = true,
-					long_message_to_split = true,
-					inc_rename = false,
-					lsp_doc_border = false,
-				},
-			})
-		end,
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-		},
+		"nvim-tree/nvim-web-devicons",
+		opts = {},
+	},
+	{
+		"windwp/nvim-ts-autotag",
+		opts = {},
+	},
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		opts = {},
 	},
 }

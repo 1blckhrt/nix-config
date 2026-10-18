@@ -79,6 +79,8 @@ in
           fd
           ripgrep
           rumdl
+          prettier
+          prettierd
           ;
       };
     };

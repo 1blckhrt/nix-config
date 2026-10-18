@@ -134,9 +134,6 @@ return {
 				explorer = { hidden = true },
 			},
 		},
-		scratch = {
-			ft = "markdown",
-		},
 		dashboard = {
 			sections = {
 				{ section = "header" },

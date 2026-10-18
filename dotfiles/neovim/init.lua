@@ -9,7 +9,10 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.signcolumn = "yes"
 vim.opt.updatetime = 200
+vim.o.mouse = "a"
+vim.g.have_nerd_font = true
 vim.opt.timeoutlen = 250
+vim.o.breakindent = true
 vim.opt.cursorline = true
 vim.opt.hlsearch = true
 vim.opt.scrolloff = 10
@@ -17,12 +20,13 @@ vim.opt.smartindent = true
 vim.opt.fillchars = { eob = " " }
 vim.opt.confirm = true
 vim.opt.tabstop = 2
+vim.o.inccommand = "split"
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.showmatch = true
 vim.o.laststatus = 3
-vim.o.confirm = true
-vim.opt.clipboard = "unnamedplus"
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.o.clipboard = "unnamedplus"
 vim.diagnostic.config({
 	signs = {
 		text = {
@@ -53,24 +57,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
 	callback = function()
 		vim.hl.on_yank()
-	end,
-})
-
-vim.api.nvim_create_autocmd("Filetype", {
-	pattern = { "html", "shtml", "htm", "htmldjango" },
-	callback = function()
-		vim.lsp.start({
-			name = "superhtml",
-			cmd = { "superhtml", "lsp" },
-			root_dir = vim.fs.dirname(vim.fs.find({ ".git" }, { upward = true })[1]),
-		})
-	end,
-})
-
-vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
-	group = vim.api.nvim_create_augroup("active_cursorline", { clear = true }),
-	callback = function()
-		vim.opt_local.cursorline = true
 	end,
 })
 
