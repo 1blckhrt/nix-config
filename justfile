@@ -1,6 +1,6 @@
 # List available commands
 _default:
-  @just --list
+    @just --list
 
 # Setup a system for the first time
 bootstrap:
@@ -13,6 +13,8 @@ run-checks:
 
 # Commit changes
 commit:
+    nix fmt
+    nix flake check
     convco commit
 
 # Update Tack pins
@@ -29,6 +31,6 @@ nvim-dev:
 
 # Switch default shell to ZSH. Requires sudo access
 switch-shell:
-  @echo "This will ask you for your sudo password. Afterwards, you will need to reboot to have the changes applied."
-  @echo "/home/blckhrt/.nix-profile/bin/zsh" | sudo tee -a /etc/shells
-  @chsh --shell /home/blckhrt/.nix-profile/bin/zsh
+    @echo "This will ask you for your sudo password. Afterwards, you will need to reboot to have the changes applied."
+    @echo "/home/blckhrt/.nix-profile/bin/zsh" | sudo tee -a /etc/shells
+    @chsh --shell /home/blckhrt/.nix-profile/bin/zsh

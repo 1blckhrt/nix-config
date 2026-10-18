@@ -1,0 +1,50 @@
+{
+  "lsp": {
+    "nil": {
+      "binary": {
+        "path": "nil",
+      },
+    },
+  },
+  "languages": {
+    "Nix": {
+      "language_servers": ["nil", "!nixd"],
+      "formatter": {
+        "external": {
+          "command": "nixfmt",
+        },
+      },
+    },
+    "Shell Script": {
+      "language_servers": ["bash-language-server"],
+      "formatter": {
+        "external": {
+          "command": "shfmt",
+          "arguments": ["-filename", "{buffer_path}"],
+        },
+      },
+    },
+    "Lua": {
+      "formatter": {
+        "external": {
+          "command": "stylua",
+          "arguments": [
+            "--search-parent-directories",
+            "--stdin-filepath",
+            "{buffer_path}",
+            "-",
+          ],
+        },
+      },
+    },
+    "Markdown": {
+      "language_servers": ["rumdl"],
+      "formatter": {
+        "external": {
+          "command": "rumdl",
+          "arguments": ["fmt", "--silent", "-"],
+        },
+      },
+    },
+  },
+}

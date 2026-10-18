@@ -29,6 +29,7 @@ in
   inherit systems nixpkgsFor;
 
   eachSystem = f: inputs.nixpkgs.lib.genAttrs systems (system: f (nixpkgsFor system));
+  eachUnstableSystem = f: inputs.nixpkgs.lib.genAttrs systems (system: f (unstableNixpkgsFor system));
 
   treefmtEval = system: inputs.treefmt-nix.lib.evalModule (unstableNixpkgsFor system) ../treefmt.nix;
 
