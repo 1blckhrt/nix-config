@@ -1,6 +1,5 @@
 {
   description = "Dotfiles for my Linux setup, powered by Tack and Nix";
-
   outputs =
     { self, ... }@args:
     let

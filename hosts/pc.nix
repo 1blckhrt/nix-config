@@ -19,6 +19,7 @@ in
       neovim.enable = true;
       tmux.enable = true;
       zsh.enable = true;
+      alacritty.enable = true;
     };
 
     programs.home-manager.enable = true;
@@ -38,8 +39,8 @@ in
       enable = true;
       gpu.nvidia = {
         enable = true;
-        version = "610.57.04";
-        sha256 = "sha256-suk1xmuDuwDAyFe8jg7g/VLekoa0DJzB7sKafOfrEW0=";
+        version = "595.99.02";
+        sha256 = "sha256-6HR3lYv3YwcFSTJL1a1slI66btIQ5EAFs+/4SUD24ew=";
       };
     };
 
