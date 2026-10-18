@@ -1,7 +1,6 @@
 return {
 	{ "nvim-lua/plenary.nvim" },
 	{ "wakatime/vim-wakatime", lazy = false },
-
 	{
 		"rafamadriz/friendly-snippets",
 		config = function()
