@@ -67,6 +67,7 @@ in
       extraBinPath = builtins.attrValues {
         inherit (pkgs-unstable)
           wl-clipboard
+          xclip
           nil
           nixfmt
           ruff
