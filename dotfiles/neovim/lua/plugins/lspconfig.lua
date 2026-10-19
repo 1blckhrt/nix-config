@@ -7,6 +7,7 @@ return {
 			nil_ls = {},
 			ruff = {},
 			ty = {},
+			pyrefly = {},
 			sqruff = {},
 			cssls = {},
 			jsonls = {},

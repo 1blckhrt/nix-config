@@ -71,7 +71,9 @@ in
           nil
           nixfmt
           ruff
-          ty
+          # commented out so the virtual environment is used for LSP
+          # ty
+          # pyrefly
           lua-language-server
           stylua
           vscode-langservers-extracted

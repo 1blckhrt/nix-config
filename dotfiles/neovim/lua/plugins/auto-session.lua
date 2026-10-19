@@ -5,8 +5,8 @@ return {
 		bypass_save_filetypes = { "snacks_dashboard" },
 		allowed_dirs = {
 			"/home/blckhrt/nix-config/",
-			"/home/blckhrt/dev/*",
-			"/home/blckhrt/Notes",
+			"/home/blckhrt/my-home/dev/*",
+			"/home/blckhrt/my-home/notes/*",
 		},
 	},
 }
