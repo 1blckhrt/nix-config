@@ -15,7 +15,10 @@ pkgs.mkShell {
       stylua
       ruff
       ty
+      python3
       ;
   };
-  shellHook = "echo 'Dev shell ready'";
+  shellHook = ''
+    python3 ${../scripts/last_update.py}
+  '';
 }

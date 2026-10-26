@@ -10,9 +10,12 @@ bootstrap:
 commit:
     convco commit
 
-# Update Tack pins
+# Update Tack pins, rebuild, and rewrite the 'last-update' file.
 update:
     nix run github:manic-systems/tack -- update
+    nh home switch /home/blckhrt/nix-config -c pc
+    mkdir -p ~/.local/state/nix-config
+    date +%s > ~/.local/state/nix-config/last-update
 
 # Start development shell
 dev:
