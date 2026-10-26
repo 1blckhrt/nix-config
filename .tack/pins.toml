@@ -18,5 +18,9 @@ follows = { nixpkgs = "nixpkgs" }
 url = "github:manic-systems/tack"
 follows = { nixpkgs = "nixpkgs-unstable"}
 
+[inputs.treefmt-nix]
+url = "github:numtide/treefmt-nix"
+follows = { nixpkgs = "nixpkgs-unstable" }
+
 [inputs.mnw]
 url = "github:Gerg-L/mnw"

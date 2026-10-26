@@ -4,7 +4,8 @@
     "mnw": "github:Gerg-L/mnw",
     "nixpkgs": "github:NixOS/nixpkgs/nixos-26.05",
     "nixpkgs-unstable": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz",
-    "tack": "github:manic-systems/tack"
+    "tack": "github:manic-systems/tack",
+    "treefmt-nix": "github:numtide/treefmt-nix"
   },
   "home-manager": {
     "type": "github",
@@ -44,5 +45,13 @@
     "rev": "f7cce4f7e53c9482661b158824522fefef2d7920",
     "narHash": "sha256-vOIIx/QU6xEjMZTMZM8GNNXS/p4Idvw8V09KT5zNwTI=",
     "lastModified": 1792630541
+  },
+  "treefmt-nix": {
+    "type": "github",
+    "owner": "numtide",
+    "repo": "treefmt-nix",
+    "rev": "0d6d739a833ba9a9c93034862e4a7b061a062a1c",
+    "narHash": "sha256-C3alQ2MEt0zVrUSho5NUDo3jmhbff72++bfwoqT9Omo=",
+    "lastModified": 1791885023
   }
 }

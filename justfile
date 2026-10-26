@@ -8,6 +8,9 @@ bootstrap:
 
 # Commit changes
 commit:
+    nix fmt
+    git add -A
+    nix flake check
     convco commit
 
 # Update Tack pins, rebuild, and rewrite the 'last-update' file.

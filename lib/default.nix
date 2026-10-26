@@ -32,4 +32,5 @@ in
 
   mkHome = import ./mkHome.nix { inherit inputs stablePkgsFor unstablePkgsFor; };
   mkDevShell = pkgs: import ./mkDevShell.nix { inherit pkgs inputs; };
+  treefmt = pkgs: inputs.treefmt-nix.lib.evalModule pkgs ../treefmt.nix;
 }

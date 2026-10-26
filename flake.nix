@@ -20,5 +20,11 @@
       devShells = lib.forAllUnstableSystems (pkgs: {
         default = lib.mkDevShell pkgs;
       });
+
+      formatter = lib.forAllUnstableSystems (pkgs: (lib.treefmt pkgs).config.build.wrapper);
+
+      checks = lib.forAllUnstableSystems (pkgs: {
+        formatting = (lib.treefmt pkgs).config.build.check self;
+      });
     };
 }
