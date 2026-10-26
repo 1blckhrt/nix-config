@@ -1,24 +1,25 @@
-{ inputs, ... }:
-
+{ inputs }:
 let
+  inherit (inputs.nixpkgs) lib;
+
+  supportedSystems = [
+    "x86_64-linux"
+    "aarch64-linux"
+  ];
+
   nixpkgsConfig = {
     allowUnfree = true;
     nvidia.acceptLicense = true;
   };
 
-  systems = [
-    "x86_64-linux"
-    "aarch64-linux"
-  ];
-
-  nixpkgsFor =
+  stablePkgsFor =
     system:
     import inputs.nixpkgs {
       inherit system;
       config = nixpkgsConfig;
     };
 
-  unstableNixpkgsFor =
+  unstablePkgsFor =
     system:
     import inputs.nixpkgs-unstable {
       inherit system;
@@ -26,14 +27,9 @@ let
     };
 in
 {
-  inherit systems nixpkgsFor;
+  forAllSystems = f: lib.genAttrs supportedSystems (system: f (stablePkgsFor system));
+  forAllUnstableSystems = f: lib.genAttrs supportedSystems (system: f (unstablePkgsFor system));
 
-  eachSystem = f: inputs.nixpkgs.lib.genAttrs systems (system: f (nixpkgsFor system));
-  eachUnstableSystem = f: inputs.nixpkgs.lib.genAttrs systems (system: f (unstableNixpkgsFor system));
-
-  treefmtEval = system: inputs.treefmt-nix.lib.evalModule (unstableNixpkgsFor system) ../treefmt.nix;
-
-  mkDevShell = pkgs: import ./devshell.nix { inherit pkgs; };
-
-  mkHome = import ./home.nix { inherit inputs nixpkgsFor; };
+  mkHome = import ./mkHome.nix { inherit inputs stablePkgsFor unstablePkgsFor; };
+  mkDevShell = import ./mkDevShell.nix;
 }

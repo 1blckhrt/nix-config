@@ -17,13 +17,7 @@
         };
       };
 
-      formatter = lib.eachUnstableSystem (pkgs: (lib.treefmtEval pkgs.system).config.build.wrapper);
-
-      checks = lib.eachUnstableSystem (pkgs: {
-        formatting = (lib.treefmtEval pkgs.system).config.build.check self;
-      });
-
-      devShells = lib.eachUnstableSystem (pkgs: {
+      devShells = lib.forAllUnstableSystems (pkgs: {
         default = lib.mkDevShell pkgs;
       });
     };

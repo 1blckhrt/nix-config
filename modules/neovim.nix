@@ -1,15 +1,11 @@
 {
   pkgs,
-  inputs,
+  pkgsUnstable,
   config,
   lib,
   ...
 }:
 let
-  pkgs-unstable = import inputs.nixpkgs-unstable {
-    inherit (pkgs) system;
-    config.allowUnfree = true;
-  };
   cfg = config.modules.neovim;
   inherit (config) theme;
 in
@@ -21,12 +17,12 @@ in
   config = lib.mkIf cfg.enable {
     programs.mnw = {
       enable = true;
-      neovim = pkgs-unstable.neovim-unwrapped;
+      neovim = pkgsUnstable.neovim-unwrapped;
       luaFiles = [ ../dotfiles/neovim/init.lua ];
       plugins = {
         start =
           (builtins.attrValues {
-            inherit (pkgs-unstable.vimPlugins) lazy-nvim plenary-nvim;
+            inherit (pkgsUnstable.vimPlugins) lazy-nvim plenary-nvim;
           })
           ++ [
             (pkgs.writeTextDir "lua/theme-palette.lua" ''
@@ -65,7 +61,7 @@ in
         };
       };
       extraBinPath = builtins.attrValues {
-        inherit (pkgs-unstable)
+        inherit (pkgsUnstable)
           wl-clipboard
           xclip
           nil

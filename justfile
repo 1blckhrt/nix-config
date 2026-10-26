@@ -4,17 +4,10 @@ _default:
 
 # Setup a system for the first time
 bootstrap:
-    nix run home-manager/release-26.05 -- switch --flake ~/nix-config#laptop
-
-# Run checks
-run-checks:
-    nix fmt
-    nix flake check
+    nix run home-manager/release-26.05 -- switch --flake ~/nix-config#pc
 
 # Commit changes
 commit:
-    nix fmt
-    nix flake check
     convco commit
 
 # Update Tack pins
@@ -27,7 +20,7 @@ dev:
 
 # Start Neovim development shell for configuration purposes
 nvim-dev:
-    nix shell .#homeConfigurations.laptop.config.programs.mnw.finalPackage.devMode
+    nix shell .#homeConfigurations.pc.config.programs.mnw.finalPackage.devMode
 
 # Switch default shell to ZSH. Requires sudo access
 switch-shell:

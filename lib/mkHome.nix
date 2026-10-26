@@ -1,4 +1,8 @@
-{ inputs, nixpkgsFor }:
+{
+  inputs,
+  stablePkgsFor,
+  unstablePkgsFor,
+}:
 
 {
   system ? "x86_64-linux",
@@ -9,9 +13,10 @@
 }:
 
 inputs.home-manager.lib.homeManagerConfiguration {
-  pkgs = nixpkgsFor system;
+  pkgs = stablePkgsFor system;
   extraSpecialArgs = {
     inherit inputs;
+    pkgsUnstable = unstablePkgsFor system;
   };
   modules = [
     {

@@ -31,3 +31,6 @@ eval "$(atuin init zsh)"
 
 bindkey "^[[1;5C" forward-word    # Ctrl+Right
 bindkey "^[[1;5D" backward-word   # Ctrl+Left
+
+# opencode
+export PATH=/home/blckhrt/.opencode/bin:$PATH
