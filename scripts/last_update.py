@@ -1,3 +1,5 @@
+"""Stores the last update time in a file that is output by the dev shell."""
+
 import time
 from pathlib import Path
 
@@ -11,6 +13,7 @@ TIME_UNITS = (
 
 
 def format_age(age_seconds: float) -> str:
+    """Nicely format the age of the last update."""
     for suffix, unit_seconds in TIME_UNITS:
         if age_seconds >= unit_seconds:
             return f"{int(age_seconds // unit_seconds)}{suffix} ago"
@@ -18,9 +21,10 @@ def format_age(age_seconds: float) -> str:
 
 
 def main() -> None:
+    """Main entry point."""
     try:
         last_update_timestamp = int(LAST_UPDATE_FILE.read_text())
-    except (OSError, ValueError):
+    except OSError, ValueError:
         print("flake updated never")
         return
 
