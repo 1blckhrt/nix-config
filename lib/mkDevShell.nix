@@ -18,6 +18,7 @@ pkgs.mkShell {
       python3
       ;
   };
+
   shellHook = ''
     python3 ${../scripts/last_update.py}
   '';

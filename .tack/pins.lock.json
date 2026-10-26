@@ -3,7 +3,7 @@
     "home-manager": "github:nix-community/home-manager/release-26.05",
     "mnw": "github:Gerg-L/mnw",
     "nixpkgs": "github:NixOS/nixpkgs/nixos-26.05",
-    "nixpkgs-unstable": "github:NixOS/nixpkgs/nixpkgs-unstable",
+    "nixpkgs-unstable": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz",
     "tack": "github:manic-systems/tack"
   },
   "home-manager": {
@@ -31,11 +31,10 @@
     "lastModified": 1792898606
   },
   "nixpkgs-unstable": {
-    "type": "github",
-    "owner": "NixOS",
-    "repo": "nixpkgs",
+    "type": "tarball",
+    "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.11pre1100667.674a2028661e/nixexprs.tar.xz?rev=674a2028661e550a97400c1cc992b9cca9a668a1&lastModified=1792812153",
     "rev": "674a2028661e550a97400c1cc992b9cca9a668a1",
-    "narHash": "sha256-T2+XBfNbf9pecLUWS4+RtuVNZ3W8K5taG5QdV71mWlk=",
+    "narHash": "sha256-GNxqGToDYDZH2M4YeIj5nLPEyljtn3hEdIFY1/JNm0M=",
     "lastModified": 1792812153
   },
   "tack": {

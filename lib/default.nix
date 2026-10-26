@@ -31,5 +31,5 @@ in
   forAllUnstableSystems = f: lib.genAttrs supportedSystems (system: f (unstablePkgsFor system));
 
   mkHome = import ./mkHome.nix { inherit inputs stablePkgsFor unstablePkgsFor; };
-  mkDevShell = import ./mkDevShell.nix;
+  mkDevShell = pkgs: import ./mkDevShell.nix { inherit pkgs inputs; };
 }
