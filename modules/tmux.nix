@@ -8,6 +8,10 @@
 let
   cfg = config.modules.tmux;
   inherit (config) theme;
+
+  sepR = builtins.fromJSON ''"\ue0b8"''; # solid, segment ends
+  sepL = builtins.fromJSON ''"\ue0ba"''; # solid, segment starts (right side)
+  sepThin = builtins.fromJSON ''"\ue0bb"''; # thin divider
 in
 {
   options.modules.tmux = {
@@ -42,14 +46,19 @@ in
       extraConfig = ''
         source-file ~/.config/tmux/tmux-base.conf
 
-        set -g status-style "bg=#${theme.base01},fg=#${theme.base05}"
+        set -g status-style bg=default,fg=default
+        set -g status-justify left
+        set -g status-interval 30
         set -g status-left-length 40
-        set -g status-right-length 80
-        set -g status-left "#[bg=#${theme.base0D},fg=#${theme.base00},bold] 󰨇  #S #[bg=#${theme.base01},fg=#${theme.base0D}]"
-        set -g status-right "#[bg=#${theme.base01},fg=#${theme.base0D}]#[bg=#${theme.base0D},fg=#${theme.base00},bold]   #h "
+        set -g status-right-length 120
 
-        setw -g window-status-format "#[fg=#${theme.base04}] #I:#W "
-        setw -g window-status-current-format "#[bg=#${theme.base02},fg=#${theme.base0B},bold] #I:#W "
+        set -g status-left "#[fg=#${theme.base00},bg=#${theme.base0D},bold]   #S #[fg=#${theme.base03},bg=#${theme.base0D},nobold,noitalics,nounderscore]${sepL}#[fg=#${theme.base05},bg=#${theme.base03}]   #{session_windows} #[fg=#${theme.base00},bg=#${theme.base03}]${sepL}"       
+
+        set -g status-right "#{prefix_highlight}#[fg=#${theme.base03},bg=default,nobold,noitalics,nounderscore]${sepL}#[fg=#${theme.base05},bg=#${theme.base03}] %Y-%m-%d #[fg=#${theme.base05},bg=#${theme.base03},nobold,noitalics,nounderscore]${sepThin}#[fg=#${theme.base05},bg=#${theme.base03}] %H:%M #[fg=#${theme.base0C},bg=#${theme.base03},nobold,noitalics,nounderscore]${sepL}#[fg=#${theme.base00},bg=#${theme.base0C},bold] 󰒋 #H "
+
+        setw -g window-status-separator ""
+        setw -g window-status-format "#[fg=#${theme.base04},bg=default] #I:#W "
+        setw -g window-status-current-format "#[fg=#${theme.base02},bg=default,nobold,noitalics,nounderscore]${sepL}#[fg=#${theme.base0B},bg=#${theme.base02},bold] #I:#W #[fg=#${theme.base02},bg=default,nobold,noitalics,nounderscore]${sepR}"
 
         set -g pane-border-style "fg=#${theme.base02}"
         set -g pane-active-border-style "fg=#${theme.base0D}"
@@ -60,7 +69,6 @@ in
         set -g display-panes-active-colour "#${theme.base0D}"
         set -g window-style 'bg=default'
         set -g window-active-style 'bg=default'
-        set -g status-style 'bg=default'
       '';
     };
   };
