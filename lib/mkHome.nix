@@ -24,7 +24,6 @@ inputs.home-manager.lib.homeManagerConfiguration {
       home.homeDirectory = homeDirectory;
       home.stateVersion = "26.05";
     }
-    inputs.mnw.homeManagerModules.mnw
   ]
   ++ modules;
 }

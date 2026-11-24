@@ -24,10 +24,6 @@ update:
 dev:
     nix develop
 
-# Start Neovim development shell for configuration purposes
-nvim-dev:
-    nix shell .#homeConfigurations.pc.config.programs.mnw.finalPackage.devMode
-
 # Switch default shell to ZSH. Requires sudo access
 switch-shell:
     @echo "This will ask you for your sudo password. Afterwards, you will need to reboot to have the changes applied."

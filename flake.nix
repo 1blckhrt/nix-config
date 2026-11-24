@@ -15,6 +15,10 @@
         pc = lib.mkHome {
           modules = [ ./hosts/pc.nix ];
         };
+
+        wsl = lib.mkHome {
+          modules = [ ./hosts/wsl.nix ];
+        };
       };
 
       devShells = lib.forAllUnstableSystems (pkgs: {

@@ -1,57 +1,52 @@
 {
   "$declared": {
     "home-manager": "github:nix-community/home-manager/release-26.05",
-    "mnw": "github:Gerg-L/mnw",
     "nixpkgs": "github:NixOS/nixpkgs/nixos-26.05",
     "nixpkgs-unstable": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz",
-    "tack": "github:manic-systems/tack",
+    "nvim": "github:1blckhrt/neovim-config",
     "treefmt-nix": "github:numtide/treefmt-nix"
   },
   "home-manager": {
     "type": "github",
     "owner": "nix-community",
     "repo": "home-manager",
-    "rev": "24f2190587513b9c2f73db112a17844ae912d965",
-    "narHash": "sha256-199i7ubVSXTMl+0AAlL7cVCXSjcI+jWByMcimYjeMX0=",
-    "lastModified": 1792818383
-  },
-  "mnw": {
-    "type": "github",
-    "owner": "Gerg-L",
-    "repo": "mnw",
-    "rev": "a582dbedf7c8ec7effa6939ac5bdd23b27267d1b",
-    "narHash": "sha256-6IWPAMEotKY/nQvs1kU6qwMwCXTeW5HlOhw2RwFHFdI=",
-    "lastModified": 1790357809
+    "rev": "6480d7d8533b88c78cc6dcda395ab89cd546e450",
+    "narHash": "sha256-XYoMPsqRFZ6jOaYI1KAAu8fzqif4tkCX8mhEKrViDXQ=",
+    "lastModified": 1795325060,
+    "public": true
   },
   "nixpkgs": {
     "type": "github",
     "owner": "NixOS",
     "repo": "nixpkgs",
-    "rev": "1f607aa79b6356ed45d3cd3c8079c196e79efa2c",
-    "narHash": "sha256-Mg3rRjsbMqhSMxop5PYMXos8SwAjejrxSgVThTvP9eg=",
-    "lastModified": 1792898606
+    "rev": "0dc498bfe49baeb18b0f9891e800b53bb2603193",
+    "narHash": "sha256-s/0jq8usZtLVOolYBwmyUmd3JsfAu7w3FU+a0dgMqSY=",
+    "lastModified": 1795370043,
+    "public": true
   },
   "nixpkgs-unstable": {
     "type": "tarball",
-    "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.11pre1100667.674a2028661e/nixexprs.tar.xz?rev=674a2028661e550a97400c1cc992b9cca9a668a1&lastModified=1792812153",
-    "rev": "674a2028661e550a97400c1cc992b9cca9a668a1",
-    "narHash": "sha256-GNxqGToDYDZH2M4YeIj5nLPEyljtn3hEdIFY1/JNm0M=",
-    "lastModified": 1792812153
+    "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.11pre1126808.619c39f6eac5/nixexprs.tar.xz?lastModified=1795371335&rev=619c39f6eac5d1ed6b8f073a9414baf7034b2356",
+    "rev": "619c39f6eac5d1ed6b8f073a9414baf7034b2356",
+    "narHash": "sha256-3Xq+XlDu5l+UJ0cc+Jigs84+tz7Qu92NgXVHgJwC52M=",
+    "lastModified": 1795371335
   },
-  "tack": {
+  "nvim": {
     "type": "github",
-    "owner": "manic-systems",
-    "repo": "tack",
-    "rev": "f7cce4f7e53c9482661b158824522fefef2d7920",
-    "narHash": "sha256-vOIIx/QU6xEjMZTMZM8GNNXS/p4Idvw8V09KT5zNwTI=",
-    "lastModified": 1792630541
+    "owner": "1blckhrt",
+    "repo": "neovim-config",
+    "rev": "8b256707071803cf0c629fc9f91978f9cfd114d1",
+    "narHash": "sha256-ngFbhpG8dpjXB6mupjSGsaO9OOdcg3wYq/YoFcYoc78=",
+    "lastModified": 1795495270,
+    "public": true
   },
   "treefmt-nix": {
     "type": "github",
     "owner": "numtide",
     "repo": "treefmt-nix",
-    "rev": "0d6d739a833ba9a9c93034862e4a7b061a062a1c",
-    "narHash": "sha256-C3alQ2MEt0zVrUSho5NUDo3jmhbff72++bfwoqT9Omo=",
-    "lastModified": 1791885023
+    "rev": "a0a97e31a897a3537eea5c49df4f8adaa83b3b37",
+    "narHash": "sha256-J8IYl3oEdctyvBgWr+/L01MY5Xm0TU4WXwZDccN5jjk=",
+    "lastModified": 1795173499,
+    "public": true
   }
 }

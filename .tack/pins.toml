@@ -14,13 +14,10 @@ nixpkgs-unstable.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar
 url = "github:nix-community/home-manager/release-26.05"
 follows = { nixpkgs = "nixpkgs" }
 
-[inputs.tack]
-url = "github:manic-systems/tack"
-follows = { nixpkgs = "nixpkgs-unstable"}
-
 [inputs.treefmt-nix]
 url = "github:numtide/treefmt-nix"
 follows = { nixpkgs = "nixpkgs-unstable" }
 
-[inputs.mnw]
-url = "github:Gerg-L/mnw"
+[inputs.nvim]
+url = "github:1blckhrt/neovim-config"
+follows = { nixpkgs = "nixpkgs-unstable" }
