@@ -35,9 +35,9 @@
     "type": "github",
     "owner": "1blckhrt",
     "repo": "neovim-config",
-    "rev": "8b256707071803cf0c629fc9f91978f9cfd114d1",
-    "narHash": "sha256-ngFbhpG8dpjXB6mupjSGsaO9OOdcg3wYq/YoFcYoc78=",
-    "lastModified": 1795495270,
+    "rev": "ba1737b1dddc3d56fff0a62076c71f9f996d4d83",
+    "narHash": "sha256-TlM/mkDxfwRXEJKNntA8ERVcD/uDXA6jtgVSJm7/kow=",
+    "lastModified": 1795568214,
     "public": true
   },
   "treefmt-nix": {
