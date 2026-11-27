@@ -4,31 +4,48 @@
     { self, ... }@args:
     let
       inputs = (import ./.tack) { };
-      lib = import ./lib { inherit inputs; };
+      inherit (import ./lib.nix { inherit inputs; })
+        forSupportedSystems
+        unstablePkgsFor
+        mkHome
+        mkDevShell
+        treefmt
+        ;
     in
     {
       homeConfigurations = {
-        laptop = lib.mkHome {
-          modules = [ ./hosts/laptop.nix ];
-        };
-
-        pc = lib.mkHome {
-          modules = [ ./hosts/pc.nix ];
-        };
-
-        wsl = lib.mkHome {
-          modules = [ ./hosts/wsl.nix ];
-        };
+        laptop = mkHome "x86_64-linux" ./hosts/laptop.nix;
+        pc = mkHome "x86_64-linux" ./hosts/pc.nix;
+        wsl = mkHome "x86_64-linux" ./hosts/wsl.nix;
       };
 
-      devShells = lib.forAllUnstableSystems (pkgs: {
-        default = lib.mkDevShell pkgs;
-      });
+      devShells = forSupportedSystems (
+        system:
+        let
+          pkgs = unstablePkgsFor system;
+        in
+        {
+          default = mkDevShell pkgs;
+        }
+      );
 
-      formatter = lib.forAllUnstableSystems (pkgs: (lib.treefmt pkgs).config.build.wrapper);
+      formatter = forSupportedSystems (
+        system:
+        let
+          pkgs = unstablePkgsFor system;
+        in
+        (treefmt pkgs).config.build.wrapper
+      );
 
-      checks = lib.forAllUnstableSystems (pkgs: {
-        formatting = (lib.treefmt pkgs).config.build.check self;
-      });
+      checks = forSupportedSystems (
+        system:
+        let
+          pkgs = unstablePkgsFor system;
+        in
+        {
+          formatting = (treefmt pkgs).config.build.check self;
+        }
+      );
+
     };
 }

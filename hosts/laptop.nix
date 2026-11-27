@@ -1,6 +1,6 @@
 {
   pkgs,
-  pkgsUnstable,
+  unstablePkgs,
   lib,
   ...
 }:
@@ -37,7 +37,7 @@ in
       packages = builtins.attrValues {
         inherit (pkgs) fzf;
         inherit (pkgs.nerd-fonts) jetbrains-mono;
-        inherit (pkgsUnstable) tack;
+        inherit (unstablePkgs) tack;
       };
     };
 
