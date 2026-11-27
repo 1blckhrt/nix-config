@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  pkgsUnstable,
+  lib,
+  ...
+}:
 let
   colors = import ../modules/colors.nix;
 in
@@ -32,6 +37,7 @@ in
       packages = builtins.attrValues {
         inherit (pkgs) fzf;
         inherit (pkgs.nerd-fonts) jetbrains-mono;
+        inherit (pkgsUnstable) tack;
       };
     };
 

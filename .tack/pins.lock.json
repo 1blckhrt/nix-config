@@ -1,19 +1,11 @@
 {
-  "$declared": {
-    "home-manager": "github:nix-community/home-manager/release-26.05",
-    "nixpkgs": "github:NixOS/nixpkgs/nixos-26.05",
-    "nixpkgs-unstable": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz",
-    "nvim": "github:1blckhrt/neovim-config",
-    "treefmt-nix": "github:numtide/treefmt-nix"
-  },
   "home-manager": {
     "type": "github",
     "owner": "nix-community",
     "repo": "home-manager",
     "rev": "6480d7d8533b88c78cc6dcda395ab89cd546e450",
     "narHash": "sha256-XYoMPsqRFZ6jOaYI1KAAu8fzqif4tkCX8mhEKrViDXQ=",
-    "lastModified": 1795325060,
-    "public": true
+    "lastModified": 1795325060
   },
   "nixpkgs": {
     "type": "github",
@@ -21,15 +13,13 @@
     "repo": "nixpkgs",
     "rev": "0dc498bfe49baeb18b0f9891e800b53bb2603193",
     "narHash": "sha256-s/0jq8usZtLVOolYBwmyUmd3JsfAu7w3FU+a0dgMqSY=",
-    "lastModified": 1795370043,
-    "public": true
+    "lastModified": 1795370043
   },
   "nixpkgs-unstable": {
     "type": "tarball",
-    "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.11pre1126808.619c39f6eac5/nixexprs.tar.xz?lastModified=1795371335&rev=619c39f6eac5d1ed6b8f073a9414baf7034b2356",
+    "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.11pre1126808.619c39f6eac5/nixexprs.tar.xz",
     "rev": "619c39f6eac5d1ed6b8f073a9414baf7034b2356",
-    "narHash": "sha256-3Xq+XlDu5l+UJ0cc+Jigs84+tz7Qu92NgXVHgJwC52M=",
-    "lastModified": 1795371335
+    "narHash": "sha256-3Xq+XlDu5l+UJ0cc+Jigs84+tz7Qu92NgXVHgJwC52M="
   },
   "nvim": {
     "type": "github",
@@ -37,16 +27,14 @@
     "repo": "neovim-config",
     "rev": "ba1737b1dddc3d56fff0a62076c71f9f996d4d83",
     "narHash": "sha256-TlM/mkDxfwRXEJKNntA8ERVcD/uDXA6jtgVSJm7/kow=",
-    "lastModified": 1795568214,
-    "public": true
+    "lastModified": 1795568214
   },
   "treefmt-nix": {
     "type": "github",
     "owner": "numtide",
     "repo": "treefmt-nix",
-    "rev": "a0a97e31a897a3537eea5c49df4f8adaa83b3b37",
-    "narHash": "sha256-J8IYl3oEdctyvBgWr+/L01MY5Xm0TU4WXwZDccN5jjk=",
-    "lastModified": 1795173499,
-    "public": true
+    "rev": "b7b56d3c8833016c650ca542b1230e6130299741",
+    "narHash": "sha256-/C0FK2Fwq0aWE/GADYyYbAIdQeGfYBbWMin3tfks1NA=",
+    "lastModified": 1795615686
   }
 }
